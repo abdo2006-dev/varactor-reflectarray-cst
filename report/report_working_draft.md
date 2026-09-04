@@ -22,68 +22,68 @@ This is a working engineering document describing an investigation that is still
 
 ## 1  Introduction
 
-A reflectarray replaces the shaped surface of a conventional reflector antenna with a flat panel carrying many individually controlled scattering elements. Each element receives the field radiated by a feed antenna and re-radiates it with a prescribed phase, so that the collection of element phases synthesises the wavefront a curved reflector would have produced. Because no corporate feed network distributes the signal to the elements, the arrangement avoids the distribution loss that limits conventional arrays at millimetre wavelengths, while keeping a flat geometry that can be manufactured on ordinary printed circuit board.
+A reflectarray replaces the shaped surface of a conventional reflector antenna with a flat panel carrying many individually controlled scattering elements. Each element receives the field radiated by a feed antenna and re-radiates it with a prescribed phase, so that the collection of element phases synthesises the wavefront a curved reflector would have produced [1]. Because no corporate feed network distributes the signal to the elements, the arrangement avoids the distribution loss that limits conventional arrays at millimetre wavelengths, while keeping a flat geometry that can be manufactured on ordinary printed circuit board.
 
-When the phase of each element is fixed at manufacture, the beam direction is fixed with it. Making the element phase electronically adjustable turns the same panel into a steerable antenna. Reverse-biased varactor diodes are one of the few practical ways to do this in the K-band: they are small enough to fit behind a single element, they draw negligible current, and their capacitance varies continuously with the applied voltage rather than in discrete steps. Continuous control matters because quantised phase, even at one or two bits, raises sidelobe levels and costs gain at boresight [1].
+When the phase of each element is fixed at manufacture, the beam direction is fixed with it. Making the element phase electronically adjustable turns the same panel into a steerable antenna. Reverse-biased varactor diodes are one of the few practical ways to do this in the K-band: they are small enough to fit behind a single element, they draw negligible current, and their capacitance varies continuously with the applied voltage rather than in discrete steps. Continuous control matters because quantised phase, even at one or two bits, raises sidelobe levels and costs gain at boresight [2].
 
-Interest in this frequency range is driven by 5G deployment near 26 GHz and by the measurement problem that follows from it. Characterising steerable millimetre-wave antennas requires reference antennas whose beam can itself be moved in a known way, which is the application that motivated the reference design used here [2].
+Interest in this frequency range is driven by 5G deployment near 26 GHz and by the measurement problem that follows from it. Characterising steerable millimetre-wave antennas requires reference antennas whose beam can itself be moved in a known way, which is the application that motivated the reference design used here [3].
 
-Placing a tuning element behind a reflecting surface is not free. The varactor has to be reachable by a DC bias network that does not disturb the radio-frequency path, and the radio-frequency path has to couple strongly enough into the tuned resonator for the varactor to control the reflected phase at all. The reference design solves both problems with an aperture-coupled patch over a buried resonant stripline, a blind via, and a bias-T built from a quarter-wavelength transformer and a radial stub.
+Placing a tuning element behind a reflecting surface is not free. The varactor must be reachable by a DC bias network that does not disturb the radio-frequency path, and that path must couple strongly enough into the tuned resonator for the varactor to control the reflected phase. The reference design solves both with an aperture-coupled patch over a buried resonant stripline, a blind via, and a bias-T built from a quarter-wavelength transformer and a radial stub.
 
-The objective of this work is to reconstruct that element in CST Studio Suite from the published description, to establish a full-wave periodic unit-cell model whose configuration and numerical behaviour can be defended, and to investigate how its reflection response depends on the varactor capacitance near 26 GHz. The reconstruction is complete and the model solves reliably. The capacitance-dependent phase behaviour reported by the source has not yet been recovered, and locating it is the current focus of the investigation.
+The objective of this work is to reconstruct that element in CST Studio Suite from the published description, to establish a full-wave periodic unit-cell model whose configuration and numerical behaviour can be defended, and to investigate how its reflection response depends on the varactor capacitance near 26 GHz. The geometric reconstruction and the initial numerical model have been established, and the model solves reliably. The capacitance-dependent phase behaviour reported by the source has not yet been recovered, and locating it is the current focus of the investigation.
 
 
 ## 2  Reference design
 
-The element reconstructed in this work is the antenna element of Harz and Kleine-Ostmann [2], which develops an earlier element by Harz, Kleine-Ostmann and Schrader [1] and applies the single-varactor concept of Venneri, Costanzo and Di Massa [3]. The two Harz papers describe different elements and their numerical dimensions must not be mixed: the 2020 element uses an 8 mm cell on a Rogers RT5870 substrate, whereas the 2022 element uses a 7 mm cell on Isola Astra MT77. This work reconstructs the 2022 element. The 2020 paper is used for its account of the operating principle and for its dimensioned bias-T figure, which is reproduced in Appendix D.
+The element reconstructed in this work is the antenna element of Harz and Kleine-Ostmann [3], which develops an earlier element by Harz, Kleine-Ostmann and Schrader [2] and applies the single-varactor concept of Venneri, Costanzo and Di Massa [4]. The two Harz papers describe different elements and their numerical dimensions must not be mixed: the 2020 element uses an 8 mm cell on a Rogers RT5870 substrate, whereas the 2022 element uses a 7 mm cell on Isola Astra MT77. This work reconstructs the 2022 element. The 2020 paper is used for its account of the operating principle and for its dimensioned bias-T figure, which is reproduced in Appendix D.
 
 
 ### 2.1  Operating principle
 
 An incident plane wave illuminates a square patch on the first conductor layer. The patch is not a resonator terminated in free space; it is aperture-coupled through a rectangular slot in the second layer to a stripline on the third layer. Energy therefore passes from the incident field into the patch, through the aperture, and onto the buried stripline, where it encounters the tuning element.
 
-The stripline is divided by its connection point into two lengths that play different roles. The short stub of length Ls above the junction presents an inductive reactance, and the longer section of length Lv below the junction, terminated by the varactor, presents the capacitive part. Together they form a series resonant circuit whose resonant frequency is set principally by Ls and whose usable phase range is matched to the capacitance range of the diode by choosing Lv [2], [3]. Changing the varactor capacitance moves the resonance, and the phase of the wave returned through the aperture to the patch shifts with it. The patch re-radiates that phase-shifted wave, so the reflection phase of the whole cell becomes a function of the bias voltage.
+The stripline is divided by its connection point into two lengths that play different roles. The short stub of length Ls above the junction presents an inductive reactance, and the longer section of length Lv below the junction, terminated by the varactor, presents the capacitive part. Together they form a series resonant circuit whose resonant frequency is set principally by Ls and whose usable phase range is matched to the capacitance range of the diode by choosing Lv [3], [4]. Changing the varactor capacitance moves the resonance, and the phase of the wave returned through the aperture to the patch shifts with it. The patch re-radiates that phase-shifted wave, so the reflection phase of the whole cell becomes a function of the bias voltage.
 
-The aperture-coupled arrangement has a second benefit that motivated its selection. Every active and biasing component sits behind the layer-four ground plane, so the reflecting face stays flat and the backscatter depends only on the patch and the slot, with no parasitic radiation from the bias circuitry [1].
+The arrangement has a second benefit that motivated its selection. Every active and biasing component sits behind the layer-four ground plane, so the reflecting face stays flat and the backscatter depends only on the patch and the slot, with no parasitic radiation from the bias circuitry [2].
 
 
 ### 2.2  Published element geometry
 
-Figure 1 reproduces the published layout. It fixes the unit-cell extent, the patch and aperture dimensions, the two resonant stripline lengths, and the position of the blind via and the varactor, together with the four dimensions that define the bias-T. The numerical values are collected in Table 1 of [2] and are carried into Table 1 of this report.
+Figure 1 reproduces the published layout. It fixes the unit-cell extent, the patch and aperture dimensions, the two resonant stripline lengths, and the position of the blind via and the varactor, together with the four dimensions that define the bias-T. The numerical values are collected in Table 1 of [3] and are carried into Table 1 of this report.
 
 ![Figure 1](../figures/source/fig01_harz2022_element_layout.png)
 
-**Figure 1.** Published layout of the reference antenna element, showing the unit-cell extent X and Y, the patch width Pw, the coupling slot Sw and Sl, the stripline width Lw and its two resonant lengths Lv and Ls, the blind via, the varactor diode position, and the bias line with the radial stub dimensioned by Bl, Bd, Bw and Bh. Reproduced from Harz and Kleine-Ostmann [2], Fig. 1, under the Creative Commons Attribution 4.0 licence.
+**Figure 1.** Published layout of the reference antenna element, showing the unit-cell extent X and Y, the patch width Pw, the coupling slot Sw and Sl, the stripline width Lw and its two resonant lengths Lv and Ls, the blind via, the varactor diode position, and the bias line with the radial stub dimensioned by Bl, Bd, Bw and Bh. Reproduced from Harz and Kleine-Ostmann [3], Fig. 1, under the Creative Commons Attribution 4.0 licence.
 
 Two features of the layout govern the reconstruction. The blind via sits at the junction between Ls and Lv, on the stripline axis, so that the via position and the two published lengths are not independent quantities. The bias line continues away from the patch along that axis, and the radial stub branches laterally from it at a distance Bd from the junction rather than continuing along it. Both readings were taken from the figure directly and both differ from earlier interpretations used in this project.
 
 
 ### 2.3  Published multilayer architecture
 
-The element is built on a six-layer board, reproduced in Figure 2. The first four layers produce the reflection with the intended phase shift; the last two route the bias signals and carry the diode [2].
+The element is built on a six-layer board, reproduced in Figure 2. The first four layers produce the reflection with the intended phase shift; the last two route the bias signals and carry the diode [3].
 
 ![Figure 2](../figures/source/fig02_harz2022_layer_structure.png)
 
-**Figure 2.** Published six-layer structure of the reference antenna element. The patch sits on layer one, the coupling aperture is the gap in the layer-two conductor, the resonant stripline is on layer three, layer four is the ground plane, and the blind via carries the resonant path down to the varactor on layer six. Reproduced from Harz and Kleine-Ostmann [2], Fig. 2, under the Creative Commons Attribution 4.0 licence.
+**Figure 2.** Published six-layer structure of the reference antenna element. The patch sits on layer one, the coupling aperture is the gap in the layer-two conductor, the resonant stripline is on layer three, layer four is the ground plane, and the blind via carries the resonant path down to the varactor on layer six. Reproduced from Harz and Kleine-Ostmann [3], Fig. 2, under the Creative Commons Attribution 4.0 licence.
 
-Layer one carries the patch. Layer two is a conductor sheet interrupted by the coupling aperture, which also serves as the upper ground of the stripline. Layer three carries the resonant stripline and, in the 2022 element, the bias-T. Layer four is the ground plane, which limits radiation from the back of the element. Layers five and six route the control voltage through the array to neighbouring cells and carry the varactor itself. A blind via connects the layer-three resonant path down to the diode, passing through a clearance in the ground plane.
+Layer one carries the patch. Layer two is a conductor sheet interrupted by the coupling aperture, which also serves as the upper ground of the stripline. Layer three carries the resonant stripline and, in this reconstruction, the bias-T branch; Section 3.4 explains why that placement is an interpretation rather than a published assignment. Layer four is the ground plane, which limits radiation from the back of the element. Layers five and six route the control voltage through the array to neighbouring cells and carry the varactor itself. A blind via connects the layer-three resonant path down to the diode, passing through a clearance in the ground plane.
 
-Isola Astra MT77 was chosen for every layer because it supports buried and blind vias and because using one material throughout avoids the mechanical stress that would bow or twist a mixed-material board [2]. One point deserves explicit mention: the published permittivity of 3.0 and loss factor of 0.0017 are specified only up to 20 GHz, and the source applies them at 26 GHz. This reconstruction follows that choice, so the extrapolation is inherited from the source rather than introduced here.
+Isola Astra MT77 was chosen for every layer because it supports buried and blind vias and because one material throughout avoids the mechanical stress that would bow a mixed-material board [3]. Its published permittivity of 3.0 and loss factor of 0.0017 are specified only to 20 GHz, and the source applies them at 26 GHz. This reconstruction follows that choice, so the extrapolation is inherited rather than introduced here.
 
-The source does not publish everything the model needs. It gives no via diameter, no ground clearance diameter, no PCB land pattern for the diode, and no dimensions for the layer-five to layer-six interconnect. Section 4.4 records the values adopted in their place.
+The source does not publish everything the model needs. It gives no via diameter, no ground clearance diameter, no PCB land pattern for the diode, and no dimensions for the layer-five to layer-six interconnect. Section 4.3 records the values adopted in their place.
 
 
 ### 2.4  Published target behaviour
 
 The quantities in this subsection describe the published system. None of them is a result of the model presented in this report, and no result in Section 7 should be read as reproducing them.
 
-The optimisation goal in [2] was a wide phase-shift range, and the reported outcome is a maximum simulated phase shift of 337 degrees for the element whose dimensions appear in Table 1 of that paper. The precursor element of [1] reports 340 degrees for its own, different geometry.
+The optimisation goal in [3] was a wide phase-shift range, and the reported outcome is a maximum simulated phase shift of 337 degrees for the element whose dimensions appear in Table 1 of that paper. The precursor element of [2] reports 340 degrees for its own, different geometry.
 
-Fabricated elements were then measured in a waveguide simulator, a technique in which a small number of elements placed in a waveguide reproduces the mutual coupling environment of a large array [4]. The control voltage was swept from 0 to 15 V over 25.6 to 26.6 GHz. Within a 100 MHz bandwidth the maximum measured phase-change range lies between 308 and 336 degrees, and at 26.104 GHz specifically it is 322 degrees [2]. The waveguide simulator imposes a tilted incidence of 21.4 degrees, so these measured figures are not directly comparable with normal-incidence unit-cell simulation.
+Fabricated elements were then measured in a waveguide simulator, a technique in which a small number of elements placed in a waveguide reproduces the mutual coupling environment of a large array [5]. The control voltage was swept from 0 to 15 V over 25.6 to 26.6 GHz. Within a 100 MHz bandwidth the maximum measured phase-change range lies between 308 and 336 degrees, and at 26.104 GHz specifically it is 322 degrees [3]. The waveguide simulator imposes a tilted incidence of 21.4 degrees, so these measured figures are not directly comparable with normal-incidence unit-cell simulation.
 
 The reference frequency and the frequency interval used throughout this project are inherited from that measurement rather than chosen independently: 26.104 GHz is the frequency at which the source quotes its phase-change range, and 25.6 to 26.6 GHz is the band over which the source measured.
 
-The tuning element is a MACOM flip-chip varactor with a capacitance range of 0.025 to 0.19 pF over a 0 to 15 V control range, for which the manufacturer supplies no equivalent-circuit parameters [2]. The two papers name slightly different part variants, an ambiguity recorded in Appendix F.
+The tuning element is a MACOM flip-chip varactor with a capacitance range of 0.025 to 0.19 pF over a 0 to 15 V control range, for which the manufacturer supplies no equivalent-circuit parameters [3]. The two papers print different part strings for it, an ambiguity recorded in Appendix F.
 
 
 ## 3  CST reconstruction of the unit cell
@@ -93,7 +93,7 @@ The tuning element is a MACOM flip-chip varactor with a capacitance range of 0.0
 
 The model was rebuilt from the published description rather than adapted from an existing project file, so every dimension in it can be traced to a source value, to a derivation from source values, or to a recorded assumption. Each of the three categories is marked as such in Section 4, and no assumed value is presented as a published one.
 
-The geometry is fully parameterised. Layer positions are expressed as a chain of z-coordinate formulas driven by the substrate and conductor thicknesses, so changing one thickness moves every layer above and below it consistently, and features that must stay aligned are tied to shared parameters rather than to typed coordinates. This matters for the present investigation: the geometry variations in Section 7.3 were applied by editing a single parameter, which keeps the rest of the structure self-consistent and makes each variant reproducible from its parameter list alone.
+The geometry is fully parameterised. Layer positions are a chain of z-coordinate formulas driven by the substrate and conductor thicknesses, so changing one thickness moves every layer consistently, and features that must stay aligned are tied to shared parameters rather than to typed coordinates. The geometry variations in Section 7.3 were therefore applied by editing a single parameter, which keeps the rest of the structure self-consistent and makes each variant reproducible from its parameter list.
 
 The element is modelled as one cell of an infinite periodic array rather than in isolation, matching the unit-cell configuration in which the source optimised its own element.
 
@@ -126,9 +126,11 @@ The layer-two conductor is built from four rectangular solids rather than as a s
 
 The radio-frequency path runs from the patch, through the aperture, along the layer-three stripline, down the blind via, and onto the layer-six pad pair that carries the varactor. The via passes through the ground-plane clearance without touching it, so the resonant path reaches the diode without shorting to ground.
 
-The bias path leaves the same layer-three junction as a branch. The quarter-wavelength transformer and the radial stub together present an open circuit at the junction at the operating frequency, which is what keeps the DC feed from loading the resonator; the source reports 36 dB of decoupling for this arrangement [2]. The DC side then continues to the layer-five supply trace through a local interlayer via and reaches the isolated DC pad on layer six.
+The bias path is modelled as a branch leaving the same layer-three junction. The quarter-wavelength transformer and the radial stub together present an open circuit at the junction at the operating frequency, which is what keeps the DC feed from loading the resonator; the source reports 36 dB of decoupling for this arrangement [3]. The DC side then continues to the layer-five supply trace through a local interlayer via and reaches the isolated DC pad on layer six.
 
-One aspect of this arrangement remains unresolved. The source establishes that a bias-T exists on layer three, that layer five distributes the control voltage, and that the varactor sits on layer six, but it does not dimension the interlayer route between them. The connection modelled here is a reconstruction that satisfies those constraints rather than a published layout, and Appendix F records it as an open ambiguity.
+The layer on which the bias-T sits is a reconstruction interpretation rather than a published assignment. The 2022 source describes the bias-T as a quarter-wavelength stripline transformer with a microstrip radial-stub shunt, and draws the bias line and the radial stub in the same superimposed plan view as the stripline, but neither its text nor its layer-structure figure gives the bias-T a conductor-layer number [3]. The precursor paper is explicit in one direction and contrary in another: its layer-stack figure labels layer three as stripline and bias-T, while its text places the varactor diode and the bias-T behind the ground layer [2]. That stack belongs to the 8 mm precursor element, so it constrains the present reconstruction only by analogy.
+
+The reconstruction places the bias-T branch at the layer-three radio-frequency junction, following the adopted reading of the published plan view. That placement is retained as an interpretation rather than treated as a published dimension. Neither source dimensions the interlayer route between layers three, five and six, so what is modelled there satisfies the published constraints without being a published layout. Appendix F records both points as open.
 
 
 ## 4  Design parameters
@@ -138,9 +140,9 @@ This section gives the parameters needed to understand the model. The complete n
 
 ### 4.1  Principal parameters
 
-Table 1 lists the principal geometry and excitation parameters together with their published counterparts. Every dimension that [2] publishes is reproduced exactly by the reconstruction baseline; the deviations in the current column are the deliberate diagnostic changes described in Section 7.3. The varactor pad dimensions are omitted here and given with the other assumed quantities in Table 4.
+Table 1 lists the principal geometry and excitation parameters together with their published counterparts. The baseline reconstruction implements all dimensions explicitly published for the 2022 reference element. The varactor pad dimensions are omitted here and given with the other assumed quantities in Table 3.
 
-**Table 1.** Principal design parameters of the reconstruction. Published values are taken from Table 1 of [2] and verified directly against the publisher PDF. Where the current model deviates from the published value, both are shown.
+**Table 1.** Principal design parameters of the reconstruction. Published values are taken from Table 1 of [3] and verified directly against the publisher PDF. Where the current model deviates from the published value, both are shown.
 
 | Parameter | Description | Published | Current CST | Unit | Origin and status |
 |---|---|---|---|---|---|
@@ -162,53 +164,42 @@ Table 1 lists the principal geometry and excitation parameters together with the
 | Cmax | Upper capacitance endpoint | 0.19 | 0.19 | pF | Published device range |
 | fRef | Reference frequency | 26.104 | 26.104 | GHz | Published measurement frequency |
 
-
-### 4.2  Published geometry against the current diagnostic geometry
-
-Three parameters currently sit away from their published values because they were varied during the investigation. Table 2 states both figures for each. The published column remains the reference definition of the element, and the diagnostic values carry no claim of being an improvement.
-
-**Table 2.** Parameters temporarily displaced from their published values during the ongoing geometry investigation. The published column remains the reference definition of the element.
-
-| Parameter | Published value | Current diagnostic value | Change |
-|---|---|---|---|
-| slotW | 0.26 mm | 0.35 mm | +0.09 mm |
-| slotL | 2.275 mm | 2.32 mm | +0.045 mm |
-| lineV | 1.11 mm | 1.13 mm | +0.02 mm |
+The current diagnostic checkpoint intentionally departs from the published values of slotW, slotL and lineV. These are temporary investigation settings, described with their outcome in Section 7.3, and they are not presented as optimised dimensions.
 
 
-### 4.3  Stack and material parameters
+### 4.2  Stack and material parameters
 
-Table 3 collects the layer stack and material definition. The substrate thicknesses and the material properties are published; the conductor thicknesses are inferred from the source stack description rather than stated by it.
+Table 2 collects the layer stack and material definition. The substrate thicknesses and the material properties are published; the conductor thicknesses are inferred from the source stack description rather than stated by it.
 
-**Table 3.** Layer stack and material definition of the reconstruction.
+**Table 2.** Layer stack and material definition of the reconstruction.
 
 | Item | Value | Origin |
 |---|---|---|
-| Substrate material | Isola Astra MT77 | Published [2] |
-| Relative permittivity | 3.0 | Published [2], specified to 20 GHz |
-| Electric loss tangent | 0.0017 | Published [2], specified to 20 GHz |
+| Substrate material | Isola Astra MT77 | Published [3] |
+| Relative permittivity | 3.0 | Published [3], specified to 20 GHz |
+| Electric loss tangent | 0.0017 | Published [3], specified to 20 GHz |
 | Material reference frequency | 26.104 GHz | Model setting |
 | Material fit range | 25.6 to 26.6 GHz | Model setting |
-| Substrates 1 to 3 thickness | 0.254 mm each | Published [2] |
-| Substrates 4 and 5 thickness | 0.127 mm each | Published [2] |
+| Substrates 1 to 3 thickness | 0.254 mm each | Published [3] |
+| Substrates 4 and 5 thickness | 0.127 mm each | Published [3] |
 | Conductor model | Perfect electric conductor | Modelling simplification |
 | Upper conductor thickness cuOuter | 0.035 mm | Inferred from the source stack |
 | Inner conductor thickness cuInner | 0.018 mm | Inferred from the source stack |
 | L5 and L6 conductor thickness | 0.035 mm | Assumed, carried over from cuOuter |
 
 
-### 4.4  Reconstruction assumptions
+### 4.3  Reconstruction assumptions
 
-Table 4 lists the quantities the model requires but the source does not publish. These are the values most likely to be responsible for any difference between the reconstruction and the published element, and none of them has yet been sensitivity-tested.
+Table 3 lists the quantities the model requires but the source does not publish. These are the values most likely to be responsible for any difference between the reconstruction and the published element, and none of them has yet been sensitivity-tested.
 
-**Table 4.** Reconstruction assumptions. None of these values is published by the source and none has yet been sensitivity-tested.
+**Table 3.** Reconstruction assumptions. None of these values is published by the source and none has yet been sensitivity-tested.
 
 | Quantity | Value used | Basis |
 |---|---|---|
 | Blind-via diameter | 0.20 mm | Chosen. No published value in the reviewed material. |
 | L4 clearance diameter | 0.50 mm | Chosen to clear the via without shorting the ground plane. |
 | L5 and L6 copper thickness | 0.035 mm | Carried over from the upper-layer interpretation. |
-| Varactor pad geometry | 0.2155 by 0.1905 mm, 0.4185 mm separation | Taken from a MACOM flip-chip package outline in place of an unpublished PCB land pattern. The exact part variant is itself unresolved. |
+| Varactor pad geometry | 0.2155 by 0.1905 mm, 0.4185 mm separation | Taken from a MACOM flip-chip package outline recorded as MAVR-011020-1411, in place of an unpublished PCB land pattern. Neither paper names that variant and the outline drawing has not been retrieved, so the correspondence is unproven. See Appendix F, item 1. |
 | L5 to L6 DC interconnect | diameter, position and route chosen | The source shows that a DC path exists but does not dimension it. |
 | Varactor electrical model | series RLC, R = 0, L = 0 | Deliberate simplification. Package parasitics and the capacitance-versus-bias law are absent. |
 
@@ -218,9 +209,9 @@ Table 4 lists the quantities the model requires but the source does not publish.
 
 ### 5.1  Solver configuration
 
-The frequency-domain solver with a tetrahedral mesh was chosen because the structure is resonant, electrically small, and contains fine features such as the aperture and the via clearance that a conformal tetrahedral mesh resolves efficiently. Table 5 records the configuration.
+The frequency-domain solver with a tetrahedral mesh was chosen because the structure is resonant, electrically small, and contains fine features such as the aperture and the via clearance that a conformal tetrahedral mesh resolves efficiently. Table 4 records the configuration.
 
-**Table 5.** Solver and excitation configuration. All entries were read from the CST dialogs.
+**Table 4.** Solver and excitation configuration. All entries were read from the CST dialogs.
 
 | Setting | Value |
 |---|---|
@@ -250,7 +241,7 @@ The varactor is represented by a series RLC lumped network element placed across
 
 so that at 26.1 GHz the two endpoint capacitances of 0.025 and 0.19 pF correspond to reactance magnitudes of approximately 244 and 32 ohm respectively.
 
-This is deliberately an idealisation. Package parasitics, series resistance, lead inductance and the capacitance-versus-bias characteristic of the real diode are all absent, and the manufacturer publishes no equivalent circuit from which they could be added [2]. The simplification isolates the effect of capacitance alone, which is the quantity under investigation, but it means the model cannot predict the phase-versus-voltage curve of a physical element and does not represent any loss or resonance contributed by the package.
+This is deliberately an idealisation. Package parasitics, series resistance, lead inductance and the capacitance-versus-bias characteristic of the real diode are absent, and the manufacturer publishes no equivalent circuit from which they could be added [3]. It isolates the effect of capacitance alone, but the model cannot predict the phase-versus-voltage curve of a physical element and represents no loss or resonance contributed by the package.
 
 
 ### 5.3  Adaptive meshing and convergence
@@ -263,12 +254,12 @@ Adaptive tetrahedral refinement runs between three and eight passes, refining th
 
 **Figure 5.** Representative adaptive tetrahedral mesh convergence for one accepted endpoint run on the current geometry. The horizontal axis is the refinement pass number, not frequency. The acceptance criterion used throughout this project is a final Maximum Delta All S-Parameters of approximately 0.01 or below.
 
-Figure 5 shows a representative convergence record. A plot of this kind has the refinement pass number on its horizontal axis and says nothing about the frequency response of the element. Frequency-domain results are presented separately in Section 7.
+Figure 5 shows a representative convergence record. Frequency-domain results are presented separately in Section 7.
 
 
 ### 5.4  Quantities evaluated
 
-Four groups of quantities are extracted from each run. The reflection phase of SZmax(1),Zmax(1) is the primary result, since the design intent is phase control. Its magnitude is monitored as a consistency check on the energy balance rather than as a design target. The lumped-element voltage and current monitors give access to the terminal conditions at the varactor, which is the only direct view of what the tuning element experiences. Field monitors provide surface-current and electric-field distributions at selected frequencies, used qualitatively to see where energy is concentrated.
+Four groups of quantities are extracted from each run. The reflection phase of SZmax(1),Zmax(1) is the primary result, since the design intent is phase control, and its magnitude is monitored as a consistency check on the energy balance rather than as a design target. The lumped-element voltage and current monitors give the terminal conditions at the varactor, the only direct view of what the tuning element experiences. Field monitors give surface-current and electric-field distributions at selected frequencies, used qualitatively.
 
 
 ## 6  Model verification
@@ -283,9 +274,9 @@ Runs are classified against the criterion defined in Section 5.3. A run that rea
 
 ### 6.2  Lumped-element validation
 
-A converged solution does not by itself show that the lumped element is electrically active. The voltage and current monitors at the varactor terminals provide that check directly: their ratio should match the reactance magnitude of an ideal capacitor at the modelled capacitance. Table 6 gives the comparison.
+A converged solution does not by itself show that the lumped element is electrically active. The voltage and current monitors at the varactor terminals provide that check directly: their ratio should match the reactance magnitude of an ideal capacitor at the modelled capacitance. Table 5 gives the comparison.
 
-**Table 6.** Lumped-element validation. Terminal voltage and current were read from the CST lumped-element monitors and converted from the plotted dBV and dBA values; they are therefore screenshot-derived. The ideal column is the reactance magnitude of a lossless capacitor at 26.1 GHz.
+**Table 5.** Lumped-element validation. Terminal voltage and current were read from the CST lumped-element monitors and converted from the plotted dBV and dBA values; they are therefore screenshot-derived. The ideal column is the reactance magnitude of a lossless capacitor at 26.1 GHz.
 
 | varC | Current | Voltage | Measured |V/I| | Ideal 1/(2*pi*f*C) |
 |---|---|---|---|---|
@@ -294,7 +285,7 @@ A converged solution does not by itself show that the lumped element is electric
 
 The agreement is close at both endpoints, and the terminal impedance changes by roughly the expected factor between them. The element is therefore excited by the radio-frequency solution and responds to the capacitance parameter as an ideal capacitor would.
 
-The scope of this conclusion is narrow. It establishes that the lumped element is connected, excited and behaving as specified. It does not establish that the resonant structure loading it is correct, nor that the coupling from the aperture into that structure is strong enough for the varactor to control the reflected phase.
+The scope of this conclusion is narrow. It establishes that the lumped element is connected, excited and behaving as specified, not that the resonant structure loading it is correct or that the aperture couples into that structure strongly enough for the varactor to control the reflected phase.
 
 
 ### 6.3  Geometry and connectivity
@@ -319,19 +310,19 @@ Figure 6 overlays the reflection phase at the two capacitance endpoints on the c
 
 The two curves remain almost coincident across most of the simulated interval, and in particular at the 26.104 GHz reference frequency. Some additional separation is visually apparent toward the upper end of the interval, near 26.5 to 26.6 GHz. The current reconstruction therefore does not yet exhibit meaningful capacitance-dependent reflection-phase separation at the reference frequency.
 
-No figure is given here for the size of that separation in degrees. The observation is a reading from overlaid plots, and the underlying S-parameter data have not been exported numerically. Quantifying it is one of the immediate tasks in Section 9.
+The separation is not quantified in degrees here. The observation is a reading from overlaid plots, and the underlying S-parameter data have not been exported numerically; Section 9 gives that as an immediate task.
 
 
 ### 7.2  Endpoint reflection magnitude
 
-The reflection magnitude stays close to 0 dB across the interval in every converged branch, and the two endpoint curves differ by only a few hundredths of a decibel. This is consistent with a structure built from perfect conductors on a low-loss substrate, in which almost all incident power is returned regardless of the capacitance state, and it serves as a check that no unintended loss mechanism has entered the model. It carries no information about whether a resonance is present, since a resonant element with negligible loss can shift phase strongly while its reflection magnitude stays near unity. The magnitude overlay is Figure E.1.
+The reflection magnitude stays close to 0 dB across the interval in every converged branch, and the two endpoint curves differ by a few hundredths of a decibel. That is expected of perfect conductors on a low-loss substrate and serves only as a check that no unintended loss mechanism has entered the model. A low-loss resonant element can shift phase strongly while its reflection magnitude stays near unity, so the magnitude carries no evidence either way about a resonance. The overlay is Figure E.1.
 
 
 ### 7.3  Preliminary geometry diagnostics
 
-Single-parameter adjustments to the slot width, the resonant stripline length and the slot length were tried in sequence to see whether a nearby geometry would recover endpoint phase separation at the reference frequency. None did. Table 7 summarises them.
+Single-parameter adjustments to the slot width, the resonant stripline length and the slot length were tried in sequence to see whether a nearby geometry would recover endpoint phase separation at the reference frequency. None did. Table 6 summarises them.
 
-**Table 7.** Single-parameter geometry adjustments carried out as diagnostic checks. Each value was applied in sequence and carried forward, so the three were not varied independently about a common baseline.
+**Table 6.** Single-parameter geometry adjustments carried out as diagnostic checks. Each value was applied in sequence and carried forward, so the three were not varied independently about a common baseline.
 
 | Parameter | Reference value | Diagnostic value | Outcome at 26.104 GHz |
 |---|---|---|---|
@@ -339,7 +330,7 @@ Single-parameter adjustments to the slot width, the resonant stripline length an
 | lineV | 1.11 mm | 1.13 mm | No meaningful endpoint phase separation recovered |
 | slotL | 2.275 mm | 2.32 mm | No meaningful endpoint phase separation recovered |
 
-Because only isolated nearby values were tested, and because each change was carried forward into the next rather than applied about a common baseline, these trials are treated as diagnostic checks rather than as a parametric sensitivity study. They do not establish that these dimensions are unimportant, and they do not bound the response over any wider parameter range. The full record of each branch is in Appendix D and in the repository experiment log.
+Only isolated nearby values were tested, and each change was carried forward into the next rather than applied about a common baseline, so these trials are diagnostic checks rather than a parametric sensitivity study. They neither establish that these dimensions are unimportant nor bound the response over any wider parameter range. The record of each branch is in Appendix D and in the repository experiment log.
 
 
 ### 7.4  Surface-current distribution
@@ -352,18 +343,18 @@ A field monitor at the reference frequency was used to see where current concent
 
 **Figure 7.** Surface-current magnitude at 26.104 GHz for varC = 0.025 pF, plotted on a fixed 0 to 5 A/m colour scale so that the resonant path is visible. The global maximum reported by the solver for this run is 392.368 A/m, located at approximately (1.138, -0.130, -0.254) mm, which is the layer-two level. The fixed scale saturates the aperture region by construction and the plot is therefore a qualitative distribution, not a calibrated field export.
 
-The global maximum reported by the solver for this run is 392.368 A/m at approximately (1.138, -0.130, -0.254) mm, which places it at the layer-two level near the aperture. On a rescaled plot the current flowing on the layer-three resonant path is of the order of a few amperes per metre, roughly two orders of magnitude below that maximum. The maximum and its position are solver-reported values; the level on the resonant path is an estimate read from a fixed-scale plot.
+The solver-reported maximum given in the caption lies at the layer-two level near the aperture. On the rescaled plot the current on the layer-three resonant path is of the order of a few amperes per metre, roughly two orders of magnitude below it. That maximum and its position are solver-reported; the level on the resonant path is an estimate read from a fixed-scale plot.
 
 This observation is not on its own evidence that coupling into the resonator is inadequate. A resonant path can carry modest current and still dominate the reflected phase, and the comparison here is between a current maximum at a field concentration and a distributed current elsewhere in the structure. Interpreting it requires the same monitor at the other capacitance endpoint, which has not yet been run.
 
 
 ## 8  Current engineering status
 
-Four things are established. The reconstruction reproduces every dimension the source publishes, and it solves as a periodic unit-cell model with a defensible solver configuration. Accepted runs meet a stated convergence criterion that has excluded results in practice. The lumped varactor is electrically active and responds to the capacitance parameter as an ideal capacitor. On the current geometry, the two capacitance endpoints produce almost coincident reflection-phase curves at the reference frequency.
+Four things are established. The baseline reconstruction implements all dimensions explicitly published for the 2022 reference element, and the model solves as a periodic unit-cell model with a defensible solver configuration; the current checkpoint departs from three of those dimensions by design. Accepted runs meet a stated convergence criterion that has excluded results in practice. The lumped varactor is electrically active and responds to the capacitance parameter as an ideal capacitor. On the current geometry, the two capacitance endpoints produce almost coincident reflection-phase curves at the reference frequency.
 
-Three things are unresolved. The frequency region in which this element is most sensitive to capacitance has not been located, and the simulated interval so far has been the one inherited from the source measurement rather than one chosen to find that region. The reconstruction still contains unpublished quantities, listed in Table 4, whose influence has not been bounded. And it is not yet known whether the discrepancy originates in the coupling into the resonator, in the placement of the resonance, in one of those assumed quantities, or in some combination of them.
+Three things are unresolved. The frequency region in which this element is most sensitive to capacitance has not been located, and the simulated interval so far has been the one inherited from the source measurement rather than one chosen to find that region. The reconstruction still contains unpublished quantities, listed in Table 3, whose influence has not been bounded. And it is not yet known whether the discrepancy originates in the coupling into the resonator, in the placement of the resonance, in one of those assumed quantities, or in some combination of them.
 
-The diagnostic branches tried so far have narrowed the search less than their number suggests. Each rejected a specific hypothesis about the topology or a specific nearby geometry, but none of them establishes that the feature it changed is electrically unimportant, and none of them has been tested outside the original 1 GHz interval.
+The diagnostic branches carried out so far have not localised the discrepancy. Each rejects one hypothesis about the topology or one nearby geometry; none establishes that the feature it changed is electrically unimportant, and none has been tested outside the original 1 GHz interval.
 
 
 ## 9  Ongoing work
@@ -372,14 +363,14 @@ The immediate task is a wider-frequency endpoint diagnostic on the unchanged cur
 
 Alongside that, the S-parameter results will be exported numerically rather than read from plots, so that endpoint separation can be stated in degrees and tracked between branches instead of being described qualitatively.
 
-Further work depends on what those two steps show. If a capacitance-sensitive region is found, the sequence is to characterise it, then to make targeted geometry changes aimed at moving it toward 26.104 GHz, and only then to run a dense capacitance sweep, which is worth its cost only once an endpoint pair separates meaningfully. If no such region is found, the assumed quantities in Table 4 become the next candidates, starting with a sensitivity test of the via and clearance diameters, together with a field-monitor comparison between the two capacitance states on the same geometry.
+Further work depends on what those two steps show. If a capacitance-sensitive region is found, the sequence is to characterise it, then to move it toward 26.104 GHz by targeted geometry changes, and only then to run a dense capacitance sweep. If no such region is found, the assumed quantities in Table 3 become the next candidates, starting with a sensitivity test of the via and clearance diameters and a field-monitor comparison between the two capacitance states on the same geometry.
 
 None of the work in this section has been carried out. Nothing in this report establishes that a resonance exists above the present upper simulation boundary.
 
 
 ## 10  Interim project status
 
-A parameterised six-layer reconstruction of the published element now exists in CST and reproduces every dimension the source states. Its solver configuration, convergence behaviour and internal connectivity have been checked, and the lumped varactor has been verified to be electrically active at both capacitance endpoints. The modelling foundation for the investigation is in place.
+A parameterised six-layer reconstruction of the published element now exists in CST. Its baseline implements all dimensions explicitly published for the 2022 element, and the current diagnostic checkpoint departs from three of them by design. The solver configuration, the convergence behaviour and the internal connectivity have been checked, and the lumped varactor has been verified to be electrically active at both capacitance endpoints.
 
 The behaviour that motivated the work has not been recovered. On the geometry tested so far, changing the varactor capacitance across its full range leaves the reflection phase at 26.104 GHz essentially unchanged, whereas the source reports a simulated phase shift of 337 degrees for its element and a measured phase-change range of 322 degrees at that frequency. Explaining that difference is the open problem, and this report does not claim to have reproduced the published behaviour. No hardware has been fabricated or measured in this project; every result reported here is from simulation.
 
@@ -388,97 +379,108 @@ The next step is the wider-frequency diagnostic described in Section 9, followed
 
 ## References
 
-1. T. Harz, T. Kleine-Ostmann, and T. Schrader, “Design of a continuously tunable reflectarray element for 5G metrology in the k-band,” Advances in Radio Science, vol. 18, pp. 1–5, 2020, doi: 10.5194/ars-18-1-2020.
-2. T. Harz and T. Kleine-Ostmann, “Measurement and optimization of a continuously tunable 10 x 10 reflectarray antenna for 5G metrology in the K-band,” Advances in Radio Science, vol. 19, pp. 215–220, 2022, doi: 10.5194/ars-19-215-2022.
-3. F. Venneri, S. Costanzo, and G. Di Massa, “Design and validation of a reconfigurable single varactor-tuned reflectarray,” IEEE Transactions on Antennas and Propagation, vol. 61, no. 2, pp. 635–645, 2013.
-4. P. Hannan and M. Balfour, “Simulation of a phased-array antenna in waveguide,” IEEE Transactions on Antennas and Propagation, vol. 13, pp. 342–353, 1965, doi: 10.1109/TAP.1965.1138428.
-5. Dassault Systèmes, CST Studio Suite 2023. [Computer software]. [TO BE COMPLETED: confirm the vendor string, release designation and build number from Help > About in the installed copy before submission.]
-6. MACOM Technology Solutions, MAVR-011020 series flip-chip varactor diode datasheet. [TO BE COMPLETED: the correct part variant is unresolved, see Appendix F, item 1. Add the datasheet revision and access date once the variant is fixed.]
+1. J. Huang and J. A. Encinar, Reflectarray Antennas, M. E. El-Hawary, Ed. New York, NY, USA: Wiley-IEEE Press, 2008, doi: 10.1002/9780470178775.
+2. T. Harz, T. Kleine-Ostmann, and T. Schrader, “Design of a continuously tunable reflectarray element for 5G metrology in the k-band,” Advances in Radio Science, vol. 18, pp. 1–5, 2020, doi: 10.5194/ars-18-1-2020.
+3. T. Harz and T. Kleine-Ostmann, “Measurement and optimization of a continuously tunable 10 x 10 reflectarray antenna for 5G metrology in the K-band,” Advances in Radio Science, vol. 19, pp. 215–220, 2022, doi: 10.5194/ars-19-215-2022.
+4. F. Venneri, S. Costanzo, and G. Di Massa, “Design and validation of a reconfigurable single varactor-tuned reflectarray,” IEEE Transactions on Antennas and Propagation, vol. 61, pp. 635–645, 2013, doi: 10.1109/TAP.2012.2226229.
+5. P. Hannan and M. Balfour, “Simulation of a phased-array antenna in waveguide,” IEEE Transactions on Antennas and Propagation, vol. 13, 1965, doi: 10.1109/TAP.1965.1138428.
+6. Dassault Systèmes, CST Studio Suite 2023. [Computer software]. [TO BE COMPLETED: confirm the vendor string, release designation and build number from Help > About in the installed copy before submission.]
+7. MACOM Technology Solutions, MAVR-011020 series flip-chip varactor diode datasheet. [TO BE COMPLETED: the correct part variant is unresolved, see Appendix F, item 1. Add the datasheet revision and access date once the variant is fixed.]
 
-References [1] to [4] were verified directly against the publisher PDFs. References [5] and [6] are deliberately incomplete rather than filled in from memory.
+References [2] and [3] are the source papers and were read in full. Entries [1], [4] and [5] were transcribed from the reference lists of those papers; no page range is given for [5] because the list that cites it prints an implausible one. References [6] and [7] are deliberately incomplete rather than filled in from memory.
 
 
 ## Appendix A  Complete CST parameter inventory
 
-Table A.1 lists every named parameter used by the model, together with its defining expression where it has one. Where a parameter exists in the model history but its current value cannot be established from the available evidence, the origin column says so rather than offering a guess.
+Table A.1 lists every named parameter used by the model, together with its defining expression where it has one. The baseline column and the current column are given separately, so that a value produced at the reconstruction baseline is never shown as though it were the value at the present checkpoint. For a parameter that does not depend on a displaced dimension the two columns are identical.
 
-Parameters whose expressions depend on lineV re-evaluate when lineV changes. The resolved values given here are those at the reconstruction baseline lineV = 1.11 mm unless the table states otherwise.
+Three parameters are displaced from their published values at the current checkpoint: slotW, slotL and lineV. Every expression that depends on lineV re-evaluates with it, and the current column for those entries is computed from the recorded expression rather than read back from the solver. The origin column marks them accordingly.
 
-**Table A.1.** Complete inventory of named parameters in the CST model. Resolved values are given at the reconstruction baseline unless stated otherwise. Entries marked as not verified exist in the model history but their current value could not be established from the available evidence.
+Parameter names were checked against the project model records. Two discrepancies survive that check. The substrate permittivity parameter is written espAstra in the Stage-A parameter table and epsAstra in the later bias-T parameter audit, and no CST parameter export is available on the machine used to prepare this report, so the spelling is flagged rather than silently corrected. The stub half-height parameter is captured as 1.3 mm in the audit and as Bw/2 in the earlier construction, and it is flagged on the same grounds. Entries recorded before the source-topology rebuild described in Appendix D are marked as such, because the rebuild moved the bias network and their present status is unconfirmed.
 
-| Parameter | Expression | Resolved | Unit | Purpose | Origin |
-|---|---|---|---|---|---|
-| theta | 0 | 0 | deg | Incidence elevation angle | Model setting |
-| phi | 0 | 0 | deg | Incidence azimuth angle | Model setting |
-| fRef | 26.104 | 26.104 | GHz | Reference and material fit frequency | Published [2] |
-| cellX | 7 | 7 | mm | Unit-cell extent in x | Published (X) [2] |
-| cellY | 7 | 7 | mm | Unit-cell extent in y | Published (Y) [2] |
-| patchW | 2.225 | 2.225 | mm | Square patch side on L1 | Published (Pw) [2] |
-| slotW | 0.26 baseline | 0.35 | mm | Coupling aperture width on L2 | Published (Sw); currently displaced |
-| slotL | 2.275 baseline | 2.32 | mm | Coupling aperture length on L2 | Published (Sl); currently displaced |
-| lineW | 0.33 | 0.33 | mm | Stripline width on L3 | Published (Lw) [2] |
-| lineV | 1.11 baseline | 1.13 | mm | Resonant length below the junction | Published (Lv); currently displaced |
-| lineS | 0.2 | 0.2 | mm | Inductive stub above the junction | Published (Ls) [2] |
-| sub1 | 0.254 | 0.254 | mm | Substrate 1 thickness, L1 to L2 | Published [2] |
-| sub2 | 0.254 | 0.254 | mm | Substrate 2 thickness, L2 to L3 | Published [2] |
-| sub3 | 0.254 | 0.254 | mm | Substrate 3 thickness, L3 to L4 | Published [2] |
-| sub4 | 0.127 | 0.127 | mm | Substrate 4 thickness, L4 to L5 | Published [2] |
-| sub5 | 0.127 | 0.127 | mm | Substrate 5 thickness, L5 to L6 | Published [2] |
-| cuOuter | 0.035 | 0.035 | mm | Outer-layer conductor thickness | Inferred |
-| cuInner | 0.018 | 0.018 | mm | Inner-layer conductor thickness | Inferred |
-| espAstra | 3 | 3 | - | Substrate relative permittivity | Published [2] |
-| tanDAstra | 0.0017 | 0.0017 | - | Substrate electric loss tangent | Published [2] |
-| Bl | 0.25 | 0.25 | mm | Bias-line width on L3 | Published [2] |
-| Bd | 1.6 | 1.6 | mm | Junction to radial-stub offset | Published [2] |
-| Bw | 1.3 | 1.3 | mm | Radial-stub half-span | Published [2] |
-| Bh | 1.13 | 1.13 | mm | Radial-stub chord offset | Published [2] |
-| zPatchBottom | 0 | 0 | mm | L1 lower face, stack datum | Derived |
-| zPatchTop | zPatchBottom + cuOuter | 0.035 | mm | L1 upper face | Derived |
-| zL2Top | -sub1 | -0.254 | mm | L2 upper face | Derived |
-| zL2Bottom | zL2Top - cuOuter | -0.289 | mm | L2 lower face | Derived |
-| zL3Top | zL2Bottom - sub2 | -0.543 | mm | L3 upper face | Derived |
-| zL3Bottom | zL3Top - cuInner | -0.561 | mm | L3 lower face | Derived |
-| zL4Top | zL3Bottom - sub3 | -0.815 | mm | L4 upper face | Derived |
-| zL4Bottom | zL4Top - cuInner | -0.833 | mm | L4 lower face | Derived |
-| zL5Top | zL4Bottom - sub4 | -0.960 | mm | L5 upper face | Derived |
-| zL5Bottom | zL5Top - cuOuter | -0.995 | mm | L5 lower face | Derived |
-| zL6Top | zL5Bottom - sub5 | -1.122 | mm | L6 upper face | Derived |
-| zL6Bottom | zL6Top - cuOuter | -1.157 | mm | L6 lower face | Derived |
-| viaD | 0.20 | 0.20 | mm | Blind-via diameter | Assumed |
-| viaClearD | 0.50 | 0.50 | mm | L4 clearance diameter | Assumed |
-| viaX | capX | 0 | mm | Blind-via centre, x | Derived |
-| viaY | 0 | 0 | mm | Blind-via centre, y; splits L3 into Lv and Ls | Derived, locked |
-| viaZtop | zL3Bottom | -0.561 | mm | Blind-via upper end | Derived |
-| viaZbottom | zL6Top | -1.122 | mm | Blind-via lower end | Derived |
-| capX | 0 | 0 | mm | Tuning-element centre, x | Derived |
-| capY | -lineV + lineW/2 | -0.945 | mm | Tuning-element centre, y; re-evaluates with lineV | Derived |
-| varCenterY | capY | -0.945 | mm | Varactor terminal-pair centre | Derived |
-| varTermSep | 0.4185 | 0.4185 | mm | Separation of the two terminal pads | Assumed from a package outline |
-| varPadW | 0.2155 | 0.2155 | mm | Terminal pad width on L6 | Assumed from a package outline |
-| varPadL | 0.1905 | 0.1905 | mm | Terminal pad length on L6 | Assumed from a package outline |
-| varRFPadY | varCenterY + varTermSep/2 | -0.73575 | mm | Radio-frequency-side pad centre | Derived |
-| varDCPadY | varCenterY - varTermSep/2 | -1.15425 | mm | DC-side pad centre | Derived |
-| varPadXmin | -varPadW/2 | -0.10775 | mm | Pad extent, x minimum | Derived |
-| varPadXmax | +varPadW/2 | +0.10775 | mm | Pad extent, x maximum | Derived |
-| varRFPadYmax | varRFPadY + varPadL/2 | -0.6405 | mm | Radio-frequency pad extent, y maximum | Derived |
-| varRFPadYmin | varRFPadY - varPadL/2 | -0.831 | mm | Radio-frequency pad extent, y minimum | Derived |
-| varDCPadYmax | varDCPadY + varPadL/2 | -1.059 | mm | DC pad extent, y maximum | Derived |
-| varDCPadYmin | varDCPadY - varPadL/2 | -1.2495 | mm | DC pad extent, y minimum | Derived |
-| varElemX | 0 | 0 | mm | Lumped-element position, x | Derived |
-| varElemZ | zL6Top | -1.122 | mm | Lumped-element position, z | Derived |
-| stubR | Sqr(Bh*Bh + Bw*Bw) | 1.7225 | mm | Radial-stub sector radius | Derived from published Bh, Bw |
-| stubHalfAng | atan(Bw/Bh)*180/pi | 48.99 | deg | Radial-stub sector half-angle | Derived from published Bh, Bw |
-| stubCx | viaX | 0 | mm | Sector apex, x | Derived |
-| stubCy | viaY - Bd | -1.6 | mm | Sector apex, y | Derived |
-| stubChordX | Bh | 1.13 | mm | Chord offset from the bias-line axis | Derived |
-| Cmin | 0.025 | 0.025 | pF | Lower capacitance endpoint | Published device range [2] |
-| Cmax | 0.19 | 0.19 | pF | Upper capacitance endpoint | Published device range [2] |
-| varC | swept | 0.025 or 0.19 | pF | Active varactor capacitance | Controlled variable |
-| stubHalfH | Bw/2 | 0.65 | mm | Superseded stub half-height | Superseded, see Appendix D |
-| stubEdgeX | Sqr(stubR^2 - stubHalfH^2) | 0.92434 | mm | Superseded chord construction | Superseded, see Appendix D |
-| stubHalfSpanY | Bw | 1.3 | mm | Superseded span definition | Superseded, see Appendix D |
-| stubApexX | viaX | 0 | mm | Alternative apex naming in the model history | Not verified in current evidence |
-| stubApexY | viaY - Bd | -1.6 | mm | Alternative apex naming in the model history | Not verified in current evidence |
+**Table A.1.** Complete inventory of named parameters in the CST model. The baseline column is the reconstruction baseline; the current column is the diagnostic checkpoint at slotW = 0.35 mm, slotL = 2.32 mm and lineV = 1.13 mm. A value given as [VERIFY] carries the flag VERIFY AGAINST CST PARAMETER LIST: the entry exists in the model record but could not be confirmed against the present model from the evidence available here.
+
+| Parameter | Definition or expression | Baseline | Current | Unit | Purpose | Origin and status |
+|---|---|---|---|---|---|---|
+| theta | 0 | 0 | 0 | deg | Incidence elevation angle | Model setting |
+| phi | 0 | 0 | 0 | deg | Incidence azimuth angle | Model setting |
+| fRef | 26.104 | 26.104 | 26.104 | GHz | Reference and material fit frequency | Published [3] |
+| cellX | 7 | 7 | 7 | mm | Unit-cell extent in x | Published (X) [3] |
+| cellY | 7 | 7 | 7 | mm | Unit-cell extent in y | Published (Y) [3] |
+| patchW | 2.225 | 2.225 | 2.225 | mm | Square patch side on L1 | Published (Pw) [3] |
+| slotW | independent | 0.26 | 0.35 | mm | Coupling aperture width on L2 | Published (Sw) [3]; currently displaced |
+| slotL | independent | 2.275 | 2.32 | mm | Coupling aperture length on L2 | Published (Sl) [3]; currently displaced |
+| lineW | 0.33 | 0.33 | 0.33 | mm | Stripline width on L3 | Published (Lw) [3] |
+| lineV | independent | 1.11 | 1.13 | mm | Resonant length below the junction | Published (Lv) [3]; currently displaced |
+| lineS | 0.2 | 0.2 | 0.2 | mm | Inductive stub above the junction | Published (Ls) [3] |
+| sub1 | 0.254 | 0.254 | 0.254 | mm | Substrate 1 thickness, L1 to L2 | Published [3] |
+| sub2 | 0.254 | 0.254 | 0.254 | mm | Substrate 2 thickness, L2 to L3 | Published [3] |
+| sub3 | 0.254 | 0.254 | 0.254 | mm | Substrate 3 thickness, L3 to L4 | Published [3] |
+| sub4 | 0.127 | 0.127 | 0.127 | mm | Substrate 4 thickness, L4 to L5 | Published [3] |
+| sub5 | 0.127 | 0.127 | 0.127 | mm | Substrate 5 thickness, L5 to L6 | Published [3] |
+| cuOuter | 0.035 | 0.035 | 0.035 | mm | Outer-layer conductor thickness | Inferred from the source stack |
+| cuInner | 0.018 | 0.018 | 0.018 | mm | Inner-layer conductor thickness | Inferred from the source stack |
+| espAstra | 3 | 3 | 3 | - | Substrate relative permittivity | Value published [3]; spelling disputed, [VERIFY AGAINST CST PARAMETER LIST] |
+| tanDAstra | 0.0017 | 0.0017 | 0.0017 | - | Substrate electric loss tangent | Published [3] |
+| biasW | 0.25 | 0.25 | 0.25 | mm | Bias-line width; published symbol Bl | Published [3]; CST name from the model record |
+| Bd | 1.6 | 1.6 | 1.6 | mm | Junction to radial-stub offset | Published [3] |
+| Bw | 1.3 | 1.3 | 1.3 | mm | Radial-stub half-span | Published [3] |
+| Bh | 1.13 | 1.13 | 1.13 | mm | Radial-stub chord offset | Published [3] |
+| zPatchBottom | 0 | 0 | 0 | mm | L1 lower face, stack datum | Derived |
+| zPatchTop | zPatchBottom + cuOuter | 0.035 | 0.035 | mm | L1 upper face | Derived |
+| zL2Top | -sub1 | -0.254 | -0.254 | mm | L2 upper face | Derived |
+| zL2Bottom | zL2Top - cuOuter | -0.289 | -0.289 | mm | L2 lower face | Derived |
+| zL3Top | zL2Bottom - sub2 | -0.543 | -0.543 | mm | L3 upper face | Derived |
+| zL3Bottom | zL3Top - cuInner | -0.561 | -0.561 | mm | L3 lower face | Derived |
+| zL4Top | zL3Bottom - sub3 | -0.815 | -0.815 | mm | L4 upper face | Derived |
+| zL4Bottom | zL4Top - cuInner | -0.833 | -0.833 | mm | L4 lower face | Derived |
+| zL5Top | zL4Bottom - sub4 | -0.960 | -0.960 | mm | L5 upper face | Derived |
+| zL5Bottom | zL5Top - cuOuter | -0.995 | -0.995 | mm | L5 lower face | Derived |
+| zL6Top | zL5Bottom - sub5 | -1.122 | -1.122 | mm | L6 upper face | Derived |
+| zL6Bottom | zL6Top - cuOuter | -1.157 | -1.157 | mm | L6 lower face | Derived |
+| viaD | 0.20 | 0.20 | 0.20 | mm | Blind-via diameter | Assumed |
+| viaClearD | 0.50 | 0.50 | 0.50 | mm | L4 clearance diameter | Assumed |
+| viaX | capX | 0 | 0 | mm | Blind-via centre, x | Derived |
+| viaY | 0 | 0 | 0 | mm | Blind-via centre, y; splits L3 into Lv and Ls | Derived, locked |
+| viaZtop | zL3Bottom | -0.561 | -0.561 | mm | Blind-via upper end | Derived |
+| viaZbottom | zL6Top | -1.122 | -1.122 | mm | Blind-via lower end | Derived |
+| capX | 0 | 0 | 0 | mm | Tuning-element centre, x | Derived |
+| capY | -lineV + lineW/2 | -0.945 | -0.965 | mm | Tuning-element centre, y | Derived; computed from the expression |
+| varCenterY | capY | -0.945 | -0.965 | mm | Varactor terminal-pair centre | Derived; computed from the expression |
+| varTermSep | 0.4185 | 0.4185 | 0.4185 | mm | Separation of the two terminal pads | Assumed from a package outline |
+| varPadW | 0.2155 | 0.2155 | 0.2155 | mm | Terminal pad width on L6 | Assumed from a package outline |
+| varPadL | 0.1905 | 0.1905 | 0.1905 | mm | Terminal pad length on L6 | Assumed from a package outline |
+| varRFPadY | varCenterY + varTermSep/2 | -0.73575 | -0.75575 | mm | Radio-frequency-side pad centre | Derived; computed from the expression |
+| varDCPadY | varCenterY - varTermSep/2 | -1.15425 | -1.17425 | mm | DC-side pad centre | Derived; computed from the expression |
+| varPadXmin | -varPadW/2 | -0.10775 | -0.10775 | mm | Pad extent, x minimum | Derived |
+| varPadXmax | +varPadW/2 | +0.10775 | +0.10775 | mm | Pad extent, x maximum | Derived |
+| varRFPadYmax | varRFPadY + varPadL/2 | -0.6405 | -0.6605 | mm | Radio-frequency pad extent, y maximum | Derived; computed from the expression |
+| varRFPadYmin | varRFPadY - varPadL/2 | -0.831 | -0.851 | mm | Radio-frequency pad extent, y minimum | Derived; computed from the expression |
+| varDCPadYmax | varDCPadY + varPadL/2 | -1.059 | -1.079 | mm | DC pad extent, y maximum | Derived; computed from the expression |
+| varDCPadYmin | varDCPadY - varPadL/2 | -1.2495 | -1.2695 | mm | DC pad extent, y minimum | Derived; computed from the expression |
+| varElemX | 0 | 0 | 0 | mm | Lumped-element position, x | Derived |
+| varElemZ | zL6Top | -1.122 | -1.122 | mm | Lumped-element position, z | Derived |
+| varElemY_RF | varRFPadYmin | -0.831 | -0.851 | mm | Lumped-element terminal, radio-frequency side | Model record; expression inferred |
+| varElemY_DC | varDCPadYmax | -1.059 | -1.079 | mm | Lumped-element terminal, DC side | Model record; expression inferred |
+| stubR | Sqr(Bh*Bh + Bw*Bw) | 1.7225 | 1.7225 | mm | Radial-stub sector radius | Derived from published Bh, Bw; agrees with the model record |
+| stubHalfAng | atan(Bw/Bh)*180/pi | 48.99 | 48.99 | deg | Radial-stub sector half-angle | Derived from published Bh, Bw; agrees with the model record |
+| stubCx | viaX | 0 | 0 | mm | Sector apex, x | Derived |
+| stubCy | viaY - Bd | -1.6 | -1.6 | mm | Sector apex, y | Derived; agrees with the model record |
+| stubChordX | Bh | 1.13 | 1.13 | mm | Chord offset from the bias-line axis | Derived |
+| Cmin | 0.025 | 0.025 | 0.025 | pF | Lower capacitance endpoint | Published device range [3] |
+| Cmax | 0.19 | 0.19 | 0.19 | pF | Upper capacitance endpoint | Published device range [3] |
+| varC | set per run | 0.10 | 0.025 or 0.19 | pF | Active varactor capacitance | Controlled variable |
+| biasYTop | 0 | 0 | [VERIFY] | mm | Bias-line extent, y maximum | Model record capture, pre-rebuild topology |
+| biasYbottom | -Bd | -1.6 | [VERIFY] | mm | Bias-line extent, y minimum | Model record capture, pre-rebuild topology |
+| rfTraceYmax | viaY | 0 | [VERIFY] | mm | L6 radio-frequency trace, y maximum | Model record capture, pre-rebuild topology |
+| rfTraceYmin | varRFPadYmax | -0.6405 | [VERIFY] | mm | L6 radio-frequency trace, y minimum | Model record capture, pre-rebuild topology |
+| dcTraceYmax | varDCPadYmin | -1.2495 | [VERIFY] | mm | L6 DC trace, y maximum | Model record capture, pre-rebuild topology |
+| dcTraceYmin | stubCy | -1.6 | [VERIFY] | mm | L6 DC trace, y minimum | Model record capture, pre-rebuild topology |
+| stubHalfH | disputed | 1.3 or 0.65 | [VERIFY] | mm | Stub half-height | One record captures 1.3 mm, another the superseded reading Bw/2 |
+| stubEdgeX | Sqr(stubR^2 - stubHalfH^2) | 0.92434 for Bw/2 | [VERIFY] | mm | Superseded chord construction | Superseded, see Appendix D; depends on the disputed stubHalfH |
+| stubHalfSpanY | Bw | 1.3 | [VERIFY] | mm | Superseded span definition | Superseded, see Appendix D |
+| stubApexX | viaX | Not verified | Not verified | mm | Alternative apex naming in the model history | Not verified in current evidence |
+| stubApexY | viaY - Bd | Not verified | Not verified | mm | Alternative apex naming in the model history | Not verified in current evidence |
 
 
 ## Appendix B  Layer stack and derived z coordinates
@@ -504,7 +506,7 @@ All z coordinates are derived from the substrate and conductor thicknesses by th
 
 ## Appendix C  Solver settings and convergence records
 
-The solver configuration is given in Table 5 of the main text and is not repeated here. Table C.1 records the convergence outcome of each simulated branch.
+The solver configuration is given in Table 4 of the main text and is not repeated here. Table C.1 records the convergence outcome of each simulated branch.
 
 **Table C.1.** Convergence records for the simulated branches. Values marked approx. were read from a convergence plot rather than from a solver log. The acceptance criterion is a final Maximum Delta All S-Parameters of approximately 0.01 or below.
 
@@ -521,7 +523,7 @@ The solver configuration is given in Table 5 of the main text and is not repeate
 | Source-topology rebuild | 0.025 / 0.19 pF | approx. 0.0094 / 0.007 | Yes |
 | Current geometry | 0.025 / 0.19 pF | Both meet the criterion; the two individual values are not in the record | Yes |
 
-Two entries in this table are runs that failed the criterion and were re-run rather than used. They are kept because the acceptance rule is only meaningful if it is shown to have excluded results.
+Two entries in this table are runs that failed the criterion and were re-run rather than used. They are kept because the acceptance rule is only meaningful if it is shown to have excluded results. Figure C.1 collects the per-branch convergence plots themselves.
 
 > **FIGURE C.1. Figure required, not yet available.**
 >
@@ -534,7 +536,7 @@ Two entries in this table are runs that failed the criterion and were re-run rat
 
 The main text summarises only what bears on the current engineering position. This appendix records the diagnostic branches themselves. The complete chronological record, including construction checkpoints that were never simulated, is maintained in docs/experiment_log.md in the project repository.
 
-The work divides into two stages. Stage A modelled the four upper layers with a capacitor placed directly between the stripline and the ground plane. Stage B added layers five and six, the blind via and its clearance, the varactor terminal pads and the bias network, and moved the lumped element onto the layer-six terminal pair. All results in the main text are Stage-B results.
+The work divides into two stages. Stage A modelled the four upper layers with a capacitor placed directly between the stripline and the ground plane. Stage B added layers five and six, the blind via and its clearance, the varactor terminal pads and the bias network, and moved the lumped element onto the layer-six terminal pair. All results in the main text are Stage-B results. Table D.1 lists the branches and what each one settled.
 
 **Table D.1.** Diagnostic branches and their outcomes. None of these outcomes establishes that the feature changed is electrically unimportant; each rejects one specific hypothesis under one specific set of conditions.
 
@@ -543,7 +545,7 @@ The work divides into two stages. Stage A modelled the four upper layers with a 
 | Stage A, simplified stack | A capacitor placed directly between the L3 stripline and the L4 ground reproduces the tuning behaviour | Rejected. Total phase change across the full capacitance range was of the order of a few degrees. Retained as a diagnostic reference branch. |
 | L3 termination at the via | Truncating the stripline so that it ends at the blind via recovers tuning | Rejected. Both endpoints converged and the phase curves stayed almost coincident. |
 | L5 reference plane | A missing reference plane on L5 prevents the radial stub from behaving as a microstrip structure | Rejected. Separation stayed at approximately 1 to 1.5 degrees at the upper band edge. A later source check found L5 to be a bias-supply layer rather than a ground plane, so the plane was removed on source grounds as well. |
-| Bias-T on L6 | The quarter-wave transformer and radial stub belong on L6, in series between the varactor and the DC supply | Rejected on source grounds before simulation. The source describes the bias-T as a branch from the radio-frequency junction on L3. |
+| Bias-T on L6 | The quarter-wave transformer and radial stub belong on L6, in series between the varactor and the DC supply | Set aside before simulation on the adopted reading of the published plan-view topology. That reading is an interpretation rather than a published layer assignment, so this branch is not closed by source evidence. See Appendix F, item 3. |
 | Stub dimensioning by Bw/2 | The radial stub has radius Bh and half-height Bw/2 | Superseded by a re-reading of the source figure. The corrected sector uses a radius of Sqr(Bh^2 + Bw^2) and a half-angle of approximately 49 degrees. |
 | Stub opening toward -Y | The radial stub continues along the bias line rather than branching from it | Superseded. The source top view shows the stub branching laterally. |
 | Via anchored at capY | Moving the blind via to capY restores the resonant loading | Rejected before simulation. Because capY is the varactor terminal-pair centre, the change drove the via into the varactor gap and produced overlapping solids, so no valid geometry existed to simulate. |
@@ -554,12 +556,12 @@ The stub dimensioning and orientation entries above were corrected against the d
 
 ![Figure D.1](../figures/source/figD1_harz2020_biasT_dimensions.png)
 
-**Figure D.1.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it, which is the reading that corrected the stub orientation and dimensioning in this reconstruction. Note that the numerical dimensions belong to the 2020 element and not to the element reconstructed here. Reproduced from Harz et al. [1], Fig. 5, under the Creative Commons Attribution 4.0 licence.
+**Figure D.1.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it, which is the reading that corrected the stub orientation and dimensioning in this reconstruction. Note that the numerical dimensions belong to the 2020 element and not to the element reconstructed here. Reproduced from Harz et al. [2], Fig. 5, under the Creative Commons Attribution 4.0 licence.
 
 
 ## Appendix E  Additional electromagnetic plots
 
-The plots listed here support the main text but are not needed to follow it. None has yet been exported from the solver.
+The plots listed here support the main text but are not needed to follow it. Figure E.1 is the endpoint reflection-magnitude overlay discussed in Section 7.2, and Figure E.2 is the electric-field distribution at the reference frequency. Neither has yet been exported from the solver.
 
 > **FIGURE E.1. Figure required, not yet available.**
 >
@@ -578,10 +580,11 @@ The plots listed here support the main text but are not needed to follow it. Non
 
 The following points are unsettled. They are recorded here so that they are not mistaken for settled ones, and each is tracked in docs/claims_ledger.md in the project repository.
 
-1. The exact varactor part variant. The 2022 paper names MAVR-011020-111 [2], the 2020 paper names MAVR-011020-141 for the same capacitance range [1], and the package outline used for the pad geometry in this model was recorded as MAVR-011020-1411. The difference has not been resolved against a manufacturer datasheet, and it affects the assumed pad geometry in Table 4.
-2. The incidence angle used in the source's own unit-cell simulation. The source states that the element was optimised in a unit-cell configuration but does not give the angle. This model uses normal incidence. The published measurement, separately, used a waveguide simulator at 21.4 degrees, so the measured phase figures quoted in Section 2.4 are not directly comparable with normal-incidence simulation.
-3. The interlayer bias route between layers three, five and six. The source establishes that the route exists but does not dimension it. What is modelled satisfies the published constraints without being a published layout.
-4. The conductor thicknesses. These are inferred from the source stack description rather than published, and the value used for layers five and six is carried over from the upper layers.
-5. The substrate properties above 20 GHz. The published permittivity and loss factor are specified only to 20 GHz and are applied here at 26 GHz, following the source. Widening the simulated interval will extend this extrapolation further and requires the material fit range to be re-checked.
-6. Per-run numerical records for the slotW and lineV diagnostic branches. Their parameter values are known and carried forward into the current geometry, but their individual convergence and phase readings were not archived. No numerical value from those two branches is quoted anywhere in this report.
-7. The endpoint phase separation near the upper band edge. It has been observed from overlaid plots but not quantified, because the S-parameter data have not been exported numerically.
+1. The exact varactor part variant. Three part strings are in play. The 2022 paper prints MAVR-011020-111 (Sect. 2 of [3]) and the 2020 paper prints MAVR-011020-141 for the same 0.025 to 0.19 pF range over 0 to 15 V (Sect. 4 of [2]); both were read from the publisher PDFs. The outline used for the pad geometry here was recorded as MAVR-011020-1411, the string that appears in the MACOM catalogue and in distributor listings for a flip-chip hyperabrupt varactor specified at 0.025 pF at 15 V. No catalogue entry was found for either string printed in the papers, and the pages carrying the mechanical outline could not be retrieved, so the drawing behind varPadW, varPadL and varTermSep has not been shown to match the part either paper names. Those three dimensions stay an explicit assumption in Table 3, and the CST pad geometry is left unchanged. The project reference index records the outline as Case Style 1500.
+2. The incidence angle used in the source's own unit-cell simulation. The source states that the element was optimised in a unit-cell configuration but does not give the angle; this model uses normal incidence. The published measurement used a waveguide simulator at 21.4 degrees, so the measured phase figures quoted in Section 2.4 are not directly comparable with normal-incidence simulation.
+3. The conductor layer of the bias-T. The 2022 source gives the bias-T no layer number, in its text or in its layer-structure figure. The Layer-3 placement used here follows the superimposed plan view of that paper and the Layer-3 label in the precursor stack-up, but the precursor describes a different element and its own text places the bias-T behind the ground layer. The placement is an interpretation, and the alternative arrangement recorded in Appendix D is therefore not closed by source evidence.
+4. The interlayer bias route between layers three, five and six. The source establishes that the route exists but does not dimension it. What is modelled satisfies the published constraints without being a published layout.
+5. The conductor thicknesses. These are inferred from the source stack description rather than published, and the value used for layers five and six is carried over from the upper layers.
+6. The substrate properties above 20 GHz. The published permittivity and loss factor are specified only to 20 GHz and are applied here at 26 GHz, following the source. Widening the simulated interval will extend this extrapolation further and requires the material fit range to be re-checked.
+7. Per-run numerical records for the slotW and lineV diagnostic branches. Their parameter values are known and carried forward into the current geometry, but their individual convergence and phase readings were not archived. No numerical value from those two branches is quoted anywhere in this report.
+8. The endpoint phase separation near the upper band edge. It has been observed from overlaid plots but not quantified, because the S-parameter data have not been exported numerically.

@@ -1,11 +1,13 @@
 # Figure manifest
 
-Generated to match the working draft in `deliverables/`. Every figure the
-report references is listed with the caption it must carry, the model
-configuration it must come from, and its current status.
+Generated from `tools/report_build/report_content.py` by
+`tools/report_build/build_manifest.py`. Every figure the report references is
+listed with the caption it must carry, the model configuration it must come
+from, and its current status.
 
-Regenerate the deliverables with `tools/report_build/build.sh` after adding an
-image, so that captions and numbering cannot drift from the source result.
+Add an image, point the figure's `path` at it, then rerun this script and
+`tools/report_build/build.sh`, so that captions and numbering cannot drift from
+the source result.
 
 ## Rules
 
@@ -20,6 +22,8 @@ image, so that captions and numbering cannot drift from the source result.
    carries no information.
 5. Reproduced source figures carry their attribution in the caption. See
    `figures/source/ATTRIBUTION.md`.
+6. The short form in the `short` field is what the report's list of figures
+   prints. The full caption below is what appears under the figure.
 
 ## Main-text figures
 
@@ -27,13 +31,21 @@ image, so that captions and numbering cannot drift from the source result.
 
 **Status.** present, `figures/source/fig01_harz2022_element_layout.png`
 
-**Caption.** Published layout of the reference antenna element, showing the unit-cell extent X and Y, the patch width Pw, the coupling slot Sw and Sl, the stripline width Lw and its two resonant lengths Lv and Ls, the blind via, the varactor diode position, and the bias line with the radial stub dimensioned by Bl, Bd, Bw and Bh. Reproduced from Harz and Kleine-Ostmann [2], Fig. 1, under the Creative Commons Attribution 4.0 licence.
+**Reserved height.** 4.15 in
+
+**List-of-figures entry.** Published layout of the reference element
+
+**Caption.** Published layout of the reference antenna element, showing the unit-cell extent X and Y, the patch width Pw, the coupling slot Sw and Sl, the stripline width Lw and its two resonant lengths Lv and Ls, the blind via, the varactor diode position, and the bias line with the radial stub dimensioned by Bl, Bd, Bw and Bh. Reproduced from Harz and Kleine-Ostmann [3], Fig. 1, under the Creative Commons Attribution 4.0 licence.
 
 ### Figure 2
 
 **Status.** present, `figures/source/fig02_harz2022_layer_structure.png`
 
-**Caption.** Published six-layer structure of the reference antenna element. The patch sits on layer one, the coupling aperture is the gap in the layer-two conductor, the resonant stripline is on layer three, layer four is the ground plane, and the blind via carries the resonant path down to the varactor on layer six. Reproduced from Harz and Kleine-Ostmann [2], Fig. 2, under the Creative Commons Attribution 4.0 licence.
+**Reserved height.** 1.35 in
+
+**List-of-figures entry.** Published six-layer architecture
+
+**Caption.** Published six-layer structure of the reference antenna element. The patch sits on layer one, the coupling aperture is the gap in the layer-two conductor, the resonant stripline is on layer three, layer four is the ground plane, and the blind via carries the resonant path down to the varactor on layer six. Reproduced from Harz and Kleine-Ostmann [3], Fig. 2, under the Creative Commons Attribution 4.0 licence.
 
 ### Figure 3
 
@@ -43,6 +55,10 @@ image, so that captions and numbering cannot drift from the source result.
 
 **Save to.** `figures/cst/cst_iso.png`, then set `path` for `cst_iso` in
 `tools/report_build/report_content.py` and rebuild.
+
+**Reserved height.** 3.30 in
+
+**List-of-figures entry.** CST reconstruction of the unit cell
 
 **Caption.** Reconstructed unit cell in CST Studio Suite 2023. The model is a 7 mm by 7 mm periodic cell containing six perfect-electric-conductor layers separated by five Astra MT77 substrates, with an ideal lumped capacitor across the layer-six terminal pads representing the varactor.
 
@@ -55,6 +71,10 @@ image, so that captions and numbering cannot drift from the source result.
 **Save to.** `figures/cst/cst_layers.png`, then set `path` for `cst_layers` in
 `tools/report_build/report_content.py` and rebuild.
 
+**Reserved height.** 3.45 in
+
+**List-of-figures entry.** Layer-by-layer CST reconstruction
+
 **Caption.** Layer-by-layer view of the reconstruction. L1 carries the square patch, L2 is a conductor sheet interrupted by the rectangular coupling aperture, L3 carries the resonant stripline together with the bias-T branch and radial stub, L4 is the ground plane with a circular clearance around the blind via, L5 carries the DC supply trace, and L6 carries the varactor terminal pads.
 
 ### Figure 5
@@ -65,6 +85,10 @@ image, so that captions and numbering cannot drift from the source result.
 
 **Save to.** `figures/cst/convergence.png`, then set `path` for `convergence` in
 `tools/report_build/report_content.py` and rebuild.
+
+**Reserved height.** 2.90 in
+
+**List-of-figures entry.** Representative adaptive-mesh convergence
 
 **Caption.** Representative adaptive tetrahedral mesh convergence for one accepted endpoint run on the current geometry. The horizontal axis is the refinement pass number, not frequency. The acceptance criterion used throughout this project is a final Maximum Delta All S-Parameters of approximately 0.01 or below.
 
@@ -77,6 +101,10 @@ image, so that captions and numbering cannot drift from the source result.
 **Save to.** `figures/cst/endpoint_phase.png`, then set `path` for `endpoint_phase` in
 `tools/report_build/report_content.py` and rebuild.
 
+**Reserved height.** 3.20 in
+
+**List-of-figures entry.** Endpoint reflection phase on the current geometry
+
 **Caption.** Reflection phase of the co-polarised term SZmax(1),Zmax(1) at the two capacitance endpoints on the current geometry (lineV = 1.13 mm, slotW = 0.35 mm, slotL = 2.32 mm), over approximately 25.6 to 26.6 GHz. Both runs satisfy the convergence criterion of Section 5.3. The reference frequency 26.104 GHz is marked.
 
 ### Figure 7
@@ -87,6 +115,10 @@ image, so that captions and numbering cannot drift from the source result.
 
 **Save to.** `figures/cst/surface_current.png`, then set `path` for `surface_current` in
 `tools/report_build/report_content.py` and rebuild.
+
+**Reserved height.** 3.20 in
+
+**List-of-figures entry.** Surface-current distribution at 26.104 GHz
 
 **Caption.** Surface-current magnitude at 26.104 GHz for varC = 0.025 pF, plotted on a fixed 0 to 5 A/m colour scale so that the resonant path is visible. The global maximum reported by the solver for this run is 392.368 A/m, located at approximately (1.138, -0.130, -0.254) mm, which is the layer-two level. The fixed scale saturates the aperture region by construction and the plot is therefore a qualitative distribution, not a calibrated field export.
 
@@ -101,13 +133,21 @@ image, so that captions and numbering cannot drift from the source result.
 **Save to.** `figures/cst/convergence_appendix.png`, then set `path` for `convergence_appendix` in
 `tools/report_build/report_content.py` and rebuild.
 
+**Reserved height.** 2.60 in
+
+**List-of-figures entry.** Convergence records for diagnostic branches
+
 **Caption.** Per-branch adaptive-mesh convergence records for the branches in Table C.1.
 
 ### Figure D.1
 
 **Status.** present, `figures/source/figD1_harz2020_biasT_dimensions.png`
 
-**Caption.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it, which is the reading that corrected the stub orientation and dimensioning in this reconstruction. Note that the numerical dimensions belong to the 2020 element and not to the element reconstructed here. Reproduced from Harz et al. [1], Fig. 5, under the Creative Commons Attribution 4.0 licence.
+**Reserved height.** 3.30 in
+
+**List-of-figures entry.** Bias-T geometry of the 2020 precursor element
+
+**Caption.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it, which is the reading that corrected the stub orientation and dimensioning in this reconstruction. Note that the numerical dimensions belong to the 2020 element and not to the element reconstructed here. Reproduced from Harz et al. [2], Fig. 5, under the Creative Commons Attribution 4.0 licence.
 
 ### Figure E.1
 
@@ -117,6 +157,10 @@ image, so that captions and numbering cannot drift from the source result.
 
 **Save to.** `figures/cst/magnitude_appendix.png`, then set `path` for `magnitude_appendix` in
 `tools/report_build/report_content.py` and rebuild.
+
+**Reserved height.** 2.30 in
+
+**List-of-figures entry.** Endpoint reflection magnitude
 
 **Caption.** Reflection magnitude at the two capacitance endpoints on the current geometry, same runs as Figure 6. Discussed in Section 7.2.
 
@@ -129,12 +173,16 @@ image, so that captions and numbering cannot drift from the source result.
 **Save to.** `figures/cst/efield_appendix.png`, then set `path` for `efield_appendix` in
 `tools/report_build/report_content.py` and rebuild.
 
+**Reserved height.** 2.30 in
+
+**List-of-figures entry.** Electric-field distribution at 26.104 GHz
+
 **Caption.** Electric-field magnitude at 26.104 GHz for varC = 0.025 pF on a fixed non-saturating colour scale.
 
 ## Blocked items
 
-- The geometry-sensitivity comparison that the previous report revision listed as
-  Figure 7 has been dropped from the main text. The per-variant results for the
+- The geometry-sensitivity comparison that the first report revision listed as a
+  figure has been dropped from the main text. The per-variant results for the
   `slotW` and `lineV` branches were never archived, so the figure cannot be
   produced. Section 7.3 of the report presents those branches as a short table
   instead, and the missing records are recorded as an evidence gap in

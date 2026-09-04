@@ -43,7 +43,7 @@ Six conductor layers on five substrates, in a 7 mm by 7 mm periodic cell:
 |---|---|
 | L1 | Patch, receives the incident field |
 | L2 | Slot layer, couples into the resonator |
-| L3 | Stripline resonator and bias-T branch |
+| L3 | Stripline resonator and, in this reconstruction, the bias-T branch |
 | L4 | Ground, with a clearance for the blind via |
 | L5 | Bias-voltage supply routing |
 | L6 | Varactor terminals and local routing |
@@ -53,11 +53,18 @@ clearance down to a Layer-6 terminal pad. An ideal lumped capacitor bridges the
 gap to a second, isolated pad, which the Layer-5 bias routing reaches through a
 local interlayer via.
 
-*[Figure placeholder: plan view of the four RF layers]*
+The Layer-3 placement of the bias-T is a reconstruction interpretation, not a
+published assignment. The 2022 paper describes the bias-T functionally and gives
+its four dimensions, but neither its text nor its layer-structure figure names a
+conductor layer for it; the 2020 precursor labels Layer 3 "Stripline, Bias-T" in
+its stack-up while its text places the bias-T behind the ground layer, and that
+stack belongs to a different element. See `docs/claims_ledger.md`, CL-S11 and
+CL-A8.
 
-*[Figure placeholder: six-layer stack, side or exploded view]*
-
-*[Figure placeholder: bias network detail, blind via and varactor terminals]*
+No CST capture of this geometry exists on the machine that builds this
+repository; the model lives in the Windows virtual machine that runs CST. The
+figures the report needs, and the exact view each one must show, are listed in
+[docs/figure_manifest.md](docs/figure_manifest.md).
 
 ## Skills demonstrated
 
@@ -107,9 +114,12 @@ experiment. When geometry changes, the mesh is rebuilt.
 
 ## Current findings
 
-The reconstruction is dimensionally faithful. Every dimension the reference
-design publishes, twelve in total, is reproduced exactly by the model, checked
-directly against the source paper's dimension table rather than against notes.
+The baseline reconstruction is dimensionally faithful. It implements all
+dimensions explicitly published for the 2022 reference element, twelve in total,
+checked directly against the source paper's dimension table rather than against
+notes. The current diagnostic checkpoint departs from three of them by design:
+`slotW`, `slotL` and `lineV` are temporary investigation settings, not optimised
+dimensions.
 
 The model is numerically sound. Accepted runs meet the convergence criterion,
 broadband interpolation error is negligible, and energy balance stays close to
@@ -129,8 +139,8 @@ intended tuning response.
 
 Five candidate explanations have been tested and rejected with converged
 endpoint pairs: a simplified baseline topology, a truncated stripline below the
-via, a missing Layer-5 reference plane, the layer assignment and routing of the
-bias network, and an alternative blind-via anchor coordinate.
+via, a missing Layer-5 reference plane, the routing of the bias network, and an
+alternative blind-via anchor coordinate.
 
 ## Current limitation
 
@@ -158,6 +168,7 @@ tools/report_build/
   report_content.py      the report text, as structured data
   build_docx.py          renders it to a styled, editable DOCX
   build_markdown.py      renders the Markdown mirror
+  build_manifest.py      regenerates docs/figure_manifest.md from the content
   build.sh               two-pass build of both deliverables
 report/
   report_working_draft.md  generated Markdown mirror, for readable diffs
@@ -181,9 +192,11 @@ Active investigation. The report is a working draft. Its abstract is a marked
 placeholder and its closing section is an interim status rather than a
 conclusion; both will be written once the investigation reaches a result.
 
-Every dimension the reference design publishes is reproduced exactly by the
-model, verified directly against the source papers. What has not been recovered
-is the capacitance-dependent phase behaviour those papers report.
+The baseline reconstruction implements every dimension the reference design
+publishes, verified directly against the source papers; the current checkpoint
+sits three parameters away from that baseline for diagnostic reasons. What has
+not been recovered is the capacitance-dependent phase behaviour those papers
+report.
 
 The next experiment is a wider-frequency endpoint diagnostic on unchanged
 geometry, to test whether the capacitance-sensitive region lies above the

@@ -6,6 +6,83 @@ The format follows the spirit of Keep a Changelog. Because this repository is a
 research record rather than a released product, entries also note when a claim
 changed status in `docs/claims_ledger.md`.
 
+## Academic layout and source-ambiguity corrections
+
+Branch `report/academic-restructure-v2`. A targeted correction pass over the
+restructured draft; the v2 architecture is unchanged.
+
+### Changed
+
+- Section 4.2 and its table were removed. Table 1 already carried the published
+  value, the current value and the status for each displaced parameter, so the
+  subsection restated what the table above it said. One sentence under Table 1
+  now names the three temporary investigation settings. Tables renumbered.
+- Wording that read as though the *current* model reproduced all published
+  geometry was corrected throughout Sections 4, 8 and 10 and in `README.md`. The
+  accurate statement is that the baseline implements every published dimension
+  and that the current diagnostic checkpoint departs from three of them by
+  design.
+- Section 3.4 was rewritten. The Layer-3 bias-T placement is now presented as a
+  reconstruction interpretation rather than a published assignment, with the
+  evidence on both sides stated.
+- Appendix A was redesigned with separate baseline and current columns, so a
+  value produced at the baseline is never shown as the value at the present
+  checkpoint. Values derived from `lineV` now carry both. The inventory grew
+  from 71 to 79 parameters after checking names against the model records.
+- Section 7.3 stayed compact; no experiment detail was restored to the main
+  text.
+- A conservative prose pass removed text that repeated a caption or a later
+  section, in Sections 1, 2.1, 2.3, 3.1, 5.2, 5.3, 5.4, 6.2, 7.1, 7.2, 7.4 and
+  9. Main-body prose is about 4200 words over 14 pages.
+
+### Added
+
+- Reference [1], Huang and Encinar, *Reflectarray Antennas*, Wiley-IEEE Press,
+  2008, cited once in the Introduction for the general reflectarray concept. Its
+  details were transcribed from the reference lists of the two source papers,
+  which both cite it. All other citations shifted by one.
+- `tools/report_build/build_manifest.py`, which regenerates
+  `docs/figure_manifest.md` from the report content so captions cannot drift.
+- Claims `CL-S11` (the 2022 source assigns no conductor layer to the bias-T) and
+  `CL-S12` (the foundational reference). New assumption `CL-A8` records the
+  Layer-3 bias-T placement as an open interpretation.
+- Evidence gaps 7 to 10: the bias-T layer, the `espAstra` / `epsAstra` spelling,
+  the disputed `stubHalfH`, and the pre-rebuild Layer-6 bias parameters.
+
+### Fixed
+
+- List-of-figures entries were truncated mid-number, because they were cut at
+  the first full stop of the caption. Figures and tables now carry an explicit
+  short form for the lists; the full caption still appears under the figure.
+- Front-matter page numbers were wrong for some entries. The page map located a
+  figure by its label alone, which matched a prose cross-reference at the end of
+  a sentence first. It now matches the opening words of the rendered caption.
+  All 60 entries were re-checked against the printed pages after the final
+  build.
+- The nomenclature no longer spills a single entry onto a near-empty page: the
+  short list entries let the lists and the nomenclature share one page, and the
+  rows are bound together.
+- Table columns no longer collapse. Tables now declare a fixed layout, so a long
+  cell cannot widen its column and squeeze short words into broken letters.
+- A long table can no longer break immediately after its header or just before
+  its last row.
+- A figure placeholder no longer strands its caption on the following page. The
+  box and its caption are rows of one table, because keep-with-next binds row to
+  row here but does not bind a table to the paragraph after it.
+
+### Verified
+
+- The MACOM part strings. `MAVR-011020-111` (2022) and `MAVR-011020-141` (2020)
+  were read from the publisher PDFs; neither appears in the manufacturer or
+  distributor catalogues. `MAVR-011020-1411`, the outline the model's pad
+  geometry came from, is a catalogued flip-chip hyperabrupt varactor rated
+  0.025 pF at 15 V, but its mechanical outline could not be retrieved, so
+  correspondence is unproven and the CST pad geometry is unchanged.
+- The bias-T layer evidence, by reading both papers in full and inspecting
+  Figure 1 of the 2020 paper and Figure 2 of the 2022 paper as rendered images.
+- The 26-page PDF, page by page: front matter, every figure page, the parameter
+  tables, the equation, the references and every appendix.
+
 ## Report restructured as a concise academic working draft
 
 Branch `report/academic-restructure-v2`.

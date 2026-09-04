@@ -213,7 +213,10 @@ interchanged.
 **Claim.** The source design describes the bias-T as a quarter-wavelength line
 plus a radial-stub shunt, with `Bl = 0.25`, `Bd = 1.6`, `Bw = 1.3` and
 `Bh = 1.13` mm.
-**Evidence.** Source table values recorded in the continuity notes.
+**Evidence.** Verified directly against the publisher PDF: the description is in
+Section 2, page 216, and the four dimensions are in Table 1, page 217.
+**Note.** The description is functional. It does not say which conductor layer
+carries the bias-T. See CL-S11.
 **Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high.
 **Status.** confirmed as a quotation of the source.
 
@@ -273,11 +276,22 @@ between 0 and 15 V", and states that the manufacturer does not provide
 equivalent-circuit parameters.
 **Evidence.** Verified directly against the publisher PDF, Section 2, page 216.
 **Consequence.** This is the origin of `Cmin = 0.025 pF` and `Cmax = 0.19 pF`.
-**Ambiguity.** The 2022 paper names the part MAVR-011020-111. The 2020 precursor
-names MAVR-011020-141 for the same capacitance range. The reconstruction pad
-geometry in CL-A4 was taken from a package outline recorded as
-MAVR-011020-1411. These three part numbers are not identical and the difference
-has not been resolved against a manufacturer datasheet.
+**Ambiguity.** The 2022 paper prints `MAVR-011020-111` (Section 2, page 216) and
+the 2020 precursor prints `MAVR-011020-141` for the same capacitance range
+(Section 4, page 4); both strings were read directly from the publisher PDFs.
+The reconstruction pad geometry in CL-A4 was taken from a package outline
+recorded as `MAVR-011020-1411`, listed in the project's own reference index as
+Case Style 1500.
+**Verification attempted.** `MAVR-011020-1411` is a catalogued MACOM flip-chip
+hyperabrupt varactor, listed by the manufacturer and by distributors with
+0.025 pF total capacitance at 1 MHz and 15 V, which is consistent with the
+capacitance range both papers quote. No catalogue entry was found for either of
+the two strings the papers print. The manufacturer and distributor pages
+carrying the mechanical outline drawing returned HTTP 403 or timed out, so the
+outline that supplied `varPadW`, `varPadL` and `varTermSep` could not be
+retrieved and has *not* been shown to correspond to the part either paper names.
+The CST pad geometry is left unchanged and the three dimensions remain an
+explicit reconstruction assumption.
 **Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high for
 the capacitance range, low for the exact part variant.
 **Status.** confirmed as a quotation of the source, with an open ambiguity.
@@ -342,6 +356,47 @@ See `figures/source/ATTRIBUTION.md`.
 
 ---
 
+### CL-S11 The bias-T conductor layer is not assigned by the 2022 source
+
+**Claim.** The 2022 paper does not state which conductor layer carries the
+bias-T. Its text says that "all parts required for changing the phase can be
+positioned underneath the ground plane", that "the first four layers cause a
+reflection with the desired phase shift" and that "the last two layers are used
+to route the signals to the varactor diode", and it describes the bias-T
+functionally. Its Figure 2, the layer-structure figure, labels the six layers
+only as "1st layer" to "6th layer" and carries no functional annotation. Its
+Figure 1 is a superimposed plan view in which the bias line and the radial stub
+are drawn in the same line style as the stripline.
+**Contrast.** The 2020 precursor is explicit in one direction and contrary in
+another. Its Figure 1 layer stack-up labels Layer 3 as "Stripline, Bias-T",
+Layer 5 as "Bias-voltage-supply" and Layer 6 as "Varactor diode"; its own text
+says that "the circuit elements like the varactor-diode and the bias-T are
+behind the ground layer". That stack belongs to the 8 mm precursor element on
+RT5870, not to the element reconstructed here.
+**Evidence.** Both publisher PDFs read in full; Figure 1 of the 2020 paper and
+Figure 2 of the 2022 paper inspected as rendered images.
+**Consequence.** The Layer-3 placement used in this reconstruction is an
+interpretation, not a published assignment. See CL-A8.
+**Kind.** categorical. **Confidence.** high that the 2022 source makes no
+explicit layer assignment.
+**Status.** confirmed.
+
+### CL-S12 Foundational reflectarray reference
+
+**Claim.** The general reflectarray background in Section 1 is supported by
+Huang and Encinar, *Reflectarray Antennas*, Wiley-IEEE Press, 2008,
+doi: 10.1002/9780470178775.
+**Evidence.** Both Harz papers cite this work, and its bibliographic details
+were transcribed from their reference lists rather than written from memory; the
+2022 list gives the editor (M. E. El-Hawary), the publisher, the place and the
+DOI. The book itself was not consulted, and the publisher landing page returned
+HTTP 403 when checked.
+**Use.** Broad background statements only. No numerical claim in this project
+rests on it.
+**Kind.** bibliographic. **Confidence.** high for the details as printed in the
+citing papers.
+**Status.** confirmed as transcribed.
+
 ## Reconstruction assumptions
 
 None of these are published values. Each must be sensitivity-tested before any
@@ -403,6 +458,22 @@ provisional as a representation of the physical device.
 
 ---
 
+### CL-A8 Bias-T placed on Layer 3
+
+The reconstruction places the bias-T branch at the Layer-3 radio-frequency
+junction. The placement follows the adopted reading of the published plan-view
+topology in Figure 1 of the 2022 paper, and it is consistent with the Layer-3
+"Stripline, Bias-T" label in the 2020 stack-up, but the 2022 source does not
+assign the bias-T to a conductor layer (CL-S11) and the 2020 text places the
+bias-T behind the ground layer. The placement is therefore retained as a
+reconstruction interpretation, not as a published dimension.
+**Consequence.** No result in this project may be described as depending on a
+published Layer-3 bias-T assignment.
+**Status.** open reconstruction interpretation. **Confidence.** moderate that
+Layer 3 is what the source intends; low that the intent is unambiguous.
+**Note.** Superseding this interpretation would change geometry, which is out of
+scope for the current documentation work.
+
 ## Rejected hypotheses
 
 ### CL-R1 Layer-3 termination at the blind via
@@ -441,11 +512,19 @@ solids. No valid geometry existed to simulate.
 
 **Hypothesis.** The quarter-wave transformer and radial stub belong on Layer 6,
 in series between the varactor DC terminal and the DC supply.
-**Result.** Rejected on source grounds. The precursor source labels the Layer-3
-copper as stripline and bias-T, and describes the bias-T as a branch from the
-high-frequency junction rather than a series continuation through the varactor.
-The Layer-6 bias-T was excluded and rebuilt on Layer 3.
-**Status.** rejected. **Confidence.** medium to high.
+**Result.** Set aside on the adopted reading of the published topology, before
+simulation. The precursor source labels its Layer-3 copper as stripline and
+bias-T, and the plan view of the 2022 paper shows the bias line branching from
+the high-frequency junction rather than continuing in series through the
+varactor. The Layer-6 bias-T was excluded and the network rebuilt on Layer 3.
+**Revised after direct source inspection.** The 2022 paper assigns no conductor
+layer to the bias-T, and the 2020 text places the varactor and the bias-T behind
+the ground layer (CL-S11). This branch therefore rests on an interpretation, not
+on an explicit source statement, and it is not closed by source evidence. It was
+never simulated.
+**Status.** set aside on interpretation, not rejected on evidence.
+**Confidence.** medium that Layer 3 is intended; low that Layer 6 is excluded by
+the source.
 
 ### CL-R5 Radial-stub dimension interpretation using `Bw/2`
 
@@ -553,6 +632,21 @@ missing.
    does not give the incidence angle for that simulation. This project uses
    normal incidence. The published measurement, by contrast, used a waveguide
    simulator at 21.4 degrees.
+7. The conductor layer of the bias-T. See CL-S11 and CL-A8.
+8. The spelling of the substrate permittivity parameter. The Stage-A parameter
+   table records `espAstra` and the later bias-T parameter audit records
+   `epsAstra`. No CST parameter export is available on the machine used to
+   prepare the report, so neither spelling can be confirmed. Appendix A of the
+   report carries the flag `[VERIFY AGAINST CST PARAMETER LIST]` rather than a
+   silent correction.
+9. The current value and definition of `stubHalfH`. One model record captures
+   1.3 mm, equal to `Bw`; the earlier construction used `Bw/2 = 0.65 mm`. The
+   parameters derived from it, `stubEdgeX` and `stubHalfSpanY`, inherit the same
+   uncertainty. Flagged in Appendix A on the same grounds.
+10. The present status of the Layer-6 bias-network parameters captured before
+   the source-topology rebuild: `biasYTop`, `biasYbottom`, `rfTraceYmax`,
+   `rfTraceYmin`, `dcTraceYmax` and `dcTraceYmin`. Their baseline values are
+   recorded; whether they survive the rebuild is unverified.
 
 Gap 5 of the previous revision, independent re-verification of CL-S1 against the
 source PDF, is now closed. See CL-S1.

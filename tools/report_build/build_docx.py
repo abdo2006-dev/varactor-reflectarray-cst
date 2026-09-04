@@ -108,6 +108,17 @@ def add_field(par, instr):
     r5._r.append(_el("w:fldChar", **{"w:fldCharType": "end"}))
 
 
+def fixed_layout(tbl):
+    """Honour the requested column widths.
+
+    Without an explicit fixed layout the renderer is free to widen a column to
+    fit its longest cell, which squeezes the narrow columns until short words
+    break mid-letter.
+    """
+    tblPr = tbl._tbl.tblPr
+    tblPr.append(_el("w:tblLayout", **{"w:type": "fixed"}))
+
+
 def repeat_header(row):
     trPr = row._tr.get_or_add_trPr()
     trPr.append(_el("w:tblHeader", **{"w:val": "true"}))
@@ -294,14 +305,36 @@ def decorate_section(sec, header_text, numbering=True):
 
 # --------------------------------------------------------------- rendering
 
+def list_caption(spec, lab):
+    """Short entry for the list of figures or tables.
+
+    The full caption is a sentence or several and truncating it mid-number gives
+    entries such as "lineV = 1". Content modules therefore carry an explicit
+    short form; the first clause of the caption is only a fallback.
+    """
+    s = spec.get("short")
+    if s:
+        return s
+    return spec["caption"].split(".")[0].strip()
+
+
+def probe(lab, spec):
+    """Text that identifies this caption uniquely on a rendered page."""
+    return "%s. %s" % (lab, spec["caption"][:45])
+
+
 class Builder:
     def __init__(self, doc, page_map=None):
         self.doc = doc
         self.page_map = page_map or {}
         self.fig_n = 0
         self.tab_n = 0
-        self.figures = []   # (label, short caption, key)
+        self.figures = []   # (label, short list caption, key)
         self.tables = []
+        # key -> the exact opening text of the rendered caption, used to locate
+        # the figure or table in the first-pass PDF. Matching on the label alone
+        # would also hit a prose cross-reference that ends a sentence.
+        self.probes = {}
         self.h1 = 0
         self.h2 = 0
         self.toc = []       # (level, text)
@@ -378,41 +411,56 @@ class Builder:
     def figure(self, spec, label=None, key=None):
         self.fig_n += 1 if label is None else 0
         lab = label or ("Figure %d" % self.fig_n)
-        holder = self.doc.add_paragraph()
-        holder.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        holder.paragraph_format.space_before = Pt(9)
-        holder.paragraph_format.space_after = Pt(0)
-        keep_with_next(holder)
 
         path = spec.get("path")
         if path:
-            full = os.path.join(REPO, path)
-            holder.add_run().add_picture(full, height=Inches(spec["height"]))
+            holder = self.doc.add_paragraph()
+            holder.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            holder.paragraph_format.space_before = Pt(9)
+            holder.paragraph_format.space_after = Pt(0)
+            keep_with_next(holder)
+            holder.add_run().add_picture(os.path.join(REPO, path),
+                                         height=Inches(spec["height"]))
+            cap = self.doc.add_paragraph(style="Caption")
+            cap.add_run("%s. " % lab).bold = True
+            cap.add_run(spec["caption"])
         else:
-            self._placeholder(holder, lab, spec)
+            self._placeholder(lab, spec)
 
-        cap = self.doc.add_paragraph(style="Caption")
-        cap.add_run("%s. " % lab).bold = True
-        cap.add_run(spec["caption"])
-        short = spec["caption"].split(".")[0].strip()
-        self.figures.append((lab, short, key or lab))
+        self.figures.append((lab, list_caption(spec, lab), key or lab))
+        self.probes[key or lab] = probe(lab, spec)
         return lab
 
-    def _placeholder(self, holder, lab, spec):
+    def _placeholder(self, lab, spec):
         # A bordered box of realistic figure dimensions, so that page layout
-        # stays honest before the image exists.
-        tbl = self.doc.add_table(rows=1, cols=1)
+        # stays honest before the image exists. The caption is the second row of
+        # the same table rather than a following paragraph: keep-with-next binds
+        # row to row reliably here, whereas a table does not bind to the
+        # paragraph after it and the caption ended up stranded on the next page.
+        # A hairline spacer. A table cannot carry space-before itself, and a
+        # normal empty paragraph here would waste most of a line above every
+        # box.
+        lead = self.doc.add_paragraph()
+        lead.add_run("").font.size = Pt(1)
+        lead.paragraph_format.space_before = Pt(8)
+        lead.paragraph_format.space_after = Pt(0)
+        lead.paragraph_format.line_spacing = Pt(2)
+        keep_with_next(lead)
+
+        tbl = self.doc.add_table(rows=2, cols=1)
         tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
         tbl.autofit = False
+        fixed_layout(tbl)
         w = 5.9
         tbl.columns[0].width = Inches(w)
+        for row in tbl.rows:
+            no_split(row)
+            row.cells[0].width = Inches(w)
+
         cell = tbl.rows[0].cells[0]
-        cell.width = Inches(w)
         set_cell_border(cell, sz=8, color="AAAAAA")
         shade_cell(cell, "FAFAFA")
-        no_split(tbl.rows[0])
-        tr = tbl.rows[0]
-        tr.height = Inches(spec["height"])
+        tbl.rows[0].height = Inches(spec["height"])
 
         p0 = cell.paragraphs[0]
         p0.style = self.doc.styles["Placeholder Label"]
@@ -421,9 +469,15 @@ class Builder:
         p1.add_run("Figure required. Not yet available.").italic = True
         p2 = cell.add_paragraph(style="Placeholder Body")
         p2.add_run(spec["need"])
-        # move the table into the holder position
-        holder._p.addnext(tbl._tbl)
-        holder.add_run("")
+        for par in (p0, p1, p2):
+            par.paragraph_format.keep_with_next = True
+
+        capcell = tbl.rows[1].cells[0]
+        clear_cell_borders(capcell)
+        cap = capcell.paragraphs[0]
+        cap.style = self.doc.styles["Caption"]
+        cap.add_run("%s. " % lab).bold = True
+        cap.add_run(spec["caption"])
 
     def table(self, spec, label=None, key=None):
         if label is None:
@@ -462,6 +516,7 @@ class Builder:
                 p.style = self.doc.styles["Table Body"]
                 p.add_run(str(v))
         if widths:
+            fixed_layout(tbl)
             # Scale the requested widths to the text column so that a table can
             # never bleed into the margins, whatever the content module asks for.
             total = float(sum(widths))
@@ -479,15 +534,26 @@ class Builder:
         # every row but the last to the next one pushes the whole table onto the
         # following page instead. Long tables are left to break naturally, since
         # they cannot fit on one page and their headers do repeat.
+        def bind(row):
+            for c in row.cells:
+                for par in c.paragraphs:
+                    par.paragraph_format.keep_with_next = True
+
         if len(rows) <= 12:
             for row in tbl.rows[:-1]:
-                for c in row.cells:
-                    for par in c.paragraphs:
-                        par.paragraph_format.keep_with_next = True
+                bind(row)
+        else:
+            # A long table is allowed to break, but not immediately after its
+            # header and not just before its last row: binding the opening and
+            # closing rows to their neighbours forces the break into the middle.
+            for row in tbl.rows[:min(4, len(tbl.rows) - 1)]:
+                bind(row)
+            for row in tbl.rows[-3:-1]:
+                bind(row)
         after = self.doc.add_paragraph()
         after.paragraph_format.space_after = Pt(8)
-        short = spec["caption"].split(".")[0].strip()
-        self.tables.append((lab, short, key or lab))
+        self.tables.append((lab, list_caption(spec, lab), key or lab))
+        self.probes[key or lab] = probe(lab, spec)
         return lab
 
     def render(self, blocks, fig_src, tab_src, fig_label=None, tab_label=None):
@@ -662,6 +728,7 @@ def main(out_path, page_map):
         (1, "References", "refs"))
     fig_entries = [(1, "%s  %s" % (l, s), k) for l, s, k in sb.figures]
     tab_entries = [(1, "%s  %s" % (l, s), k) for l, s, k in sb.tables]
+    probes = dict(sb.probes)
 
     # ---- contents
     if STATIC_TOC:
@@ -675,6 +742,10 @@ def main(out_path, page_map):
     list_block(doc, "List of tables", tab_entries, page_map)
 
     nom = doc.add_heading("Nomenclature", level=1)
+    # Kept in the flow after the list of tables: with one-line list entries the
+    # three blocks fit on a single page. The rows below are bound together so a
+    # future longer list moves the whole nomenclature rather than orphaning a
+    # line of it.
     tbl = doc.add_table(rows=0, cols=2)
     tbl.autofit = False
     for term, meaning in C.NOMENCLATURE:
@@ -687,6 +758,7 @@ def main(out_path, page_map):
             par = c.paragraphs[0]
             par.style = doc.styles["Front Matter Entry"]
             par.add_run(txt).bold = bold
+            par.paragraph_format.keep_with_next = True
             clear_cell_borders(c)
         for i, w in enumerate((1.35, 4.85)):
             tbl.columns[i].width = Inches(w)
@@ -729,6 +801,7 @@ def main(out_path, page_map):
         toc=[list(t) for t in toc_entries],
         figures=[list(f) for f in fig_entries],
         tables=[list(t) for t in tab_entries],
+        probes=probes,
     )
     with open(os.path.splitext(out_path)[0] + ".outline.json", "w") as fh:
         json.dump(meta, fh, indent=1)

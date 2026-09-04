@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-04
+Last updated: 2026-09-05
 
 This file records the current authoritative state of the CST model. It is the
 first file to read when resuming work. Where an earlier project note conflicts
@@ -94,8 +94,22 @@ carried forward from notes.
   must not be interchanged. See CL-S1 and CL-S9.
 - Both papers are distributed under CC BY 4.0, so their figures may be reproduced
   with attribution. See CL-S10 and `figures/source/ATTRIBUTION.md`.
-- The varactor part variant is unresolved: the two papers name different variants
-  and the pad geometry in the model came from a third. See CL-S6.
+- The varactor part variant is unresolved. The 2022 paper prints
+  `MAVR-011020-111`, the 2020 paper prints `MAVR-011020-141`, and the pad
+  geometry in the model came from an outline recorded as `MAVR-011020-1411`.
+  Only the third is a catalogued MACOM part; the manufacturer's mechanical
+  outline could not be retrieved, so the pad dimensions remain an unproven
+  assumption. See CL-S6.
+- The conductor layer of the bias-T is *not* assigned by the 2022 source. Its
+  text and its layer-structure figure give no layer number, and the Layer-3
+  label comes from the 2020 precursor's stack-up, which describes a different
+  element and whose own text places the bias-T behind the ground layer. The
+  model's Layer-3 placement is therefore a reconstruction interpretation. See
+  CL-S11 and CL-A8.
+- Two model parameter names could not be confirmed: the substrate permittivity
+  parameter is recorded as both `espAstra` and `epsAstra`, and `stubHalfH` is
+  recorded as both 1.3 mm and `Bw/2`. No CST parameter export exists on the
+  build machine. Appendix A of the report flags both rather than guessing.
 
 ## Standing rules
 
@@ -108,3 +122,5 @@ carried forward from notes.
    confirms it.
 5. No dense capacitance sweep until an endpoint pair shows meaningful phase
    separation.
+6. A parameter name that the model records disagree about is flagged in the
+   report, not silently corrected, until a CST parameter export settles it.

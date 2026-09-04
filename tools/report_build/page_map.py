@@ -22,6 +22,7 @@ def norm(s):
 
 def main(pdf_path, outline_path, out_path):
     outline = json.load(open(outline_path))
+    probes = outline.get("probes", {})
     doc = pymupdf.open(pdf_path)
 
     pages = [norm(doc[i].get_text()) for i in range(len(doc))]
@@ -35,29 +36,38 @@ def main(pdf_path, outline_path, out_path):
             offset = i
             break
 
-    def find(label, skip_front=True):
-        start = offset if skip_front else 0
-        for i in range(start, len(pages)):
-            if norm(label) in pages[i]:
+    missing = []
+
+    def find(label):
+        needle = norm(label)
+        for i in range(offset, len(pages)):
+            if needle in pages[i]:
                 return i - offset + 1
         return None
 
     page_map = {}
     for level, text, key in outline["toc"]:
-        if key == "refs":
-            n = find("References")
+        n = find("References") if key == "refs" else find(text)
+        if n:
+            page_map[key] = n
         else:
-            n = find(text)
-        if n:
-            page_map[key] = n
+            missing.append(key)
+
+    # Figures and tables are located by the opening words of the rendered
+    # caption, not by the label alone: a prose cross-reference that ends a
+    # sentence ("... shown in Table 4.") is otherwise an earlier match.
     for level, text, key in outline["figures"] + outline["tables"]:
-        n = find(text.split("  ")[0] + ".")
+        n = find(probes.get(key, text.split("  ")[0] + "."))
         if n:
             page_map[key] = n
+        else:
+            missing.append(key)
 
     json.dump(page_map, open(out_path, "w"), indent=1)
     print("page map: %d entries over %d pages (front matter %d)"
           % (len(page_map), len(doc) - offset, offset))
+    if missing:
+        print("  NOT LOCATED: %s" % ", ".join(missing))
     return 0
 
 

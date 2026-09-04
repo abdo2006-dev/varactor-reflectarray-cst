@@ -77,6 +77,26 @@ Exact new frequency bounds: to be decided. They have not been chosen and have
 not been run. Extending the sweep also requires re-checking the `Astra_MT77`
 material fit range, which is currently declared over 25.6 to 26.6 GHz.
 
+## Source verification status
+
+Both source papers were read directly from the publisher PDFs during the
+2026-09-04 report restructure, and the following are now confirmed rather than
+carried forward from notes.
+
+- Table 1 of the 2022 paper publishes X, Y, Pw, Sw, Sl, Lw, Lv, Ls, Bl, Bd, Bw
+  and Bh. The reconstruction baseline reproduces every one of them exactly. See
+  [claims_ledger.md](claims_ledger.md), CL-S3.
+- `fRef = 26.104 GHz` and the 25.6 to 26.6 GHz interval are inherited from the
+  source's own waveguide-simulator measurement, not chosen independently. See
+  CL-S7.
+- The published simulated phase shift is 337 degrees for the 2022 element. The
+  340 degrees figure belongs to the different 2020 precursor element and the two
+  must not be interchanged. See CL-S1 and CL-S9.
+- Both papers are distributed under CC BY 4.0, so their figures may be reproduced
+  with attribution. See CL-S10 and `figures/source/ATTRIBUTION.md`.
+- The varactor part variant is unresolved: the two papers name different variants
+  and the pad geometry in the model came from a third. See CL-S6.
+
 ## Standing rules
 
 1. One controlled change per branch. Change geometry or capacitance, not both.

@@ -7,6 +7,16 @@ response its reference design reports.
 
 Simulation only. No hardware was fabricated and no measurement was made.
 
+## Read the report
+
+- [Working draft, PDF](deliverables/Varactor_Reflectarray_CST_Report_Working_Draft.pdf)
+- [Working draft, DOCX](deliverables/Varactor_Reflectarray_CST_Report_Working_Draft.docx)
+
+A working engineering document, not a finished thesis. The main text is kept
+short while the investigation is open; the detailed branch history sits in the
+appendices and in `docs/experiment_log.md`. The abstract and conclusion will be
+written once the electromagnetic characterisation is complete.
+
 ## The engineering problem
 
 A reconfigurable reflectarray steers a beam by controlling the reflection phase
@@ -97,6 +107,10 @@ experiment. When geometry changes, the mesh is rebuilt.
 
 ## Current findings
 
+The reconstruction is dimensionally faithful. Every dimension the reference
+design publishes, twelve in total, is reproduced exactly by the model, checked
+directly against the source paper's dimension table rather than against notes.
+
 The model is numerically sound. Accepted runs meet the convergence criterion,
 broadband interpolation error is negligible, and energy balance stays close to
 unity across most of the simulated interval.
@@ -106,10 +120,6 @@ The tuning element is electrically valid. Its monitored terminal impedance near
 reactance of approximately 32 ohm, and approximately 240 to 245 ohm at 0.025 pF
 against approximately 244 ohm. The element is excited, is not shorted across its
 terminal gap, and responds to the capacitance parameter.
-
-*[Figure placeholder: adaptive convergence, delta against pass number]*
-
-*[Figure placeholder: endpoint reflection phase against frequency]*
 
 Numerically converged endpoint simulations currently show limited
 capacitance-dependent phase separation near the 26.104 GHz reference frequency.
@@ -138,30 +148,42 @@ achievable phase range or loss for a physical device.
 ## Repository structure
 
 ```
+deliverables/            the DOCX and PDF report, the documents meant for readers
 docs/
   project_state.md       current geometry, result, hypothesis, next experiment
   experiment_log.md      one entry per controlled experiment or model branch
   claims_ledger.md       every claim with its evidence, precision and status
   figure_manifest.md     required figures with captions and source configuration
+tools/report_build/
+  report_content.py      the report text, as structured data
+  build_docx.py          renders it to a styled, editable DOCX
+  build_markdown.py      renders the Markdown mirror
+  build.sh               two-pass build of both deliverables
 report/
-  report.md              assembled document
-  sections/              section sources, the single source of truth
-  assemble.sh            rebuilds report.md from sections/
-figures/                 architecture, geometry, results, convergence, fields
+  report_working_draft.md  generated Markdown mirror, for readable diffs
+figures/
+  source/                figures reproduced from the CC BY source papers
+  cst/                   CST captures and exports, as they become available
 results/                 raw and processed numerical exports
 cst/                     how the CST checkpoint files are handled
 references/              source list and citation TODO
+archive/                 the longform revision that preceded the restructure
 prompts/claude_code/     prompts used while building this repository
 ```
 
-Edit `report/sections/`, then run `report/assemble.sh` to regenerate
-`report/report.md`.
+Edit `tools/report_build/report_content.py`, then run
+`tools/report_build/build.sh` to regenerate the DOCX, the PDF and the Markdown
+mirror together.
 
 ## Project status
 
-Active investigation. The report is a working draft: its abstract, the
-interpretation section and the conclusion are marked provisional and will change
-when the next experiments return results.
+Active investigation. The report is a working draft. Its abstract is a marked
+placeholder and its closing section is an interim status rather than a
+conclusion; both will be written once the investigation reaches a result.
+
+Every dimension the reference design publishes is reproduced exactly by the
+model, verified directly against the source papers. What has not been recovered
+is the capacitance-dependent phase behaviour those papers report.
 
 The next experiment is a wider-frequency endpoint diagnostic on unchanged
 geometry, to test whether the capacitance-sensitive region lies above the

@@ -3,7 +3,7 @@
 Every claim the report is allowed to make appears here first. If a statement is
 not in this ledger, the report must not assert it.
 
-Last updated: 2026-09-04
+Last updated: 2026-09-04 (revised after direct verification against both source PDFs)
 
 ## Field definitions
 
@@ -193,15 +193,20 @@ band edge.
 
 ## Source claims (properties of the published design, not of this model)
 
-### CL-S1 Published phase-shift range
+### CL-S1 Published simulated phase-shift range
 
-**Claim.** The 2022 source paper reports a maximum simulated phase shift of
-about 337 degrees for its optimised element.
-**Evidence.** Reading of the source text recorded in the project continuity
-notes. Not independently re-verified against the PDF during this repository
-build.
-**Kind.** numerical. **Precision.** exact as quoted.
-**Confidence.** medium pending a direct re-check. **Status.** provisional.
+**Claim.** Harz and Kleine-Ostmann (2022) state that the main goal of their
+optimisation was a wide phase-shift range, "resulting in a maximum simulated
+phase shift of 337 degrees".
+**Evidence.** Verified directly against the publisher PDF, Section 2,
+"Reflectarray element", page 216.
+**Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high.
+**Status.** confirmed as a quotation of the source.
+
+**Note.** The earlier precursor element in Harz et al. (2020) reports a
+simulated adjustable phase range of 340 degrees for a different element. See
+CL-S9. The two numbers belong to two different designs and must not be
+interchanged.
 
 ### CL-S2 Published bias-T description
 
@@ -211,6 +216,129 @@ plus a radial-stub shunt, with `Bl = 0.25`, `Bd = 1.6`, `Bw = 1.3` and
 **Evidence.** Source table values recorded in the continuity notes.
 **Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high.
 **Status.** confirmed as a quotation of the source.
+
+### CL-S3 Published element dimensions
+
+**Claim.** Table 1 of Harz and Kleine-Ostmann (2022), "Dimensions of the antenna
+element", gives the following values.
+
+| Symbol | Value | Symbol | Value | Symbol | Value |
+|---|---:|---|---:|---|---:|
+| X | 7.0 mm | Sw | 0.26 mm | Sl | 2.275 mm |
+| Y | 7.0 mm | Lw | 0.33 mm | Ls | 0.2 mm |
+| Pw | 2.225 mm | Lv | 1.11 mm | Bl | 0.25 mm |
+| Bd | 1.6 mm | Bw | 1.3 mm | Bh | 1.13 mm |
+
+**Evidence.** Verified directly against the publisher PDF, Table 1, page 217.
+**Consequence.** Every one of these values is reproduced exactly by the
+reconstruction baseline. The mapping is X to `cellX`, Y to `cellY`, Pw to
+`patchW`, Sw to `slotW`, Sl to `slotL`, Lw to `lineW`, Lv to `lineV`, Ls to
+`lineS`, and Bl, Bd, Bw, Bh directly. The reconstruction baseline is therefore
+dimensionally faithful to the published element in every dimension the source
+publishes.
+**Kind.** numerical. **Precision.** exact. **Confidence.** high.
+**Status.** confirmed as a quotation of the source.
+
+### CL-S4 Published substrate material
+
+**Claim.** The source selected Isola Astra MT77 "because it allows the
+realization of buried and blind vias as well", and states that the material is
+"specified with a permittivity of 3.0 and a loss factor of 0.0017 up to 20 GHz".
+The same material is used for all layers so that no mechanical tension bows or
+twists the board.
+**Evidence.** Verified directly against the publisher PDF, Section 2, page 216.
+**Note.** The published specification is quoted only up to 20 GHz, while the
+element operates near 26 GHz. The source applies the same numbers at 26 GHz, and
+this model follows that choice. This is a source-level extrapolation, not a
+modelling error introduced here.
+**Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high.
+**Status.** confirmed as a quotation of the source.
+
+### CL-S5 Published dielectric thicknesses
+
+**Claim.** "The thickness of the dielectric material for the first, the second,
+and the third layer is 254 micrometres. All other layers have a thickness of
+127 micrometres."
+**Evidence.** Verified directly against the publisher PDF, Section 2, page 216.
+**Consequence.** This confirms `sub1 = sub2 = sub3 = 0.254 mm` and
+`sub4 = sub5 = 0.127 mm` in the model.
+**Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high.
+**Status.** confirmed as a quotation of the source.
+
+### CL-S6 Published varactor device and capacitance range
+
+**Claim.** The 2022 source selects a MACOM flip-chip varactor diode with "a
+capacitance in the range from 0.025 to 0.19 pF obtained by a control voltage
+between 0 and 15 V", and states that the manufacturer does not provide
+equivalent-circuit parameters.
+**Evidence.** Verified directly against the publisher PDF, Section 2, page 216.
+**Consequence.** This is the origin of `Cmin = 0.025 pF` and `Cmax = 0.19 pF`.
+**Ambiguity.** The 2022 paper names the part MAVR-011020-111. The 2020 precursor
+names MAVR-011020-141 for the same capacitance range. The reconstruction pad
+geometry in CL-A4 was taken from a package outline recorded as
+MAVR-011020-1411. These three part numbers are not identical and the difference
+has not been resolved against a manufacturer datasheet.
+**Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high for
+the capacitance range, low for the exact part variant.
+**Status.** confirmed as a quotation of the source, with an open ambiguity.
+
+### CL-S7 Published measured phase behaviour and the origin of the reference frequency
+
+**Claim.** In the 2022 waveguide-simulator measurement the control voltage was
+varied from 0 to 15 V and phase and loss were measured "over the frequency band
+from 25.6 to 26.6 GHz". Within a 100 MHz bandwidth the maximum phase change
+range is between 308 and 336 degrees. At 26.104 GHz specifically, "the phase
+change range at this frequency is 322 degrees".
+**Evidence.** Verified directly against the publisher PDF, Section 3, page 217.
+**Consequence.** This is the origin of both `fRef = 26.104 GHz` and the
+25.6 to 26.6 GHz simulated interval used throughout this project. Neither was
+chosen arbitrarily.
+**Important.** These are measured values for fabricated hardware in a waveguide
+simulator, obtained at a tilted incidence angle of 21.4 degrees. They are not
+unit-cell simulation results and are not comparable term by term with the
+normal-incidence simulations in this project.
+**Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high.
+**Status.** confirmed as a quotation of the source.
+
+### CL-S8 Published bias-T description and decoupling
+
+**Claim.** The 2022 source describes the bias-T as consisting of "a
+quarter-wavelength stripline transformer and a microstrip radial stub shunt",
+where the radial shunt generates a short and the quarter-wavelength transformer
+converts it into an open circuit at the junction to the high-frequency
+stripline. With one radial stub shunt a decoupling of 36 dB was accomplished.
+The 2020 precursor reports over 39 dB for its own bias-T and transmission losses
+below 0.1 dB.
+**Evidence.** Verified directly against both publisher PDFs, 2022 Section 2
+page 216 and 2020 Section 3 page 3.
+**Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high.
+**Status.** confirmed as a quotation of the source.
+
+### CL-S9 The 2020 precursor element is a different design
+
+**Claim.** The element in Harz et al. (2020) is not the element reconstructed
+here. It uses an 8 mm by 8 mm unit cell, a Rogers RT5870 substrate with relative
+permittivity 2.33 at 10 GHz, a 2.5 mm by 2.5 mm patch, a 2.5 mm slot length with
+0.26 mm slot width, a stripline width of 0.5 mm, Lw of 0.8 mm and Lv of 1.5 mm,
+and reports a simulated adjustable phase range of 340 degrees.
+**Evidence.** Verified directly against the publisher PDF, Sections 2 and 4,
+pages 2 and 4.
+**Consequence.** The 2020 paper is used in this project only for its
+explanation of the operating principle and for its bias-T port definition and
+dimensioning figure. Its numerical dimensions must never be mixed with the 2022
+Table 1 values that the reconstruction follows.
+**Kind.** numerical. **Precision.** exact as quoted. **Confidence.** high.
+**Status.** confirmed as a quotation of the source.
+
+### CL-S10 Published licence terms
+
+**Claim.** Both source articles carry the statement "This work is distributed
+under the Creative Commons Attribution 4.0 License" on page 1.
+**Evidence.** Read directly from page 1 of each publisher PDF.
+**Consequence.** Figures may be reproduced in this report with attribution.
+See `figures/source/ATTRIBUTION.md`.
+**Kind.** qualitative. **Precision.** exact. **Confidence.** high.
+**Status.** confirmed.
 
 ---
 
@@ -252,10 +380,17 @@ Layer-5 bias trace to the isolated Layer-6 DC pad are chosen, not published.
 
 ### CL-A6 Bias-branch direction
 
-The Layer-3 quarter-wave bias branch extends toward +X. The source supports the
-branch and its function but does not fix the sign in the model's coordinate
-frame. The -X mirror is equivalent.
-**Status.** provisional assumption, low impact. **Confidence.** medium.
+In the model the Layer-3 bias line runs from the via junction toward -Y and the
+radial stub opens laterally toward +X at a distance `Bd` along it.
+**Update after direct source inspection.** Figure 1 of Harz and Kleine-Ostmann
+(2022) shows exactly this arrangement: the bias line continues away from the
+patch along the stripline axis and the radial stub branches sideways from it.
+The relative arrangement is therefore source-supported rather than assumed. The
+absolute sign in the model's coordinate frame remains a convention, and the
+mirrored layout is electrically equivalent at normal incidence.
+**Status.** arrangement confirmed against the source figure; the sign
+convention remains a modelling choice. **Confidence.** high for the
+arrangement, high that the sign is immaterial.
 
 ### CL-A7 Ideal varactor model
 
@@ -412,4 +547,12 @@ missing.
 3. Numerical phase separation, in degrees, between the current endpoint curves
    at 26.5 to 26.6 GHz. Described as some additional separation, not measured.
 4. Any result above 26.6 GHz. None exists.
-5. Independent re-verification of CL-S1 against the source PDF.
+5. The exact varactor part variant. See the ambiguity recorded in CL-S6.
+6. The incidence angle used in the source's own unit-cell simulation. The 2022
+   paper states that the element was optimised in a unit-cell configuration but
+   does not give the incidence angle for that simulation. This project uses
+   normal incidence. The published measurement, by contrast, used a waveguide
+   simulator at 21.4 degrees.
+
+Gap 5 of the previous revision, independent re-verification of CL-S1 against the
+source PDF, is now closed. See CL-S1.

@@ -36,7 +36,7 @@ Rules that apply to those files:
 
 ## What is committed instead
 
-The parameter table in `report/sections/99_appendices.md`, Appendix A, and the
+The parameter inventory in Appendix A of the report, and the
 solver configuration in Appendix B are sufficient to rebuild the model. Together
 with `docs/experiment_log.md` they define which branch produced which result.
 

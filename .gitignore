@@ -54,6 +54,14 @@ venv/
 references/pdf/
 *.pdf
 
+# The generated report deliverables are tracked despite the *.pdf rule above.
+!deliverables/*.pdf
+
 # Large exports that belong in a release or in Git LFS
 results/raw/**/*.zip
 results/raw/**/*.7z
+
+# Intermediate output of tools/report_build/build.sh. The DOCX and PDF are
+# tracked; the first-pass PDF, the page map and the preview renders are not.
+deliverables/.build/
+deliverables/*.outline.json

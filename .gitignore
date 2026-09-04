@@ -1,0 +1,59 @@
+# CST Studio Suite solver and cache output
+# Large solver/mesh/result directories are never committed. See cst/README.md.
+*.cst
+Result/
+Model/
+*.rex
+*.sim
+*.mod
+*.pid
+*.log
+*.tmp
+*.bak
+*.cst.bak
+Backup/
+*_Backup/
+*.hlg
+*.m3d
+*.emc
+*.mmm
+*.dsp
+*.par~
+Temp/
+temp/
+DesignEnvironment*.log
+
+# Mesh and field dumps
+*.mesh
+*.msh
+*.h5
+*.vtk
+
+# Windows virtual-machine artefacts
+*.vhdx
+*.vmdk
+*.vdi
+*.vmx
+$RECYCLE.BIN/
+Thumbs.db
+desktop.ini
+
+# macOS
+.DS_Store
+._*
+
+# Editors and Python tooling
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Licensed source material. See references/README.md.
+references/pdf/
+*.pdf
+
+# Large exports that belong in a release or in Git LFS
+results/raw/**/*.zip
+results/raw/**/*.7z

@@ -551,9 +551,11 @@ separate Layer-5 supply trace and a local interlayer via would recover tuning.
 **Result.** Both endpoints converged (about 0.0094 at 0.025 pF and about 0.007
 at 0.19 pF). The phase curves stayed almost coincident, separating by about
 1 degree near the upper band edge.
-**Status.** rejected as the missing mechanism. The topology corrections
-themselves are retained, because they were made for source-fidelity reasons
-independent of their effect on tuning. **Confidence.** high.
+**Status.** rejected as the missing mechanism; the branch did not recover
+meaningful tuning. Elements of the rebuild that are directly source-supported
+are retained. The Layer-3 bias-T placement is not one of them: it remains the
+current reconstruction interpretation and is tracked as an unresolved source
+ambiguity under CL-S11 and CL-A8. **Confidence.** high.
 
 ---
 

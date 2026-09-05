@@ -44,7 +44,7 @@ An incident plane wave illuminates a square patch on the first conductor layer. 
 
 The stripline is divided by its connection point into two lengths that play different roles. The short stub of length Ls above the junction presents an inductive reactance, and the longer section of length Lv below the junction, terminated by the varactor, presents the capacitive part. Together they form a series resonant circuit whose resonant frequency is set principally by Ls and whose usable phase range is matched to the capacitance range of the diode by choosing Lv [3], [4]. Changing the varactor capacitance moves the resonance, and the phase of the wave returned through the aperture to the patch shifts with it. The patch re-radiates that phase-shifted wave, so the reflection phase of the whole cell becomes a function of the bias voltage.
 
-The arrangement has a second benefit that motivated its selection. Every active and biasing component sits behind the layer-four ground plane, so the reflecting face stays flat and the backscatter depends only on the patch and the slot, with no parasitic radiation from the bias circuitry [2].
+The arrangement has a second benefit that motivated its selection. The 2020 precursor states that every active and biasing component sits behind the ground layer, so that the reflecting face stays flat and the backscatter depends only on the patch and the slot, with no parasitic radiation from the bias circuitry [2]. That is a statement about the precursor element. The 2022 source assigns no conductor layer to the bias-T of the element reconstructed here, so how far the property carries over is open; Section 3.4 records the position taken.
 
 
 ### 2.2  Published element geometry
@@ -190,7 +190,7 @@ Table 2 collects the layer stack and material definition. The substrate thicknes
 
 ### 4.3  Reconstruction assumptions
 
-Table 3 lists the quantities the model requires but the source does not publish. These are the values most likely to be responsible for any difference between the reconstruction and the published element, and none of them has yet been sensitivity-tested.
+Table 3 lists the quantities the model requires but the source does not publish. These quantities are potential contributors to differences between the reconstruction and the published element, and their influence has not yet been sensitivity-tested.
 
 **Table 3.** Reconstruction assumptions. None of these values is published by the source and none has yet been sensitivity-tested.
 
@@ -343,7 +343,7 @@ A field monitor at the reference frequency was used to see where current concent
 
 **Figure 7.** Surface-current magnitude at 26.104 GHz for varC = 0.025 pF, plotted on a fixed 0 to 5 A/m colour scale so that the resonant path is visible. The global maximum reported by the solver for this run is 392.368 A/m, located at approximately (1.138, -0.130, -0.254) mm, which is the layer-two level. The fixed scale saturates the aperture region by construction and the plot is therefore a qualitative distribution, not a calibrated field export.
 
-The solver-reported maximum given in the caption lies at the layer-two level near the aperture. On the rescaled plot the current on the layer-three resonant path is of the order of a few amperes per metre, roughly two orders of magnitude below it. That maximum and its position are solver-reported; the level on the resonant path is an estimate read from a fixed-scale plot.
+The solver-reported maximum given in the caption, 392.368 A/m at the layer-two level near the aperture, is the only calibrated value available for this run. On the fixed 0 to 5 A/m display the layer-three resonant path appears at substantially lower current density than the layer-two field concentration. That display is qualitative and supports no numerical ratio between the two.
 
 This observation is not on its own evidence that coupling into the resonator is inadequate. A resonant path can carry modest current and still dominate the reflected phase, and the comparison here is between a current maximum at a field concentration and a distributed current elsewhere in the structure. Interpreting it requires the same monitor at the other capacitance endpoint, which has not yet been run.
 
@@ -390,15 +390,20 @@ The next step is the wider-frequency diagnostic described in Section 9, followed
 References [2] and [3] are the source papers and were read in full. Entries [1], [4] and [5] were transcribed from the reference lists of those papers; no page range is given for [5] because the list that cites it prints an implausible one. References [6] and [7] are deliberately incomplete rather than filled in from memory.
 
 
-## Appendix A  Complete CST parameter inventory
+## Appendix A  CST parameter inventory
 
-Table A.1 lists every named parameter used by the model, together with its defining expression where it has one. The baseline column and the current column are given separately, so that a value produced at the reconstruction baseline is never shown as though it were the value at the present checkpoint. For a parameter that does not depend on a displaced dimension the two columns are identical.
+This appendix lists every named parameter the model records, divided by how far each one can be tied to the present reconstruction. Section A.1 holds the parameters believed to belong to the current model, and Section A.2 holds entries that the development record preserves but that the present evidence cannot place in it. Nothing is discarded between the two.
 
-Three parameters are displaced from their published values at the current checkpoint: slotW, slotL and lineV. Every expression that depends on lineV re-evaluates with it, and the current column for those entries is computed from the recorded expression rather than read back from the solver. The origin column marks them accordingly.
+Neither table is an export. No CST parameter export is available on the machine used to prepare this report, so the inventory is assembled from the project model records. A direct export from the live model is still needed before Table A.1 can be treated as an authoritative statement of what the model contains.
 
-Parameter names were checked against the project model records. Two discrepancies survive that check. The substrate permittivity parameter is written espAstra in the Stage-A parameter table and epsAstra in the later bias-T parameter audit, and no CST parameter export is available on the machine used to prepare this report, so the spelling is flagged rather than silently corrected. The stub half-height parameter is captured as 1.3 mm in the audit and as Bw/2 in the earlier construction, and it is flagged on the same grounds. Entries recorded before the source-topology rebuild described in Appendix D are marked as such, because the rebuild moved the bias network and their present status is unconfirmed.
 
-**Table A.1.** Complete inventory of named parameters in the CST model. The baseline column is the reconstruction baseline; the current column is the diagnostic checkpoint at slotW = 0.35 mm, slotL = 2.32 mm and lineV = 1.13 mm. A value given as [VERIFY] carries the flag VERIFY AGAINST CST PARAMETER LIST: the entry exists in the model record but could not be confirmed against the present model from the evidence available here.
+### A.1  Current reconstructed-model parameter inventory
+
+The baseline column and the current column are given separately, so that a value produced at the reconstruction baseline is never shown as though it were the value at the present checkpoint. For a parameter that does not depend on a displaced dimension the two columns are identical.
+
+Three parameters are displaced from their published values at the current checkpoint: slotW, slotL and lineV. Every expression that depends on lineV re-evaluates with it, and the current column for those entries is computed from the recorded expression rather than read back from the solver. The origin column marks them accordingly. The substrate permittivity is not listed here because its parameter spelling is disputed; the entry is in Table A.2 and the value it carries, 3, is the published one.
+
+**Table A.1.** Named parameters of the current reconstruction. The baseline column is the reconstruction baseline; the current column is the diagnostic checkpoint at slotW = 0.35 mm, slotL = 2.32 mm and lineV = 1.13 mm. Development-record, superseded and disputed names are held separately in Table A.2.
 
 | Parameter | Definition or expression | Baseline | Current | Unit | Purpose | Origin and status |
 |---|---|---|---|---|---|---|
@@ -420,7 +425,6 @@ Parameter names were checked against the project model records. Two discrepancie
 | sub5 | 0.127 | 0.127 | 0.127 | mm | Substrate 5 thickness, L5 to L6 | Published [3] |
 | cuOuter | 0.035 | 0.035 | 0.035 | mm | Outer-layer conductor thickness | Inferred from the source stack |
 | cuInner | 0.018 | 0.018 | 0.018 | mm | Inner-layer conductor thickness | Inferred from the source stack |
-| espAstra | 3 | 3 | 3 | - | Substrate relative permittivity | Value published [3]; spelling disputed, [VERIFY AGAINST CST PARAMETER LIST] |
 | tanDAstra | 0.0017 | 0.0017 | 0.0017 | - | Substrate electric loss tangent | Published [3] |
 | biasW | 0.25 | 0.25 | 0.25 | mm | Bias-line width; published symbol Bl | Published [3]; CST name from the model record |
 | Bd | 1.6 | 1.6 | 1.6 | mm | Junction to radial-stub offset | Published [3] |
@@ -470,6 +474,19 @@ Parameter names were checked against the project model records. Two discrepancie
 | Cmin | 0.025 | 0.025 | 0.025 | pF | Lower capacitance endpoint | Published device range [3] |
 | Cmax | 0.19 | 0.19 | 0.19 | pF | Upper capacitance endpoint | Published device range [3] |
 | varC | set per run | 0.10 | 0.025 or 0.19 | pF | Active varactor capacitance | Controlled variable |
+
+
+### A.2  Development-record, superseded and unverified parameter names
+
+Table A.2 holds the entries that the model records preserve but that cannot be placed in the current model from the evidence available here. They fall into four groups: captures made before the source-topology rebuild described in Appendix D, which moved the bias network; constructions the report records as superseded; names the project records disagree about; and alternative names from the model history that carry no verified value.
+
+Two disagreements are worth naming. The substrate permittivity parameter is written espAstra in the Stage-A parameter table and epsAstra in the later bias-T parameter audit. The stub half-height parameter is captured as 1.3 mm in the audit and as Bw/2 in the earlier construction. Both are flagged rather than silently corrected, and both are settled by the same parameter export that Table A.1 needs.
+
+**Table A.2.** Parameter names the model records preserve that cannot be placed in the current model from the evidence available here. A value given as [VERIFY] carries the flag VERIFY AGAINST CST PARAMETER LIST. The baseline column is the value the record captures; the current column is unconfirmed except where the value is published.
+
+| Parameter | Definition or expression | Recorded | Current | Unit | Purpose | Origin and status |
+|---|---|---|---|---|---|---|
+| espAstra | 3 | 3 | 3 | - | Substrate relative permittivity | Value published [3]; CST spelling disputed against epsAstra, [VERIFY] |
 | biasYTop | 0 | 0 | [VERIFY] | mm | Bias-line extent, y maximum | Model record capture, pre-rebuild topology |
 | biasYbottom | -Bd | -1.6 | [VERIFY] | mm | Bias-line extent, y minimum | Model record capture, pre-rebuild topology |
 | rfTraceYmax | viaY | 0 | [VERIFY] | mm | L6 radio-frequency trace, y maximum | Model record capture, pre-rebuild topology |
@@ -549,14 +566,14 @@ The work divides into two stages. Stage A modelled the four upper layers with a 
 | Stub dimensioning by Bw/2 | The radial stub has radius Bh and half-height Bw/2 | Superseded by a re-reading of the source figure. The corrected sector uses a radius of Sqr(Bh^2 + Bw^2) and a half-angle of approximately 49 degrees. |
 | Stub opening toward -Y | The radial stub continues along the bias line rather than branching from it | Superseded. The source top view shows the stub branching laterally. |
 | Via anchored at capY | Moving the blind via to capY restores the resonant loading | Rejected before simulation. Because capY is the varactor terminal-pair centre, the change drove the via into the varactor gap and produced overlapping solids, so no valid geometry existed to simulate. |
-| Source-topology rebuild | Rebuilding the bias-T on L3 as a branch, removing the L5 plane and routing the DC side through L5 recovers tuning | Rejected as the missing tuning mechanism; separation stayed at approximately 1 degree near the upper band edge. The topology corrections were kept, because they were made for source-fidelity reasons independent of their effect on tuning. |
+| Source-topology rebuild | Rebuilding the bias-T on L3 as a branch, removing the L5 plane and routing the DC side through L5 recovers tuning | Rejected as the missing tuning mechanism; the branch did not recover meaningful tuning and separation stayed at approximately 1 degree near the upper band edge. Elements of the rebuild that are directly source-supported were retained; the layer-three bias-T placement remains the current reconstruction interpretation and is tracked as an unresolved source ambiguity. |
 | Geometry diagnostics | A nearby value of slotW, lineV or slotL recovers endpoint separation at the reference frequency | Rejected for the values tested. See Section 7.3. Per-run numerical records for the slotW and lineV branches were not archived. |
 
-The stub dimensioning and orientation entries above were corrected against the dimensioned bias-T figure of the 2020 precursor paper, reproduced as Figure D.1. That figure shows the radial stub branching laterally from the bias line, with the ports defined so that the transformer length and the stub geometry can be read off directly. Its numerical dimensions belong to the 2020 element and are not the dimensions used in this reconstruction.
+The stub orientation entries above were read against the dimensioned bias-T figure of the 2020 precursor paper, reproduced as Figure D.1. That figure was used as supporting evidence for the qualitative bias-T topology and for the lateral orientation of the radial stub, and for nothing else. Its numerical dimensions belong to the 2020 precursor element and were not transferred as dimensions of the 2022 cell reconstructed here.
 
 ![Figure D.1](../figures/source/figD1_harz2020_biasT_dimensions.png)
 
-**Figure D.1.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it, which is the reading that corrected the stub orientation and dimensioning in this reconstruction. Note that the numerical dimensions belong to the 2020 element and not to the element reconstructed here. Reproduced from Harz et al. [2], Fig. 5, under the Creative Commons Attribution 4.0 licence.
+**Figure D.1.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it. The figure was used as supporting evidence for the qualitative bias-T topology and for the lateral orientation of the radial stub. Its numerical dimensions belong to the 2020 precursor element and were not transferred as dimensions of the 2022 cell reconstructed here. Reproduced from Harz et al. [2], Fig. 5, under the Creative Commons Attribution 4.0 licence.
 
 
 ## Appendix E  Additional electromagnetic plots

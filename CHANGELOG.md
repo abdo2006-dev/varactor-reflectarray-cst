@@ -6,6 +6,45 @@ The format follows the spirit of Keep a Changelog. Because this repository is a
 research record rather than a released product, entries also note when a claim
 changed status in `docs/claims_ledger.md`.
 
+## Working-report technical wording
+
+Branch `report/academic-restructure-v2`. A small correction pass over the
+wording of the corrected draft. No section was added or removed, no page
+architecture changed and no technical value changed.
+
+### Changed
+
+- Section 2.1 now attributes the statement that every active and biasing
+  component sits behind the ground layer to the 2020 precursor, and separates it
+  from the 2022 element reconstructed here, whose bias-T layer the source does
+  not assign. Section 3.4's uncertainty wording is untouched.
+- Section 4.3 no longer ranks the reconstruction assumptions by likelihood. They
+  are described as potential contributors whose influence has not been
+  sensitivity-tested.
+- Section 7.4 no longer states that the layer-three current is roughly two
+  orders of magnitude below the global maximum. That maximum is solver-reported
+  and the layer-three level was read off a fixed-scale plot, so the two do not
+  support a ratio. The solver value 392.368 A/m and its position are retained.
+- Appendix A was split. Table A.1 holds the 67 parameters believed to belong to
+  the current reconstruction; Table A.2 holds the 12 entries that are pre-rebuild
+  captures, superseded constructions, disputed names or unverified historical
+  names. All 79 parameter names are preserved. Both tables state that a direct
+  CST parameter export is still needed before A.1 can be called authoritative.
+- The Appendix D entry for the source-topology rebuild no longer says the
+  retained topology corrections were kept for source-fidelity reasons. The
+  Layer-3 bias-T placement is named as the current reconstruction interpretation
+  and tracked as an unresolved ambiguity. CL-R7 updated to match.
+- Figure D.1's caption now states that the figure was used as supporting
+  evidence for the qualitative bias-T topology and the lateral stub orientation,
+  and that its numerical dimensions belong to the 2020 precursor and were not
+  transferred as dimensions of the 2022 cell.
+
+### Fixed
+
+- Appendix subsection headings render as A.1 and A.2 rather than taking the
+  main-text counter. They are deliberately kept out of the contents: two more
+  entries pushed a single line of it onto a page of its own.
+
 ## Academic layout and source-ambiguity corrections
 
 Branch `report/academic-restructure-v2`. A targeted correction pass over the

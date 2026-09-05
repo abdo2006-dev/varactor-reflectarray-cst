@@ -339,6 +339,7 @@ class Builder:
         self.h2 = 0
         self.toc = []       # (level, text)
         self.appendix = None
+        self.ah2 = 0
         self.afig = {}
         self.atab = {}
 
@@ -369,8 +370,19 @@ class Builder:
         self.toc.append((2, full, "h2:%s" % label))
         return p
 
+    def appendix_subheading(self, text):
+        self.ah2 += 1
+        label = "%s.%d" % (self.appendix, self.ah2)
+        full = "%s  %s" % (label, text)
+        p = self.doc.add_heading(full, level=2)
+        # Deliberately not added to self.toc. The contents fits one page with the
+        # main-text headings alone, and two more entries pushed a single line of
+        # it onto a page of its own.
+        return p
+
     def appendix_heading(self, letter, text):
         self.appendix = letter
+        self.ah2 = 0
         full = "Appendix %s  %s" % (letter, text)
         p = self.doc.add_heading(full, level=1)
         self.toc.append((1, full, "app:%s" % letter))
@@ -563,6 +575,8 @@ class Builder:
                 self.heading1(b[1])
             elif kind == "h2":
                 self.heading2(b[1])
+            elif kind == "ah2":
+                self.appendix_subheading(b[1])
             elif kind == "p":
                 self.para(b[1])
             elif kind == "note":
@@ -603,6 +617,7 @@ APP_FIG_LABEL = {
 }
 APP_TAB_LABEL = {
     "param_inventory": "Table A.1",
+    "param_inventory_dev": "Table A.2",
     "stack_appendix": "Table B.1",
     "convergence_records": "Table C.1",
     "rejected": "Table D.1",

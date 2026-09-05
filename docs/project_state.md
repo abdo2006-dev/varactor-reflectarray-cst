@@ -109,7 +109,9 @@ carried forward from notes.
 - Two model parameter names could not be confirmed: the substrate permittivity
   parameter is recorded as both `espAstra` and `epsAstra`, and `stubHalfH` is
   recorded as both 1.3 mm and `Bw/2`. No CST parameter export exists on the
-  build machine. Appendix A of the report flags both rather than guessing.
+  build machine. Appendix A of the report flags both rather than guessing, and
+  holds them in Table A.2 with the other entries that cannot be placed in the
+  current model. A direct CST parameter export would settle them.
 
 ## Standing rules
 

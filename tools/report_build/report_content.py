@@ -177,11 +177,12 @@ FIGURES = {
         caption=(
             "Bias-T dimensions and port definitions for the 2020 precursor element. "
             "The radial stub branches laterally from the bias line rather than "
-            "continuing along it, which is the reading that corrected the stub "
-            "orientation and dimensioning in this reconstruction. Note that the "
-            "numerical dimensions belong to the 2020 element and not to the element "
-            "reconstructed here. Reproduced from Harz et al. [2], Fig. 5, under the "
-            "Creative Commons Attribution 4.0 licence."),
+            "continuing along it. The figure was used as supporting evidence for the "
+            "qualitative bias-T topology and for the lateral orientation of the radial "
+            "stub. Its numerical dimensions belong to the 2020 precursor element and "
+            "were not transferred as dimensions of the 2022 cell reconstructed here. "
+            "Reproduced from Harz et al. [2], Fig. 5, under the Creative Commons "
+            "Attribution 4.0 licence."),
     ),
 }
 
@@ -379,10 +380,13 @@ BODY = [
       "the phase of the wave returned through the aperture to the patch shifts with it. "
       "The patch re-radiates that phase-shifted wave, so the reflection phase of the "
       "whole cell becomes a function of the bias voltage."),
-("p", "The arrangement has a second benefit that motivated its selection. Every active "
-      "and biasing component sits behind the layer-four ground plane, so the reflecting "
-      "face stays flat and the backscatter depends only on the patch and the slot, with "
-      "no parasitic radiation from the bias circuitry [2]."),
+("p", "The arrangement has a second benefit that motivated its selection. The 2020 "
+      "precursor states that every active and biasing component sits behind the ground "
+      "layer, so that the reflecting face stays flat and the backscatter depends only "
+      "on the patch and the slot, with no parasitic radiation from the bias circuitry "
+      "[2]. That is a statement about the precursor element. The 2022 source assigns no "
+      "conductor layer to the bias-T of the element reconstructed here, so how far the "
+      "property carries over is open; Section 3.4 records the position taken."),
 
 ("h2", "Published element geometry"),
 ("p", "Figure 1 reproduces the published layout. It fixes the unit-cell extent, the patch "
@@ -540,8 +544,8 @@ BODY = [
 
 ("h2", "Reconstruction assumptions"),
 ("p", "Table 3 lists the quantities the model requires but the source does not publish. "
-      "These are the values most likely to be responsible for any difference between the "
-      "reconstruction and the published element, and none of them has yet been "
+      "These quantities are potential contributors to differences between the "
+      "reconstruction and the published element, and their influence has not yet been "
       "sensitivity-tested."),
 ("tab", "assumptions"),
 
@@ -691,11 +695,11 @@ BODY = [
       "concentrates in the structure. Figure 7 shows the surface-current magnitude for "
       "the low-capacitance state."),
 ("fig", "surface_current"),
-("p", "The solver-reported maximum given in the caption lies at the layer-two level "
-      "near the aperture. On the rescaled plot the current on the layer-three resonant "
-      "path is of the order of a few amperes per metre, roughly two orders of magnitude "
-      "below it. That maximum and its position are solver-reported; the level on the "
-      "resonant path is an estimate read from a fixed-scale plot."),
+("p", "The solver-reported maximum given in the caption, 392.368 A/m at the layer-two "
+      "level near the aperture, is the only calibrated value available for this run. On "
+      "the fixed 0 to 5 A/m display the layer-three resonant path appears at "
+      "substantially lower current density than the layer-two field concentration. That "
+      "display is qualitative and supports no numerical ratio between the two."),
 ("p", "This observation is not on its own evidence that coupling into the resonator is "
       "inadequate. A resonant path can carry modest current and still dominate the "
       "reflected phase, and the comparison here is between a current maximum at a "
@@ -827,14 +831,8 @@ REFERENCES_NOTE = (
 
 APPENDIX_TABLES = {
     "param_inventory": dict(
-        short="Complete CST parameter inventory",
-        caption=("Complete inventory of named parameters in the CST model. The baseline "
-                 "column is the reconstruction baseline; the current column is the "
-                 "diagnostic checkpoint at slotW = 0.35 mm, slotL = 2.32 mm and "
-                 "lineV = 1.13 mm. A value given as [VERIFY] carries the flag VERIFY "
-                 "AGAINST CST PARAMETER LIST: the entry exists in the model record but "
-                 "could not be confirmed against the present model from the evidence "
-                 "available here."),
+        short="Current reconstructed-model parameters",
+        caption=("Named parameters of the current reconstruction. The baseline column is the reconstruction baseline; the current column is the diagnostic checkpoint at slotW = 0.35 mm, slotL = 2.32 mm and lineV = 1.13 mm. Development-record, superseded and disputed names are held separately in Table A.2."),
         headers=["Parameter", "Definition or expression", "Baseline", "Current", "Unit",
                  "Purpose", "Origin and status"],
         widths=[0.95, 1.12, 0.60, 0.70, 0.42, 1.45, 1.05],
@@ -860,8 +858,6 @@ APPENDIX_TABLES = {
             ["sub5", "0.127", "0.127", "0.127", "mm", "Substrate 5 thickness, L5 to L6", "Published [3]"],
             ["cuOuter", "0.035", "0.035", "0.035", "mm", "Outer-layer conductor thickness", "Inferred from the source stack"],
             ["cuInner", "0.018", "0.018", "0.018", "mm", "Inner-layer conductor thickness", "Inferred from the source stack"],
-            ["espAstra", "3", "3", "3", "-", "Substrate relative permittivity",
-             "Value published [3]; spelling disputed, [VERIFY AGAINST CST PARAMETER LIST]"],
             ["tanDAstra", "0.0017", "0.0017", "0.0017", "-", "Substrate electric loss tangent", "Published [3]"],
             # ---- bias network, published dimensions
             ["biasW", "0.25", "0.25", "0.25", "mm", "Bias-line width; published symbol Bl", "Published [3]; CST name from the model record"],
@@ -917,7 +913,18 @@ APPENDIX_TABLES = {
             ["Cmin", "0.025", "0.025", "0.025", "pF", "Lower capacitance endpoint", "Published device range [3]"],
             ["Cmax", "0.19", "0.19", "0.19", "pF", "Upper capacitance endpoint", "Published device range [3]"],
             ["varC", "set per run", "0.10", "0.025 or 0.19", "pF", "Active varactor capacitance", "Controlled variable"],
-            # ---- recorded in the model history, status in the present model unverified
+        ],
+    ),
+    "param_inventory_dev": dict(
+        short="Development-record and unverified parameter names",
+        caption=("Parameter names the model records preserve that cannot be placed in the current model from the evidence available here. A value given as [VERIFY] carries the flag VERIFY AGAINST CST PARAMETER LIST. The baseline column is the value the record captures; the current column is unconfirmed except where the value is published."),
+        headers=["Parameter", "Definition or expression", "Recorded", "Current", "Unit",
+                 "Purpose", "Origin and status"],
+        # Wider third column than Table A.1: "Recorded" broke to "Recorde / d"
+        # at 0.60 in. The difference comes off the purpose column.
+        widths=[0.95, 1.12, 0.75, 0.70, 0.42, 1.30, 1.05],
+        rows=[
+            ["espAstra", "3", "3", "3", "-", "Substrate relative permittivity", "Value published [3]; CST spelling disputed against epsAstra, [VERIFY]"],
             ["biasYTop", "0", "0", "[VERIFY]", "mm", "Bias-line extent, y maximum", "Model record capture, pre-rebuild topology"],
             ["biasYbottom", "-Bd", "-1.6", "[VERIFY]", "mm", "Bias-line extent, y minimum", "Model record capture, pre-rebuild topology"],
             ["rfTraceYmax", "viaY", "0", "[VERIFY]", "mm", "L6 radio-frequency trace, y maximum", "Model record capture, pre-rebuild topology"],
@@ -1003,7 +1010,7 @@ APPENDIX_TABLES = {
              "Rejected before simulation. Because capY is the varactor terminal-pair centre, the change drove the via into the varactor gap and produced overlapping solids, so no valid geometry existed to simulate."],
             ["Source-topology rebuild",
              "Rebuilding the bias-T on L3 as a branch, removing the L5 plane and routing the DC side through L5 recovers tuning",
-             "Rejected as the missing tuning mechanism; separation stayed at approximately 1 degree near the upper band edge. The topology corrections were kept, because they were made for source-fidelity reasons independent of their effect on tuning."],
+             "Rejected as the missing tuning mechanism; the branch did not recover meaningful tuning and separation stayed at approximately 1 degree near the upper band edge. Elements of the rebuild that are directly source-supported were retained; the layer-three bias-T placement remains the current reconstruction interpretation and is tracked as an unresolved source ambiguity."],
             ["Geometry diagnostics",
              "A nearby value of slotW, lineV or slotL recovers endpoint separation at the reference frequency",
              "Rejected for the values tested. See Section 7.3. Per-run numerical records for the slotW and lineV branches were not archived."],
@@ -1012,29 +1019,19 @@ APPENDIX_TABLES = {
 }
 
 APPENDICES = [
-    ("A", "Complete CST parameter inventory", [
-        ("p", "Table A.1 lists every named parameter used by the model, together with its "
-              "defining expression where it has one. The baseline column and the current "
-              "column are given separately, so that a value produced at the reconstruction "
-              "baseline is never shown as though it were the value at the present "
-              "checkpoint. For a parameter that does not depend on a displaced dimension "
-              "the two columns are identical."),
-        ("p", "Three parameters are displaced from their published values at the current "
-              "checkpoint: slotW, slotL and lineV. Every expression that depends on lineV "
-              "re-evaluates with it, and the current column for those entries is computed "
-              "from the recorded expression rather than read back from the solver. The "
-              "origin column marks them accordingly."),
-        ("p", "Parameter names were checked against the project model records. Two "
-              "discrepancies survive that check. The substrate permittivity parameter is "
-              "written espAstra in the Stage-A parameter table and epsAstra in the "
-              "later bias-T parameter audit, and no CST parameter export is available on "
-              "the machine used to prepare this report, so the spelling is flagged rather "
-              "than silently corrected. The stub half-height parameter is captured as "
-              "1.3 mm in the audit and as Bw/2 in the earlier construction, and it is "
-              "flagged on the same grounds. Entries recorded before the source-topology "
-              "rebuild described in Appendix D are marked as such, because the rebuild "
-              "moved the bias network and their present status is unconfirmed."),
+    ("A", "CST parameter inventory", [
+        ("p", "This appendix lists every named parameter the model records, divided by how far each one can be tied to the present reconstruction. Section A.1 holds the parameters believed to belong to the current model, and Section A.2 holds entries that the development record preserves but that the present evidence cannot place in it. Nothing is discarded between the two."),
+        ("p", "Neither table is an export. No CST parameter export is available on the machine used to prepare this report, so the inventory is assembled from the project model records. A direct export from the live model is still needed before Table A.1 can be treated as an authoritative statement of what the model contains."),
+
+        ("ah2", "Current reconstructed-model parameter inventory"),
+        ("p", "The baseline column and the current column are given separately, so that a value produced at the reconstruction baseline is never shown as though it were the value at the present checkpoint. For a parameter that does not depend on a displaced dimension the two columns are identical."),
+        ("p", "Three parameters are displaced from their published values at the current checkpoint: slotW, slotL and lineV. Every expression that depends on lineV re-evaluates with it, and the current column for those entries is computed from the recorded expression rather than read back from the solver. The origin column marks them accordingly. The substrate permittivity is not listed here because its parameter spelling is disputed; the entry is in Table A.2 and the value it carries, 3, is the published one."),
         ("atab", "param_inventory"),
+
+        ("ah2", "Development-record, superseded and unverified parameter names"),
+        ("p", "Table A.2 holds the entries that the model records preserve but that cannot be placed in the current model from the evidence available here. They fall into four groups: captures made before the source-topology rebuild described in Appendix D, which moved the bias network; constructions the report records as superseded; names the project records disagree about; and alternative names from the model history that carry no verified value."),
+        ("p", "Two disagreements are worth naming. The substrate permittivity parameter is written espAstra in the Stage-A parameter table and epsAstra in the later bias-T parameter audit. The stub half-height parameter is captured as 1.3 mm in the audit and as Bw/2 in the earlier construction. Both are flagged rather than silently corrected, and both are settled by the same parameter export that Table A.1 needs."),
+        ("atab", "param_inventory_dev"),
     ]),
     ("B", "Layer stack and derived z coordinates", [
         ("p", "All z coordinates are derived from the substrate and conductor thicknesses "
@@ -1066,12 +1063,7 @@ APPENDICES = [
               "onto the layer-six terminal pair. All results in the main text are Stage-B "
               "results. Table D.1 lists the branches and what each one settled."),
         ("atab", "rejected"),
-        ("p", "The stub dimensioning and orientation entries above were corrected against "
-              "the dimensioned bias-T figure of the 2020 precursor paper, reproduced as "
-              "Figure D.1. That figure shows the radial stub branching laterally from the "
-              "bias line, with the ports defined so that the transformer length and the "
-              "stub geometry can be read off directly. Its numerical dimensions belong to "
-              "the 2020 element and are not the dimensions used in this reconstruction."),
+        ("p", "The stub orientation entries above were read against the dimensioned bias-T figure of the 2020 precursor paper, reproduced as Figure D.1. That figure was used as supporting evidence for the qualitative bias-T topology and for the lateral orientation of the radial stub, and for nothing else. Its numerical dimensions belong to the 2020 precursor element and were not transferred as dimensions of the 2022 cell reconstructed here."),
         ("fig", "biasT_2020"),
     ]),
     ("E", "Additional electromagnetic plots", [

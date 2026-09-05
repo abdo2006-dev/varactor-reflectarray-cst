@@ -147,7 +147,7 @@ the source result.
 
 **List-of-figures entry.** Bias-T geometry of the 2020 precursor element
 
-**Caption.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it, which is the reading that corrected the stub orientation and dimensioning in this reconstruction. Note that the numerical dimensions belong to the 2020 element and not to the element reconstructed here. Reproduced from Harz et al. [2], Fig. 5, under the Creative Commons Attribution 4.0 licence.
+**Caption.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it. The figure was used as supporting evidence for the qualitative bias-T topology and for the lateral orientation of the radial stub. Its numerical dimensions belong to the 2020 precursor element and were not transferred as dimensions of the 2022 cell reconstructed here. Reproduced from Harz et al. [2], Fig. 5, under the Creative Commons Attribution 4.0 licence.
 
 ### Figure E.1
 

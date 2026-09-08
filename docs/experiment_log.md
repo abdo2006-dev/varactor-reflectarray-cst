@@ -103,7 +103,7 @@ acknowledged evidence gap.
 
 ---
 
-## Current experiment
+## G-03 (superseded as the current experiment)
 
 | Item | Value |
 |---|---|
@@ -117,8 +117,55 @@ acknowledged evidence gap.
 
 ---
 
+## Current experiment: G-04, wide-frequency endpoint diagnostic
+
+This is the experiment CL-P1 specified. Geometry was held fixed and only the
+frequency interval was widened, so the comparison against G-03 is a
+one-variable change.
+
+| Item | Value |
+|---|---|
+| ID | G-04 |
+| Runs | Run 17 (`varC = 0.19 pF`), Run 18 (`varC = 0.025 pF`) |
+| Geometry | `patchW = 2.30 mm`, `slotL = 2.32 mm`, `slotW = 0.35 mm`, `lineV = 1.13 mm` |
+| Capacitance states | 0.19 pF (run 17) and 0.025 pF (run 18) |
+| Frequency interval | approximately 25.5 to 28 GHz |
+| Reference frequency | 26.104 GHz |
+| Plot convention | red = 0.19 pF, green = 0.025 pF |
+
+### Outcome
+
+- Near 26.104 GHz the two endpoint phase responses remain close, as in G-03.
+- Over the widened interval a **capacitance-sensitive resonant region appears
+  near 26.8 GHz**. Changing `varC` shifts the reflection-magnitude dip and the
+  rapid phase transition associated with it.
+- The varactor therefore influences the electromagnetic resonance of the
+  complete unit cell, not only the impedance at its own terminals.
+- The tunable resonance is **displaced above** the intended 26.104 GHz operating
+  point. **The published tuning at 26.104 GHz is not reproduced.**
+- The CST phase display **wraps at plus or minus 180 degrees**. No tuning range
+  in degrees is claimed from these plots.
+
+### Record status
+
+`patchW = 2.30 mm` departs from the published `Pw` = 2.225 mm. It is carried
+here as recorded for runs 17 and 18. The branch in which `patchW` was first
+moved off its published value was not logged separately, which is a further
+instance of the per-variant record gap already listed in
+[claims_ledger.md](claims_ledger.md).
+
+Per-run convergence deltas for runs 17 and 18 are not in the supplied record.
+The numerical S-parameter export for these runs has not been made, so the
+outcome above is read from plots.
+
+---
+
 ## Next experiment
 
-Wider-frequency endpoint diagnostic on the unchanged G-03 geometry, at both
-capacitance endpoints, before any further geometry modification. Frequency
-bounds not yet chosen. See CL-P1.
+1. Numerical export of the complex S-parameter data for runs 17 and 18 over the
+   wide interval.
+2. Phase unwrapping, then a phase-difference calculation between the two states
+   at matched frequencies, so the tuning can be stated in degrees.
+3. Re-declaration of the `Astra_MT77` material fit range, currently 25.6 to
+   26.6 GHz, before any quantitative result is taken from the 26.8 GHz region.
+4. Targeted tests of the reconstruction hypotheses, starting with CL-P3.

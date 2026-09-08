@@ -6,6 +6,80 @@ The format follows the spirit of Keep a Changelog. Because this repository is a
 research record rather than a released product, entries also note when a claim
 changed status in `docs/claims_ledger.md`.
 
+## Wide-frequency endpoint result, and public-repository presentation pass
+
+Two things: a new experimental result that changes the project's status, and a
+pass over the repository so that it reads as a technical record rather than a
+workspace.
+
+### Added
+
+- **G-04, the wide-frequency endpoint diagnostic.** Runs 17 (`varC = 0.19 pF`)
+  and 18 (`varC = 0.025 pF`) on the current geometry over approximately 25.5 to
+  28 GHz. This is the experiment CL-P1 specified.
+- `CL-15`, the wide-frequency endpoint result.
+- `CL-P4`, numerical export and unwrapped phase comparison, now the immediate
+  next step.
+- `figures/model/` and `figures/results/`, with a README in each stating what
+  belongs there and what may not be read from it.
+- `tools/check_public_repo.py`, a hygiene gate over the tracked tree: broken
+  links, local absolute paths, credential patterns, OS and editor debris,
+  publisher PDFs outside `deliverables/`, and internal workflow directories.
+
+### Changed
+
+- **The project's scientific status.** Over the widened sweep a
+  capacitance-sensitive resonant region appears near 26.8 GHz: changing `varC`
+  shifts the reflection-magnitude dip and the rapid phase transition that
+  accompanies it. The varactor therefore acts on the resonance of the complete
+  unit cell, which the terminal-impedance check of CL-09 could not establish on
+  its own. **The published tuning at 26.104 GHz is still not reproduced** — the
+  tunable feature is displaced above the intended operating point. **No tuning
+  range in degrees is claimed anywhere**, because the phase CST displays wraps
+  at plus or minus 180 degrees and no numerical S-parameter export exists.
+- `CL-H1` moves from open hypothesis to supported: the region it predicted above
+  26.6 GHz was found. Why it sits there rather than at 26.104 GHz is a separate
+  open question and is recorded as such.
+- `CL-P1` moves to done. The `Astra_MT77` fit range was **not** re-declared
+  before the run and is still 25.6 to 26.6 GHz, so everything reported above
+  26.6 GHz lies outside the range the material model was fitted for. That step
+  is carried forward into CL-P4.
+- The current geometry record now lists `patchW = 2.30 mm` and states that it
+  **departs from the published `Pw` of 2.225 mm**. Four of the eleven published
+  dimensions are now displaced by choice; the reconstruction baseline still
+  reproduces all eleven exactly.
+- Report Sections 7 to 10 rewritten around the new result. Section 7 now covers
+  the widened sweep with both the magnitude and the phase overlay; Section 9's
+  immediate task is the numerical export rather than the wider sweep; Section 10
+  states that the mechanism is present but at the wrong frequency.
+- `README.md` rewritten for a reader arriving without context: the published
+  device, the reconstruction, the operating principle, the current parameters,
+  what is verified, the current result, what is unresolved, what was already
+  tested, and what comes next. The reference figures from the source paper are
+  shown with their CC BY 4.0 attribution.
+- Three new evidence gaps recorded: plot-read rather than numerical values for
+  runs 17 and 18, the material fit range for the widened sweep, and the missing
+  branch record for `patchW`.
+
+### Removed
+
+- `prompts/claude_code/`, the archive of instructions used while building the
+  repository. It is workflow material, not evidence: nothing in it is needed to
+  understand the physics, the geometry, the numerical setup or the results, and
+  no script referenced it. The provenance statement it existed to support is now
+  one short paragraph at the end of `README.md`, which states that the writing
+  was AI-assisted under evidence-control rules and that no part of the modelling,
+  the experiment design or the results is machine generated. No history was
+  rewritten; the directory remains in earlier commits.
+
+### Fixed
+
+- **`.gitignore` was silently ignoring `figures/model/`.** The CST solver rule
+  `Model/` matched it, because Git's ignore matching is case-insensitive on macOS
+  (`core.ignorecase`). Any model screenshot committed there would have been
+  dropped with no warning. `figures/model/` and `figures/results/` are now
+  explicitly re-included, with the reason recorded beside the rule.
+
 ## Working-report technical wording
 
 Branch `report/academic-restructure-v2`. A small correction pass over the

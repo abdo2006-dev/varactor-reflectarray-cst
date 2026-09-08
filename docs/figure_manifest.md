@@ -96,18 +96,33 @@ the source result.
 
 **Status.** **required, not yet available**
 
-**What must be captured or exported.** Overlay of the reflection phase of SZmax(1),Zmax(1) against frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry over approximately 25.6 to 26.6 GHz, with 26.104 GHz marked. Export the underlying numerical data at the same time so that the separation can be stated in degrees.
+**What must be captured or exported.** Overlay of the reflection magnitude of SZmax(1),Zmax(1) against frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry over approximately 25.5 to 28 GHz (runs 17 and 18). Save to figures/results/g04_reflection_magnitude.png.
+
+**Save to.** `figures/cst/endpoint_magnitude.png`, then set `path` for `endpoint_magnitude` in
+`tools/report_build/report_content.py` and rebuild.
+
+**Reserved height.** 3.20 in
+
+**List-of-figures entry.** Endpoint reflection magnitude, wide sweep
+
+**Caption.** Reflection magnitude of SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry, over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. The magnitude dip near 26.8 GHz moves with capacitance, which is the clearest evidence in this project that the varactor reaches the resonance of the complete unit cell. The sweep extends beyond the declared Astra MT77 material fit range of 25.6 to 26.6 GHz, so this region is a diagnostic indication rather than a quantitative prediction.
+
+### Figure 7
+
+**Status.** **required, not yet available**
+
+**What must be captured or exported.** Overlay of the reflection phase of SZmax(1),Zmax(1) against frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry over approximately 25.5 to 28 GHz (runs 17 and 18), with 26.104 GHz marked. Save to figures/results/g04_reflection_phase.png. Export the underlying complex S-parameter data at the same time: the displayed phase is wrapped, so no tuning range in degrees can be taken from the plot.
 
 **Save to.** `figures/cst/endpoint_phase.png`, then set `path` for `endpoint_phase` in
 `tools/report_build/report_content.py` and rebuild.
 
 **Reserved height.** 3.20 in
 
-**List-of-figures entry.** Endpoint reflection phase on the current geometry
+**List-of-figures entry.** Endpoint reflection phase, wide sweep
 
-**Caption.** Reflection phase of the co-polarised term SZmax(1),Zmax(1) at the two capacitance endpoints on the current geometry (lineV = 1.13 mm, slotW = 0.35 mm, slotL = 2.32 mm), over approximately 25.6 to 26.6 GHz. Both runs satisfy the convergence criterion of Section 5.3. The reference frequency 26.104 GHz is marked.
+**Caption.** Reflection phase of the co-polarised term SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry (patchW = 2.30 mm, slotL = 2.32 mm, slotW = 0.35 mm, lineV = 1.13 mm), over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. Near the intended 26.104 GHz operating frequency the two responses remain close; a capacitance-dependent shift of the resonant feature appears near 26.8 GHz. The displayed phase wraps at plus or minus 180 degrees, so the tuning range has not been quantified from this plot.
 
-### Figure 7
+### Figure 8
 
 **Status.** **required, not yet available**
 

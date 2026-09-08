@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-05
+Last updated: 2026-09-08
 
 This file records the current authoritative state of the CST model. It is the
 first file to read when resuming work. Where an earlier project note conflicts
@@ -19,18 +19,22 @@ with this file, this file wins.
 
 | Parameter | Value | Status |
 |---|---:|---|
-| `lineV` | 1.13 mm | current controlled value |
-| `slotW` | 0.35 mm | current controlled value |
-| `slotL` | 2.32 mm | current controlled value |
+| `patchW` | 2.30 mm | current controlled value; **departs from the published `Pw` = 2.225 mm** |
+| `slotW` | 0.35 mm | current controlled value; published `Sw` = 0.26 mm |
+| `slotL` | 2.32 mm | current controlled value; published `Sl` = 2.275 mm |
+| `lineV` | 1.13 mm | current controlled value; published `Lv` = 1.11 mm |
 | `lineW` | 0.33 mm | unchanged from the reconstruction baseline |
 | `lineS` | 0.20 mm | unchanged from the reconstruction baseline |
 | `viaX`, `viaY` | 0, 0 | locked (see [claims_ledger.md](claims_ledger.md), CL-11) |
 | `cellX`, `cellY` | 7 mm, 7 mm | unchanged |
 
-The values of `lineV`, `slotW` and `slotL` above are the endpoint of the
-geometry sensitivity sequence described in
-[experiment_log.md](experiment_log.md). They are project-chosen test values, not
-values published by the source design.
+The values of `patchW`, `slotW`, `slotL` and `lineV` above are diagnostic
+settings reached by the sensitivity sequence in
+[experiment_log.md](experiment_log.md). **They are not optimised dimensions and
+they are not the values published by the source design**, which are listed
+beside them. Four of the eleven published dimensions are therefore currently
+displaced by choice; the reconstruction baseline in
+[claims_ledger.md](claims_ledger.md) CL-S3 still reproduces all eleven exactly.
 
 ## Current reference frequency
 
@@ -38,8 +42,14 @@ values published by the source design.
 
 ## Current simulated frequency interval
 
-Approximately 25.6 to 26.6 GHz. This interval is also the material fit range
-declared for `Astra_MT77` in the model.
+Approximately **25.5 to 28 GHz**, widened from the earlier 25.6 to 26.6 GHz
+interval by the G-04 diagnostic below.
+
+The `Astra_MT77` material fit range in the model is still declared over 25.6 to
+26.6 GHz, so the sweep now extends beyond the range the material model was fitted
+for. The response above 26.6 GHz is therefore a diagnostic indication of where a
+capacitance-sensitive feature sits, not a quantitative prediction, and the fit
+range must be re-declared before any number is taken from that region.
 
 ## Current endpoint capacitances
 
@@ -50,32 +60,50 @@ declared for `Astra_MT77` in the model.
 
 ## Current confirmed result
 
-Both endpoint simulations on the `slotL = 2.32 mm` geometry satisfy the
-project's current adaptive-mesh convergence criterion of approximately 0.01 on
-the maximum change in all S-parameters between passes.
+The wide-frequency endpoint diagnostic (G-04, runs 17 and 18) has been run on the
+current geometry at both capacitance endpoints over approximately 25.5 to 28 GHz.
 
-The two endpoint reflection-phase curves remain almost coincident near
-26.104 GHz. Some additional separation appears near the upper end of the
-simulated interval, around 26.5 to 26.6 GHz.
+**The varactor does influence the electromagnetic resonance of the complete unit
+cell.** Over the wider interval the two endpoint responses are no longer close
+everywhere: a capacitance-sensitive resonant region appears near **26.8 GHz**,
+where changing `varC` shifts both the reflection-magnitude dip and the rapid
+phase transition associated with it. That is a whole-cell effect, and it is the
+first direct evidence in this project that the tuning element reaches the
+reflected field rather than only being electrically active at its own terminals.
 
-The `slotL = 2.32 mm` test did not produce tuning at the target frequency.
+**The published tuning at 26.104 GHz has still not been reproduced.** Near the
+intended operating frequency the two endpoint phase responses remain close. The
+capacitance-sensitive feature is displaced above the intended operating point,
+which is a different situation from the earlier one — the mechanism is now
+visible, but it is at the wrong frequency.
+
+**No tuning range in degrees may be read from these plots.** The phase shown by
+CST wraps at plus or minus 180 degrees, so a screenshot cannot support a
+300-degree-class claim in either direction. The published 337-degree simulated
+figure and the 322-degree measured figure remain untouched targets, not results.
 
 ## Current hypothesis
 
-The stronger capacitance-sensitive region may lie above the present 26.6 GHz
-upper simulation boundary. This is a hypothesis. No simulation above 26.6 GHz
-has been run, so nothing in this repository establishes that a resonance exists
-there.
+The earlier hypothesis CL-H1 — that the stronger capacitance-sensitive region
+lies above the previous 26.6 GHz boundary — is now **supported** by G-04, at
+approximately 26.8 GHz. What remains open is why the feature sits there rather
+than at 26.104 GHz. The candidates are the reconstruction assumptions
+(CL-A1 to CL-A8), the four displaced geometry values listed above, weak aperture
+coupling (CL-H2), and the ideal-capacitor representation of the varactor. None
+of these is established, and they are not ranked.
 
 ## Next experiment
 
-A wider-frequency endpoint diagnostic on the unchanged
-`lineV = 1.13`, `slotW = 0.35`, `slotL = 2.32` geometry, run at both
-capacitance endpoints, before any further geometry modification.
-
-Exact new frequency bounds: to be decided. They have not been chosen and have
-not been run. Extending the sweep also requires re-checking the `Astra_MT77`
-material fit range, which is currently declared over 25.6 to 26.6 GHz.
+1. **Numerical export of the complex S-parameter data** for both endpoints over
+   the wide interval, replacing screenshot reading with exported values.
+2. **Phase unwrapping and a matched-frequency phase-difference calculation**, so
+   the capacitance-dependent phase change can be stated in degrees at a stated
+   frequency instead of being read off a wrapped plot.
+3. **Re-declaration of the `Astra_MT77` material fit range** to cover the widened
+   sweep, before any quantitative result is taken from above 26.6 GHz.
+4. **Targeted tests of the reconstruction hypotheses**, beginning with the
+   assumed via and ground-clearance dimensions (CL-P3), to see which of them
+   moves the resonant feature toward 26.104 GHz.
 
 ## Source verification status
 

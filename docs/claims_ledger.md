@@ -189,6 +189,35 @@ band edge.
 **Kind.** qualitative. **Precision.** screenshot estimated.
 **Confidence.** high. **Status.** confirmed.
 
+### CL-15 Wide-frequency endpoint result
+
+**Claim.** On the current geometry (`patchW = 2.30`, `slotL = 2.32`,
+`slotW = 0.35`, `lineV = 1.13` mm), an endpoint pair run over approximately
+25.5 to 28 GHz shows a capacitance-sensitive resonant region near 26.8 GHz.
+Changing `varC` between 0.025 pF and 0.19 pF shifts the reflection-magnitude dip
+and the rapid phase transition associated with it. Near 26.104 GHz the two
+endpoint phase responses remain close. The published tuning at 26.104 GHz is not
+reproduced.
+**Evidence.** Runs 17 (`varC = 0.19 pF`) and 18 (`varC = 0.025 pF`), G-04 in
+[experiment_log.md](experiment_log.md).
+**Configuration.** approximately 25.5 to 28 GHz, `fRef = 26.104 GHz`, red =
+0.19 pF and green = 0.025 pF in the plots.
+**Kind.** qualitative.
+**Precision.** screenshot estimated. The 26.8 GHz location is read from the
+plot, and no phase difference in degrees is stated, because the displayed phase
+wraps at plus or minus 180 degrees and the numerical S-parameter export has not
+been made.
+**What this does and does not establish.** It establishes that the varactor
+influences the resonance of the complete unit cell, which the terminal
+impedance check of CL-09 alone could not. It does **not** establish the tuning
+range, does not reproduce the published response, and does not identify why the
+feature sits above the intended operating frequency.
+**Caveat.** The sweep extends beyond the declared `Astra_MT77` material fit
+range of 25.6 to 26.6 GHz, so the 26.8 GHz region is a diagnostic indication
+rather than a quantitative prediction.
+**Confidence.** medium to high for the existence of the feature; low for its
+exact frequency. **Status.** confirmed.
+
 ---
 
 ## Source claims (properties of the published design, not of this model)
@@ -569,8 +598,12 @@ current geometry lies above the present 26.6 GHz upper simulation boundary.
 near 26.5 to 26.6 GHz than near 26.104 GHz. That is a weak trend at the edge of
 the simulated interval.
 **What would test it.** CL-P1.
-**Status.** hypothesis. **Confidence.** low. Nothing in this repository
-establishes that a resonance exists above 26.6 GHz.
+**Status.** **supported by CL-15.** The wide-frequency diagnostic found a
+capacitance-sensitive resonant region near 26.8 GHz, above the previous
+boundary. **Confidence.** medium. What the hypothesis predicted has been
+observed; the reason the feature sits there rather than at 26.104 GHz is a
+separate open question and is not answered by this result. The frequency itself
+is plot-read and lies outside the declared material fit range.
 
 ### CL-H2 Weak aperture coupling into the resonant stripline
 
@@ -594,9 +627,19 @@ between capacitance states.
 
 Run both capacitance endpoints on the unchanged current geometry over a
 frequency interval wider than 25.6 to 26.6 GHz, before any further geometry
-change. The bounds have not been chosen. Extending the sweep requires
-re-checking the `Astra_MT77` material fit range.
-**Status.** planned. Not run.
+change.
+**Status.** **done.** Run as G-04 over approximately 25.5 to 28 GHz; the result
+is CL-15. The `Astra_MT77` fit range was **not** re-declared before the run and
+is still 25.6 to 26.6 GHz, so that step is carried forward into CL-P4.
+
+### CL-P4 Numerical export and unwrapped phase comparison
+
+Export the complex S-parameter data for runs 17 and 18 over the wide interval,
+unwrap the phase, and compute the phase difference between the two capacitance
+states at matched frequencies, so the tuning can be stated in degrees instead of
+read from a wrapped plot. Re-declare the `Astra_MT77` material fit range first.
+**Status.** planned. Not run. **This is the immediate next step**, and until it
+is done no tuning range in degrees may be quoted from this project.
 
 ### CL-P2 Capacitance comparison of the field monitors
 
@@ -627,25 +670,36 @@ missing.
    but does not give the two numbers.
 3. Numerical phase separation, in degrees, between the current endpoint curves
    at 26.5 to 26.6 GHz. Described as some additional separation, not measured.
-4. Any result above 26.6 GHz. None exists.
-5. The exact varactor part variant. See the ambiguity recorded in CL-S6.
-6. The incidence angle used in the source's own unit-cell simulation. The 2022
+4. Numerical, as opposed to plot-read, values for the wide-frequency endpoint
+   pair. CL-15 rests on plot readings: the 26.8 GHz location, the shift of the
+   magnitude dip and the position of the phase transition are all screenshot
+   estimates, and the displayed phase is wrapped. Per-run convergence deltas for
+   runs 17 and 18 are also not in the supplied record. Closing this gap is
+   CL-P4.
+5. The `Astra_MT77` material fit range for the widened sweep. The model still
+   declares 25.6 to 26.6 GHz, so everything reported above 26.6 GHz is outside
+   the range the material model was fitted for.
+6. The branch record for `patchW`. The current geometry uses
+   `patchW = 2.30 mm` against a published `Pw` of 2.225 mm, and the branch in
+   which that value was first moved was not logged separately.
+7. The exact varactor part variant. See the ambiguity recorded in CL-S6.
+8. The incidence angle used in the source's own unit-cell simulation. The 2022
    paper states that the element was optimised in a unit-cell configuration but
    does not give the incidence angle for that simulation. This project uses
    normal incidence. The published measurement, by contrast, used a waveguide
    simulator at 21.4 degrees.
-7. The conductor layer of the bias-T. See CL-S11 and CL-A8.
-8. The spelling of the substrate permittivity parameter. The Stage-A parameter
+9. The conductor layer of the bias-T. See CL-S11 and CL-A8.
+10. The spelling of the substrate permittivity parameter. The Stage-A parameter
    table records `espAstra` and the later bias-T parameter audit records
    `epsAstra`. No CST parameter export is available on the machine used to
    prepare the report, so neither spelling can be confirmed. Appendix A of the
    report carries the flag `[VERIFY AGAINST CST PARAMETER LIST]` rather than a
    silent correction.
-9. The current value and definition of `stubHalfH`. One model record captures
+11. The current value and definition of `stubHalfH`. One model record captures
    1.3 mm, equal to `Bw`; the earlier construction used `Bw/2 = 0.65 mm`. The
    parameters derived from it, `stubEdgeX` and `stubHalfSpanY`, inherit the same
    uncertainty. Flagged in Appendix A on the same grounds.
-10. The present status of the Layer-6 bias-network parameters captured before
+12. The present status of the Layer-6 bias-network parameters captured before
    the source-topology rebuild: `biasYTop`, `biasYbottom`, `rfTraceYmax`,
    `rfTraceYmin`, `dcTraceYmax` and `dcTraceYmin`. Their baseline values are
    recorded; whether they survive the rebuild is unverified.

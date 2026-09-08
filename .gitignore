@@ -23,6 +23,16 @@ Temp/
 temp/
 DesignEnvironment*.log
 
+# `Model/` and `Result/` above are CST solver output directories. Git's ignore
+# matching is case-insensitive on macOS (core.ignorecase), so those two rules also
+# match `figures/model/` and `figures/results/`, which are tracked figure
+# directories. Re-include them explicitly, or the model screenshots and the result
+# plots are silently dropped at commit time with no warning.
+!figures/model/
+!figures/model/**
+!figures/results/
+!figures/results/**
+
 # Mesh and field dumps
 *.mesh
 *.msh

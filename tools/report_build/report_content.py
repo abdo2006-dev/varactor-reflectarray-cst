@@ -92,7 +92,7 @@ FIGURES = {
             "Fig. 2, under the Creative Commons Attribution 4.0 licence."),
     ),
     "cst_iso": dict(
-        path=None,
+        path=None,   # figures/model/model_isometric.png once captured
         height=3.3,
         short="CST reconstruction of the unit cell",
         need=("Isometric view of the reconstructed unit cell in CST Studio Suite 2023, "
@@ -107,7 +107,7 @@ FIGURES = {
             "across the layer-six terminal pads representing the varactor."),
     ),
     "cst_layers": dict(
-        path=None,
+        path=None,   # figures/model/model_layer_stack.png once captured
         height=3.45,
         short="Layer-by-layer CST reconstruction",
         need=("Layer-by-layer or exploded composite view of the reconstruction, one "
@@ -141,18 +141,40 @@ FIGURES = {
     "endpoint_phase": dict(
         path=None,
         height=3.2,
-        short="Endpoint reflection phase on the current geometry",
+        short="Endpoint reflection phase, wide sweep",
         need=("Overlay of the reflection phase of SZmax(1),Zmax(1) against frequency "
               "for varC = 0.025 pF and varC = 0.19 pF on the current geometry over "
-              "approximately 25.6 to 26.6 GHz, with 26.104 GHz marked. Export the "
-              "underlying numerical data at the same time so that the separation can "
-              "be stated in degrees."),
+              "approximately 25.5 to 28 GHz (runs 17 and 18), with 26.104 GHz marked. "
+              "Save to figures/results/g04_reflection_phase.png. Export the underlying "
+              "complex S-parameter data at the same time: the displayed phase is "
+              "wrapped, so no tuning range in degrees can be taken from the plot."),
         caption=(
             "Reflection phase of the co-polarised term SZmax(1),Zmax(1) at the two "
-            "capacitance endpoints on the current geometry (lineV = 1.13 mm, "
-            "slotW = 0.35 mm, slotL = 2.32 mm), over approximately 25.6 to 26.6 GHz. "
-            "Both runs satisfy the convergence criterion of Section 5.3. The reference "
-            "frequency 26.104 GHz is marked."),
+            "capacitance endpoints on the current diagnostic geometry (patchW = 2.30 mm, "
+            "slotL = 2.32 mm, slotW = 0.35 mm, lineV = 1.13 mm), over approximately "
+            "25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. Near "
+            "the intended 26.104 GHz operating frequency the two responses remain close; "
+            "a capacitance-dependent shift of the resonant feature appears near "
+            "26.8 GHz. The displayed phase wraps at plus or minus 180 degrees, so the "
+            "tuning range has not been quantified from this plot."),
+    ),
+    "endpoint_magnitude": dict(
+        path=None,
+        height=3.2,
+        short="Endpoint reflection magnitude, wide sweep",
+        need=("Overlay of the reflection magnitude of SZmax(1),Zmax(1) against "
+              "frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry "
+              "over approximately 25.5 to 28 GHz (runs 17 and 18). Save to "
+              "figures/results/g04_reflection_magnitude.png."),
+        caption=(
+            "Reflection magnitude of SZmax(1),Zmax(1) at the two capacitance endpoints "
+            "on the current diagnostic geometry, over approximately 25.5 to 28 GHz. Red "
+            "is varC = 0.19 pF and green is varC = 0.025 pF. The magnitude dip near "
+            "26.8 GHz moves with capacitance, which is the clearest evidence in this "
+            "project that the varactor reaches the resonance of the complete unit cell. "
+            "The sweep extends beyond the declared Astra MT77 material fit range of "
+            "25.6 to 26.6 GHz, so this region is a diagnostic indication rather than a "
+            "quantitative prediction."),
     ),
     "surface_current": dict(
         path=None,
@@ -653,29 +675,36 @@ BODY = [
       "the investigation is in progress and the results below are a status, not an "
       "outcome."),
 
-("h2", "Endpoint reflection phase"),
-("p", "Figure 6 overlays the reflection phase at the two capacitance endpoints on the "
-      "current geometry. Both runs satisfy the convergence criterion of Section 5.3, so "
-      "the comparison is between two numerically settled solutions rather than between "
-      "two partially converged ones."),
+("h2", "Endpoint response over the widened sweep"),
+("p", "The endpoint pair was first run over the 25.6 to 26.6 GHz interval inherited from "
+      "the source measurement, where the two capacitance states produced almost "
+      "coincident reflection-phase curves. That interval was chosen by the source, not "
+      "to find the element's capacitance-sensitive region, so the pair was re-run over "
+      "approximately 25.5 to 28 GHz on unchanged geometry. Runs 17 and 18 are that "
+      "diagnostic. In both figures below, red is varC = 0.19 pF and green is "
+      "varC = 0.025 pF."),
+("fig", "endpoint_magnitude"),
+("p", "The reflection magnitude stays close to 0 dB over most of the sweep, as expected "
+      "of perfect conductors on a low-loss substrate. Near 26.8 GHz, however, a dip "
+      "appears, and it moves with the varactor capacitance. That is the first result in "
+      "this project showing the tuning element acting on the resonance of the complete "
+      "unit cell rather than only on the impedance at its own terminals, and it is "
+      "stronger evidence than the terminal check of Section 6.2, which validates the "
+      "component and not the circuit around it."),
 ("fig", "endpoint_phase"),
-("p", "The two curves remain almost coincident across most of the simulated interval, and "
-      "in particular at the 26.104 GHz reference frequency. Some additional separation is "
-      "visually apparent toward the upper end of the interval, near 26.5 to 26.6 GHz. The "
-      "current reconstruction therefore does not yet exhibit meaningful "
-      "capacitance-dependent reflection-phase separation at the reference frequency."),
-("p", "The separation is not quantified in degrees here. The observation is a reading "
-      "from overlaid plots, and the underlying S-parameter data have not been exported "
-      "numerically; Section 9 gives that as an immediate task."),
-
-("h2", "Endpoint reflection magnitude"),
-("p", "The reflection magnitude stays close to 0 dB across the interval in every "
-      "converged branch, and the two endpoint curves differ by a few hundredths of a "
-      "decibel. That is expected of perfect conductors on a low-loss substrate and "
-      "serves only as a check that no unintended loss mechanism has entered the model. A "
-      "low-loss resonant element can shift phase strongly while its reflection magnitude "
-      "stays near unity, so the magnitude carries no evidence either way about a "
-      "resonance. The overlay is Figure E.1."),
+("p", "The phase response carries the same feature: a rapid transition accompanying the "
+      "magnitude dip, whose frequency moves with capacitance. Near the intended "
+      "26.104 GHz operating frequency the two curves remain close, as they did over the "
+      "narrower interval. The capacitance-sensitive resonance therefore exists in this "
+      "reconstruction but is displaced above the operating point the source design "
+      "works at. The published tuning at 26.104 GHz is not reproduced."),
+("p", "No tuning range in degrees is claimed from these figures, for two reasons. The "
+      "phase displayed by CST wraps at plus or minus 180 degrees, so a phase excursion "
+      "read from the plot is not a phase range. And the sweep extends past the "
+      "Astra MT77 material fit range declared in the model, 25.6 to 26.6 GHz, so the "
+      "26.8 GHz region is a diagnostic indication of where the feature sits rather than "
+      "a quantitative prediction. Section 9 gives the numerical export and phase "
+      "unwrapping that would settle both points."),
 
 ("h2", "Preliminary geometry diagnostics"),
 ("p", "Single-parameter adjustments to the slot width, the resonant stripline length and "
@@ -709,48 +738,54 @@ BODY = [
 
 # ===================== 8 ==================================================
 ("h1", "Current engineering status"),
-("p", "Four things are established. The baseline reconstruction implements all "
+("p", "Five things are established. The baseline reconstruction implements all "
       "dimensions explicitly published for the 2022 reference element, and the model "
       "solves as a periodic unit-cell model with a defensible solver configuration; the "
-      "current checkpoint departs from three of those dimensions by design. Accepted runs meet a stated convergence criterion that has "
-      "excluded results in practice. The lumped varactor is electrically active and "
-      "responds to the capacitance parameter as an ideal capacitor. On the current "
-      "geometry, the two capacitance endpoints produce almost coincident reflection-phase "
-      "curves at the reference frequency."),
-("p", "Three things are unresolved. The frequency region in which this element is most "
-      "sensitive to capacitance has not been located, and the simulated interval so far "
-      "has been the one inherited from the source measurement rather than one chosen to "
-      "find that region. The reconstruction still contains unpublished quantities, listed "
-      "in Table 3, whose influence has not been bounded. And it is not yet known whether "
-      "the discrepancy originates in the coupling into the resonator, in the placement of "
-      "the resonance, in one of those assumed quantities, or in some combination of them."),
+      "current checkpoint departs from four of those dimensions by design. Accepted runs "
+      "meet a stated convergence criterion that has excluded results in practice. The "
+      "lumped varactor is electrically active and responds to the capacitance parameter "
+      "as an ideal capacitor. Over a widened sweep the varactor is shown to act on the "
+      "resonance of the complete unit cell, near 26.8 GHz. And at the intended "
+      "26.104 GHz operating frequency the two capacitance endpoints still produce "
+      "almost coincident reflection-phase curves."),
+("p", "Three things are unresolved. Why the capacitance-sensitive feature sits near "
+      "26.8 GHz rather than at 26.104 GHz is not known. The reconstruction still "
+      "contains unpublished quantities, listed in Table 3, whose influence has not been "
+      "bounded, and four published dimensions are currently displaced by choice. And the "
+      "tuning has not been quantified at all: the phase plots are wrapped and no "
+      "numerical S-parameter export exists, so this project states no phase range in "
+      "degrees."),
 ("p", "The diagnostic branches carried out so far have not localised the discrepancy. "
       "Each rejects one hypothesis about the topology or one nearby geometry; none "
-      "establishes that the feature it changed is electrically unimportant, and none has "
-      "been tested outside the original 1 GHz interval."),
+      "establishes that the feature it changed is electrically unimportant."),
 
 # ===================== 9 ==================================================
 ("h1", "Ongoing work"),
-("p", "The immediate task is a wider-frequency endpoint diagnostic on the unchanged "
-      "current geometry, run at both capacitance endpoints. Widening the sweep before "
-      "changing the geometry again keeps the comparison against the existing result "
-      "clean, and it directly addresses the possibility that the capacitance-sensitive "
-      "region lies outside the interval examined so far. The new bounds have not been "
-      "selected. Extending the interval also requires re-checking the material fit range, "
-      "which is currently declared over 25.6 to 26.6 GHz, and the published material "
-      "specification itself is quoted only to 20 GHz."),
-("p", "Alongside that, the S-parameter results will be exported numerically rather than "
-      "read from plots, so that endpoint separation can be stated in degrees and tracked "
-      "between branches instead of being described qualitatively."),
-("p", "Further work depends on what those two steps show. If a capacitance-sensitive "
-      "region is found, the sequence is to characterise it, then to move it toward "
-      "26.104 GHz by targeted geometry changes, and only then to run a dense capacitance "
-      "sweep. If no such region is found, the assumed quantities in Table 3 become the "
-      "next candidates, starting with a sensitivity test of the via and clearance "
-      "diameters and a field-monitor comparison between the two capacitance states on "
-      "the same geometry."),
-("p", "None of the work in this section has been carried out. Nothing in this report "
-      "establishes that a resonance exists above the present upper simulation boundary."),
+("p", "The wider-frequency diagnostic that this section previously listed as the "
+      "immediate task has been carried out; it is Section 7 and runs 17 and 18. It "
+      "located a capacitance-sensitive region near 26.8 GHz and so changed the problem: "
+      "the question is no longer whether the varactor reaches the resonance, but why the "
+      "resonance sits above the intended operating frequency."),
+("p", "The immediate task is now the numerical one. The complex S-parameter data for "
+      "both endpoints will be exported rather than read from plots, the phase will be "
+      "unwrapped, and the phase difference between the two capacitance states will be "
+      "computed at matched frequencies. Only then can this project state a tuning range "
+      "in degrees, at a stated frequency, and compare it against the 337-degree "
+      "simulated and 322-degree measured figures the source reports. Before any "
+      "quantitative value is taken from the 26.8 GHz region, the Astra MT77 material fit "
+      "range must be re-declared to cover the widened sweep; it is currently 25.6 to "
+      "26.6 GHz, and the published material specification itself is quoted only to "
+      "20 GHz."),
+("p", "After that, the reconstruction hypotheses are tested against the position of the "
+      "feature. The sequence is a sensitivity test of the assumed via and ground-"
+      "clearance diameters, a field-monitor comparison between the two capacitance "
+      "states on the same geometry, and a return of the four displaced published "
+      "dimensions toward their published values, each as a separate one-variable branch. "
+      "A dense capacitance sweep is worth running only once the feature has been moved "
+      "toward 26.104 GHz."),
+("p", "None of the work in this section has been carried out. The 26.8 GHz feature is a "
+      "plot reading taken partly outside the declared material fit range; this report "
+      "does not treat its frequency as a settled value."),
 
 # ===================== 10 =================================================
 ("h1", "Interim project status"),
@@ -760,19 +795,26 @@ BODY = [
       "design. The solver configuration, the convergence behaviour and the internal "
       "connectivity have been checked, and the lumped varactor has been verified to be "
       "electrically active at both capacitance endpoints."),
-("p", "The behaviour that motivated the work has not been recovered. On the geometry "
-      "tested so far, changing the varactor capacitance across its full range leaves the "
-      "reflection phase at 26.104 GHz essentially unchanged, whereas the source reports a "
-      "simulated phase shift of 337 degrees for its element and a measured phase-change "
-      "range of 322 degrees at that frequency. Explaining that difference is the open "
-      "problem, and this report does not claim to have reproduced the published "
-      "behaviour. No hardware has been fabricated or measured in this project; every "
+("p", "The behaviour that motivated the work has not been recovered. Changing the "
+      "varactor capacitance across its full range leaves the reflection phase at "
+      "26.104 GHz essentially unchanged, whereas the source reports a simulated phase "
+      "shift of 337 degrees for its element and a measured phase-change range of 322 "
+      "degrees at that frequency. **This report does not claim to have reproduced the "
+      "published response.**"),
+("p", "What has changed is the shape of the open problem. The widened sweep shows that "
+      "the varactor does move a resonance of the complete unit cell, near 26.8 GHz, so "
+      "the mechanism the design depends on is present in the reconstruction and is "
+      "simply at the wrong frequency. That is a more tractable question than the one "
+      "this project started with. It is also not yet quantified: the phase plots are "
+      "wrapped and no numerical export exists, so no tuning range in degrees is stated "
+      "anywhere in this document. No hardware has been fabricated or measured; every "
       "result reported here is from simulation."),
-("p", "The next step is the wider-frequency diagnostic described in Section 9, followed "
-      "by numerical export of the endpoint data. This document is a working engineering "
-      "report and will be revised as that work produces results. When the investigation "
-      "reaches a conclusion, this section will be replaced by a proper discussion and "
-      "conclusion, and the abstract will be written then."),
+("p", "The next steps are the numerical export and unwrapped phase comparison described "
+      "in Section 9, then targeted tests of the reconstruction assumptions. This "
+      "document is a working engineering report and will be revised as that work "
+      "produces results. When the investigation reaches a conclusion, this section will "
+      "be replaced by a proper discussion and conclusion, and the abstract will be "
+      "written then."),
 
 ]
 

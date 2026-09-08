@@ -71,7 +71,9 @@ point.** The rest of this section states what that does and does not establish.
 cell.** Over the wider interval the two endpoint responses are no longer close
 everywhere: a capacitance-sensitive resonant region appears near **26.8 GHz**,
 where changing `varC` shifts both the reflection-magnitude dip and the rapid
-phase transition associated with it. That is a whole-cell effect, and it is the
+phase transition associated with it. Read from the plots, the dip sits at
+approximately 26.86 GHz and -3.3 dB at 0.19 pF and at approximately 26.78 GHz
+and -3.6 dB at 0.025 pF — a shift of roughly 0.08 GHz. That is a whole-cell effect, and it is the
 first direct evidence in this project that the tuning element reaches the
 reflected field rather than only being electrically active at its own terminals.
 

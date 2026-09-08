@@ -612,8 +612,11 @@ class Builder:
 APP_FIG_LABEL = {
     "convergence_appendix": "Figure C.1",
     "biasT_2020": "Figure D.1",
-    "magnitude_appendix": "Figure E.1",
-    "efield_appendix": "Figure E.2",
+    "side_view_appendix": "Figure E.1",
+    "front_view_appendix": "Figure E.2",
+    "back_view_appendix": "Figure E.3",
+    "bias_detail_appendix": "Figure E.4",
+    "efield_appendix": "Figure E.5",
 }
 APP_TAB_LABEL = {
     "param_inventory": "Table A.1",

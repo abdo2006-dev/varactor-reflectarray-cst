@@ -6,6 +6,53 @@ The format follows the spirit of Keep a Changelog. Because this repository is a
 research record rather than a released product, entries also note when a claim
 changed status in `docs/claims_ledger.md`.
 
+## Model and result figures integrated
+
+The ten CST captures the previous entry was waiting for are now in the tree, and
+the README and the report are built around them.
+
+### Added
+
+- `figures/model/`, eight captures of the reconstruction. Four carry the story in
+  the README and in report Section 3: the cell in its periodic domain, the
+  conductor layers seen in depth, the blind via crossing the ground-plane
+  clearance, and the bias network with the surrounding layers hidden. The other
+  four are collected under "Additional model views" in the README and as
+  Figures E.1 to E.4 in the report.
+- `figures/results/`, the two G-04 overlays for runs 17 and 18, now report
+  Figures 8 and 9.
+- Report Figures 5 and 6, the blind via and the bias network, are new. The
+  appendix reflection-magnitude figure was dropped: it duplicated Figure 8.
+
+### Changed
+
+- **Plot-read values are now recorded for G-04.** The magnitude dip sits at
+  approximately 26.86 GHz and -3.3 dB at 0.19 pF against approximately
+  26.78 GHz and -3.6 dB at 0.025 pF, a shift of roughly 0.08 GHz, the higher
+  capacitance at the higher frequency. At 26.104 GHz the two phase traces
+  overlie one another near -24 degrees; they separate by roughly 7 degrees at
+  26.5 GHz and 13 degrees at 26.6 GHz. **These are measurements of the plotted
+  traces, not solver exports**, and CL-15 says so. Evidence gap 3, the
+  unquantified separation near the old band edge, is narrowed rather than
+  closed; CL-P4 still governs.
+- The phase caveat is now specific: the wide apparent gap between the two wrap
+  points is an artefact of the plus or minus 180 degree display, not a tuning
+  range. **No tuning range in degrees is claimed anywhere.**
+- Two figure captions were rewritten to describe the captures that exist rather
+  than the ones originally specified. Figure 3 is the cell inside its boundary
+  box, not a cutaway; Figure 4 is one oblique view in which the layers separate
+  by depth, not a per-layer exploded set. The caption says so in each case.
+- `model_front.png` and `model_back.png` carry a red view label burned into the
+  original capture. It was left in place rather than cropped, and both captions
+  record it.
+
+### Still outstanding
+
+Four report figures remain marked "required, not yet available": the
+representative convergence record (Figure 7), the surface-current plot
+(Figure 10), the per-branch convergence records (Figure C.1) and the
+electric-field distribution (Figure E.5). No capture exists for any of them.
+
 ## Wide-frequency endpoint result, and public-repository presentation pass
 
 Two things: a new experimental result that changes the project's status, and a

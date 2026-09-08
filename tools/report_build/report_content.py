@@ -92,35 +92,57 @@ FIGURES = {
             "Fig. 2, under the Creative Commons Attribution 4.0 licence."),
     ),
     "cst_iso": dict(
-        path=None,   # figures/model/model_isometric.png once captured
-        height=3.3,
+        path="figures/model/model_isometric.png",
+        height=3.0,
         short="CST reconstruction of the unit cell",
-        need=("Isometric view of the reconstructed unit cell in CST Studio Suite 2023, "
-              "with the substrate stack shown semi-transparent so that all six "
-              "conductor layers, the blind via and the varactor terminal pads are "
-              "visible. Capture from the current geometry checkpoint "
-              "(lineV = 1.13 mm, slotW = 0.35 mm, slotL = 2.32 mm)."),
         caption=(
-            "Reconstructed unit cell in CST Studio Suite 2023. The model is a 7 mm by "
-            "7 mm periodic cell containing six perfect-electric-conductor layers "
-            "separated by five Astra MT77 substrates, with an ideal lumped capacitor "
-            "across the layer-six terminal pads representing the varactor."),
+            "Reconstructed unit cell in CST Studio Suite 2023, shown inside the "
+            "bounding box of the periodic simulation domain. The model is a 7 mm by "
+            "7 mm cell containing six perfect-electric-conductor layers separated by "
+            "five Astra MT77 substrates, with an ideal lumped capacitor across the "
+            "layer-six terminal pads representing the varactor. The substrates are "
+            "drawn semi-transparent and the square layer-one patch is visible on the "
+            "front face; the open space above and below the stack is the region "
+            "through which the Floquet excitation enters and leaves."),
     ),
     "cst_layers": dict(
-        path=None,   # figures/model/model_layer_stack.png once captured
-        height=3.45,
-        short="Layer-by-layer CST reconstruction",
-        need=("Layer-by-layer or exploded composite view of the reconstruction, one "
-              "panel per conductor layer L1 to L6, all at the same scale and camera "
-              "orientation, so that the reconstruction can be compared panel by panel "
-              "against Figure 1. Capture from the same checkpoint as Figure 3."),
+        path="figures/model/model_layer_stack.png",
+        height=3.0,
+        short="Conductor layers of the reconstruction, seen in depth",
         caption=(
-            "Layer-by-layer view of the reconstruction. L1 carries the square patch, L2 "
-            "is a conductor sheet interrupted by the rectangular coupling aperture, L3 "
-            "carries the resonant stripline together with the bias-T branch and radial "
-            "stub, L4 is the ground plane with a circular clearance around the blind "
-            "via, L5 carries the DC supply trace, and L6 carries the varactor terminal "
-            "pads."),
+            "The same model viewed close to edge-on, so that the conductor layers are "
+            "separated in depth rather than superimposed. Reading downward: the square "
+            "patch on L1, the L2 conductor interrupted by the rectangular coupling "
+            "aperture, the L3 stripline with its bias-T branch and radial stub, the L4 "
+            "ground plane with the circular clearance around the blind via, and the L5 "
+            "and L6 routing carrying the lumped varactor, visible below the stack. This "
+            "is a single oblique capture rather than a per-layer exploded set, so the "
+            "layers are identified by their depth order, not shown in isolation."),
+    ),
+    "cst_via": dict(
+        path="figures/model/model_via_detail.png",
+        height=2.9,
+        short="Blind via through the ground-plane clearance",
+        caption=(
+            "The blind via crossing the layer-four ground plane. The circular clearance "
+            "around the via, drawn here as the light ring, is what keeps the resonant "
+            "path isolated from the ground plane as it passes through it. The lumped "
+            "element representing the varactor is the darker collar on the lower part "
+            "of the via, at the layer-six terminal pads. The clearance diameter is not "
+            "published and is a reconstruction assumption; see Appendix F."),
+    ),
+    "cst_bias": dict(
+        path="figures/model/model_bias_network_detail_2.png",
+        height=2.2,
+        short="Bias network with the surrounding layers hidden",
+        caption=(
+            "The bias network with the substrates and the sheet conductors hidden, so "
+            "that the routing can be followed. The blind via descends from the layer-"
+            "three stripline, through its ground-plane clearance, to the terminal pads "
+            "carrying the lumped varactor; the bias line continues away from the "
+            "junction and the radial stub branches laterally from it. This lateral "
+            "branching, rather than a stub continuing along the bias line, is the "
+            "reading taken from Figure 1 and supported by Figure D.1."),
     ),
     "convergence": dict(
         path=None,
@@ -139,8 +161,8 @@ FIGURES = {
             "approximately 0.01 or below."),
     ),
     "endpoint_phase": dict(
-        path=None,
-        height=3.2,
+        path="figures/results/g04_reflection_phase.png",
+        height=2.35,
         short="Endpoint reflection phase, wide sweep",
         need=("Overlay of the reflection phase of SZmax(1),Zmax(1) against frequency "
               "for varC = 0.025 pF and varC = 0.19 pF on the current geometry over "
@@ -153,14 +175,19 @@ FIGURES = {
             "capacitance endpoints on the current diagnostic geometry (patchW = 2.30 mm, "
             "slotL = 2.32 mm, slotW = 0.35 mm, lineV = 1.13 mm), over approximately "
             "25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. Near "
-            "the intended 26.104 GHz operating frequency the two responses remain close; "
-            "a capacitance-dependent shift of the resonant feature appears near "
-            "26.8 GHz. The displayed phase wraps at plus or minus 180 degrees, so the "
-            "tuning range has not been quantified from this plot."),
+            "the intended 26.104 GHz operating frequency the two traces are drawn on top "
+            "of one another at approximately -24 degrees and no separation is "
+            "measurable. They become distinguishable at about 26.3 GHz and reach "
+            "roughly 7 degrees apart at 26.5 GHz and 13 degrees at 26.6 GHz, before "
+            "each wraps through the rapid transition that accompanies its own "
+            "resonance: near 26.85 GHz at 0.19 pF and near 26.77 GHz at 0.025 pF. The "
+            "displayed phase wraps at plus or minus 180 degrees, so the apparent "
+            "excursion between the two wrap points is an artefact of the display and no "
+            "tuning range in degrees is quantified from this plot."),
     ),
     "endpoint_magnitude": dict(
-        path=None,
-        height=3.2,
+        path="figures/results/g04_reflection_magnitude.png",
+        height=2.35,
         short="Endpoint reflection magnitude, wide sweep",
         need=("Overlay of the reflection magnitude of SZmax(1),Zmax(1) against "
               "frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry "
@@ -169,12 +196,15 @@ FIGURES = {
         caption=(
             "Reflection magnitude of SZmax(1),Zmax(1) at the two capacitance endpoints "
             "on the current diagnostic geometry, over approximately 25.5 to 28 GHz. Red "
-            "is varC = 0.19 pF and green is varC = 0.025 pF. The magnitude dip near "
-            "26.8 GHz moves with capacitance, which is the clearest evidence in this "
-            "project that the varactor reaches the resonance of the complete unit cell. "
-            "The sweep extends beyond the declared Astra MT77 material fit range of "
-            "25.6 to 26.6 GHz, so this region is a diagnostic indication rather than a "
-            "quantitative prediction."),
+            "is varC = 0.19 pF (run 17) and green is varC = 0.025 pF (run 18). A single "
+            "resonant dip appears near 26.8 GHz and moves with capacitance: "
+            "approximately 26.86 GHz and -3.3 dB at 0.19 pF against approximately "
+            "26.78 GHz and -3.6 dB at 0.025 pF, a shift of roughly 0.08 GHz. This is "
+            "the clearest evidence in this project that the varactor reaches the "
+            "resonance of the complete unit cell. Both figures are read from the plot "
+            "rather than exported from the solver, and the sweep extends beyond the "
+            "declared Astra MT77 material fit range of 25.6 to 26.6 GHz, so the region "
+            "is a diagnostic indication rather than a quantitative prediction."),
     ),
     "surface_current": dict(
         path=None,
@@ -502,9 +532,10 @@ BODY = [
       "enters and leaves."),
 ("fig", "cst_iso"),
 
-("h2", "Layer-by-layer model"),
-("p", "Figure 4 separates the six conductor layers so that the reconstruction can be "
-      "compared directly against the published layout of Figure 1."),
+("h2", "The conductor layers"),
+("p", "Figure 4 views the same model close to edge-on, so that the six conductor layers "
+      "are separated in depth and can be followed against the published layout of "
+      "Figure 1 and the published stack of Figure 2."),
 ("fig", "cst_layers"),
 ("p", "The layer-two conductor is built from four rectangular solids rather than as a "
       "sheet with a cut, leaving a rectangular aperture of width slotW and length slotL "
@@ -518,13 +549,16 @@ BODY = [
 ("p", "The radio-frequency path runs from the patch, through the aperture, along the "
       "layer-three stripline, down the blind via, and onto the layer-six pad pair that "
       "carries the varactor. The via passes through the ground-plane clearance without "
-      "touching it, so the resonant path reaches the diode without shorting to ground."),
+      "touching it, so the resonant path reaches the diode without shorting to ground. "
+      "Figure 5 shows that crossing."),
+("fig", "cst_via"),
 ("p", "The bias path is modelled as a branch leaving the same layer-three junction. The "
       "quarter-wavelength transformer and the radial stub together present an open "
       "circuit at the junction at the operating frequency, which is what keeps the DC "
       "feed from loading the resonator; the source reports 36 dB of decoupling for this "
       "arrangement [3]. The DC side then continues to the layer-five supply trace through "
       "a local interlayer via and reaches the isolated DC pad on layer six."),
+("fig", "cst_bias"),
 ("p", "The layer on which the bias-T sits is a reconstruction interpretation rather "
       "than a published assignment. The 2022 source describes the bias-T as a "
       "quarter-wavelength stripline transformer with a microstrip radial-stub shunt, and "
@@ -614,7 +648,7 @@ BODY = [
       "value after early runs terminated at a looser default and produced results that "
       "were not stable enough to compare between capacitance states."),
 ("fig", "convergence"),
-("p", "Figure 5 shows a representative convergence record. Frequency-domain results "
+("p", "Figure 7 shows a representative convergence record. Frequency-domain results "
       "are presented separately in Section 7."),
 
 ("h2", "Quantities evaluated"),
@@ -721,7 +755,7 @@ BODY = [
 
 ("h2", "Surface-current distribution"),
 ("p", "A field monitor at the reference frequency was used to see where current "
-      "concentrates in the structure. Figure 7 shows the surface-current magnitude for "
+      "concentrates in the structure. Figure 10 shows the surface-current magnitude for "
       "the low-capacitance state."),
 ("fig", "surface_current"),
 ("p", "The solver-reported maximum given in the caption, 392.368 A/m at the layer-two "
@@ -1111,12 +1145,16 @@ APPENDICES = [
         ("p", "The stub orientation entries above were read against the dimensioned bias-T figure of the 2020 precursor paper, reproduced as Figure D.1. That figure was used as supporting evidence for the qualitative bias-T topology and for the lateral orientation of the radial stub, and for nothing else. Its numerical dimensions belong to the 2020 precursor element and were not transferred as dimensions of the 2022 cell reconstructed here."),
         ("fig", "biasT_2020"),
     ]),
-    ("E", "Additional electromagnetic plots", [
-        ("p", "The plots listed here support the main text but are not needed to follow "
-              "it. Figure E.1 is the endpoint reflection-magnitude overlay discussed in "
-              "Section 7.2, and Figure E.2 is the electric-field distribution at the "
-              "reference frequency. Neither has yet been exported from the solver."),
-        ("afig", "magnitude_appendix"),
+    ("E", "Additional model views and electromagnetic plots", [
+        ("p", "The views collected here show the same model as Figures 3 to 6 from other "
+              "directions. They are not needed to follow the main text and are included "
+              "so that the reconstruction can be checked rather than taken on trust. "
+              "Figures E.1 to E.4 are captures of the CST model; Figure E.5 is a field "
+              "plot that has not yet been exported in a usable form."),
+        ("afig", "side_view_appendix"),
+        ("afig", "front_view_appendix"),
+        ("afig", "back_view_appendix"),
+        ("afig", "bias_detail_appendix"),
         ("afig", "efield_appendix"),
     ]),
     ("F", "Unresolved source and reconstruction ambiguities", [
@@ -1180,20 +1218,41 @@ APPENDIX_FIGURES = {
               "Pass on the horizontal axis."),
         caption="Per-branch adaptive-mesh convergence records for the branches in Table C.1.",
     ),
-    "magnitude_appendix": dict(
-        path=None, height=2.3,
-        short="Endpoint reflection magnitude",
-        need=("Overlay of the reflection magnitude of SZmax(1),Zmax(1) against frequency "
-              "at varC = 0.025 pF and 0.19 pF on the current geometry, same runs as "
-              "Figure 6."),
-        caption=("Reflection magnitude at the two capacitance endpoints on the current "
-                 "geometry, same runs as Figure 6. Discussed in Section 7.2."),
+    "side_view_appendix": dict(
+        path="figures/model/model_side_view.png", height=2.7,
+        short="Assembled cell seen from the side",
+        caption=("The assembled cell viewed from the side within its simulation domain. "
+                 "The five substrates and the conductor layers are seen in section, "
+                 "with the lumped varactor on the far side of the ground plane."),
+    ),
+    "front_view_appendix": dict(
+        path="figures/model/model_front.png", height=2.6,
+        short="Front view of the model",
+        caption=("Front view, looking into the stack along the propagation axis. The "
+                 "layer-three stripline, the blind via, the lumped varactor and the "
+                 "laterally branching radial stub are visible through the "
+                 "semi-transparent conductors. The view label is part of the original "
+                 "screen capture."),
+    ),
+    "back_view_appendix": dict(
+        path="figures/model/model_back.png", height=2.6,
+        short="Back view of the model",
+        caption=("Back view along the same axis, showing the lower conductor layers and "
+                 "the pad pair that carries the varactor. The view label is part of the "
+                 "original screen capture."),
+    ),
+    "bias_detail_appendix": dict(
+        path="figures/model/model_bias_network_detail_1.png", height=2.1,
+        short="Bias network from a second angle",
+        caption=("The bias network of Figure 6 from a second angle, with the ground-"
+                 "plane clearance ring around the blind via more clearly separated from "
+                 "the radial stub."),
     ),
     "efield_appendix": dict(
         path=None, height=2.3,
         short="Electric-field distribution at 26.104 GHz",
         need=("Electric-field magnitude at 26.104 GHz on a fixed non-saturating scale, "
-              "starting near 0 to 10000 V/m, with the same camera position as Figure 7. "
+              "starting near 0 to 10000 V/m, with the same camera position as Figure 10. "
               "The existing capture saturates and carries no information, so it must be "
               "regenerated before use."),
         caption=("Electric-field magnitude at 26.104 GHz for varC = 0.025 pF on a fixed "

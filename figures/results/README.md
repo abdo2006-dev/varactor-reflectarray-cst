@@ -11,6 +11,10 @@ Naming follows the run identifiers in
 | `g04_reflection_magnitude.png` | Reflection magnitude, both capacitance endpoints, wide sweep |
 | `g04_reflection_phase.png` | Reflection phase, both capacitance endpoints, wide sweep |
 
+Both are G-04: run 17 at `varC = 0.19 pF` and run 18 at `varC = 0.025 pF`, on one
+geometry, over approximately 25.5 to 28 GHz. The legend entries `(17)` and `(18)`
+in the plots are those run numbers.
+
 In both plots red is `varC = 0.19 pF` and green is `varC = 0.025 pF`.
 
 The phase plots are CST screen output and wrap at plus or minus 180 degrees. No

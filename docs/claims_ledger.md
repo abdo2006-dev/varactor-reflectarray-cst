@@ -195,18 +195,27 @@ band edge.
 `slotW = 0.35`, `lineV = 1.13` mm), an endpoint pair run over approximately
 25.5 to 28 GHz shows a capacitance-sensitive resonant region near 26.8 GHz.
 Changing `varC` between 0.025 pF and 0.19 pF shifts the reflection-magnitude dip
-and the rapid phase transition associated with it. Near 26.104 GHz the two
-endpoint phase responses remain close. The published tuning at 26.104 GHz is not
+and the rapid phase transition associated with it: the dip sits at approximately
+26.86 GHz and -3.3 dB at 0.19 pF against approximately 26.78 GHz and -3.6 dB at
+0.025 pF, a shift of roughly 0.08 GHz, with the higher capacitance at the higher
+frequency. Near 26.104 GHz the two endpoint phase responses remain close — the
+traces are drawn on top of one another near -24 degrees. They become
+distinguishable at about 26.3 GHz, reaching roughly 7 degrees of separation at
+26.5 GHz and 13 degrees at 26.6 GHz. The published tuning at 26.104 GHz is not
 reproduced.
 **Evidence.** Runs 17 (`varC = 0.19 pF`) and 18 (`varC = 0.025 pF`), G-04 in
 [experiment_log.md](experiment_log.md).
 **Configuration.** approximately 25.5 to 28 GHz, `fRef = 26.104 GHz`, red =
 0.19 pF and green = 0.025 pF in the plots.
-**Kind.** qualitative.
-**Precision.** screenshot estimated. The 26.8 GHz location is read from the
-plot, and no phase difference in degrees is stated, because the displayed phase
-wraps at plus or minus 180 degrees and the numerical S-parameter export has not
-been made.
+**Kind.** qualitative, with plot-read approximate values.
+**Precision.** screenshot estimated throughout. Every number above was obtained
+by measuring the plotted traces against the plot axes, not from a solver export.
+The frequencies carry the resolution of the displayed sweep; the phase
+separations are small differences between two curves and are the least reliable
+of them. No total tuning range in degrees is stated, because the displayed phase
+wraps at plus or minus 180 degrees: the wide apparent gap between the two wrap
+points is an artefact of the display, not a phase difference. The numerical
+S-parameter export has not been made.
 **What this does and does not establish.** It establishes that the varactor
 influences the resonance of the complete unit cell, which the terminal
 impedance check of CL-09 alone could not. It does **not** establish the tuning
@@ -669,7 +678,9 @@ missing.
    pair. The evidence states that both satisfy the approximately 0.01 criterion
    but does not give the two numbers.
 3. Numerical phase separation, in degrees, between the current endpoint curves
-   at 26.5 to 26.6 GHz. Described as some additional separation, not measured.
+   at 26.5 to 26.6 GHz. Approximate values are now read from the G-04 plot —
+   about 7 degrees at 26.5 GHz and 13 degrees at 26.6 GHz — but these are
+   plot measurements, not solver values, and are superseded by CL-P4.
 4. Numerical, as opposed to plot-read, values for the wide-frequency endpoint
    pair. CL-15 rests on plot readings: the 26.8 GHz location, the shift of the
    magnitude dip and the position of the phase transition are all screenshot

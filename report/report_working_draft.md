@@ -102,31 +102,35 @@ The element is modelled as one cell of an infinite periodic array rather than in
 
 Figure 3 shows the reconstructed unit cell. The cell is 7 mm square in the transverse plane, contains six conductor layers separated by five substrates, and is bounded above and below by open space through which the Floquet excitation enters and leaves.
 
-> **FIGURE 3. Figure required, not yet available.**
->
-> Isometric view of the reconstructed unit cell in CST Studio Suite 2023, with the substrate stack shown semi-transparent so that all six conductor layers, the blind via and the varactor terminal pads are visible. Capture from the current geometry checkpoint (lineV = 1.13 mm, slotW = 0.35 mm, slotL = 2.32 mm).
+![Figure 3](../figures/model/model_isometric.png)
 
-**Figure 3.** Reconstructed unit cell in CST Studio Suite 2023. The model is a 7 mm by 7 mm periodic cell containing six perfect-electric-conductor layers separated by five Astra MT77 substrates, with an ideal lumped capacitor across the layer-six terminal pads representing the varactor.
+**Figure 3.** Reconstructed unit cell in CST Studio Suite 2023, shown inside the bounding box of the periodic simulation domain. The model is a 7 mm by 7 mm cell containing six perfect-electric-conductor layers separated by five Astra MT77 substrates, with an ideal lumped capacitor across the layer-six terminal pads representing the varactor. The substrates are drawn semi-transparent and the square layer-one patch is visible on the front face; the open space above and below the stack is the region through which the Floquet excitation enters and leaves.
 
 
-### 3.3  Layer-by-layer model
+### 3.3  The conductor layers
 
-Figure 4 separates the six conductor layers so that the reconstruction can be compared directly against the published layout of Figure 1.
+Figure 4 views the same model close to edge-on, so that the six conductor layers are separated in depth and can be followed against the published layout of Figure 1 and the published stack of Figure 2.
 
-> **FIGURE 4. Figure required, not yet available.**
->
-> Layer-by-layer or exploded composite view of the reconstruction, one panel per conductor layer L1 to L6, all at the same scale and camera orientation, so that the reconstruction can be compared panel by panel against Figure 1. Capture from the same checkpoint as Figure 3.
+![Figure 4](../figures/model/model_layer_stack.png)
 
-**Figure 4.** Layer-by-layer view of the reconstruction. L1 carries the square patch, L2 is a conductor sheet interrupted by the rectangular coupling aperture, L3 carries the resonant stripline together with the bias-T branch and radial stub, L4 is the ground plane with a circular clearance around the blind via, L5 carries the DC supply trace, and L6 carries the varactor terminal pads.
+**Figure 4.** The same model viewed close to edge-on, so that the conductor layers are separated in depth rather than superimposed. Reading downward: the square patch on L1, the L2 conductor interrupted by the rectangular coupling aperture, the L3 stripline with its bias-T branch and radial stub, the L4 ground plane with the circular clearance around the blind via, and the L5 and L6 routing carrying the lumped varactor, visible below the stack. This is a single oblique capture rather than a per-layer exploded set, so the layers are identified by their depth order, not shown in isolation.
 
 The layer-two conductor is built from four rectangular solids rather than as a sheet with a cut, leaving a rectangular aperture of width slotW and length slotL between them. Layer three carries a single stripline solid spanning from -lineV to +lineS in y, so that the blind via at the origin divides it into exactly the two published lengths. Layer four is a full ground plane with a circular clearance centred on the via. Layers five and six carry the DC supply trace and the varactor terminal pads respectively.
 
 
 ### 3.4  Radio-frequency and bias paths
 
-The radio-frequency path runs from the patch, through the aperture, along the layer-three stripline, down the blind via, and onto the layer-six pad pair that carries the varactor. The via passes through the ground-plane clearance without touching it, so the resonant path reaches the diode without shorting to ground.
+The radio-frequency path runs from the patch, through the aperture, along the layer-three stripline, down the blind via, and onto the layer-six pad pair that carries the varactor. The via passes through the ground-plane clearance without touching it, so the resonant path reaches the diode without shorting to ground. Figure 5 shows that crossing.
+
+![Figure 5](../figures/model/model_via_detail.png)
+
+**Figure 5.** The blind via crossing the layer-four ground plane. The circular clearance around the via, drawn here as the light ring, is what keeps the resonant path isolated from the ground plane as it passes through it. The lumped element representing the varactor is the darker collar on the lower part of the via, at the layer-six terminal pads. The clearance diameter is not published and is a reconstruction assumption; see Appendix F.
 
 The bias path is modelled as a branch leaving the same layer-three junction. The quarter-wavelength transformer and the radial stub together present an open circuit at the junction at the operating frequency, which is what keeps the DC feed from loading the resonator; the source reports 36 dB of decoupling for this arrangement [3]. The DC side then continues to the layer-five supply trace through a local interlayer via and reaches the isolated DC pad on layer six.
+
+![Figure 6](../figures/model/model_bias_network_detail_2.png)
+
+**Figure 6.** The bias network with the substrates and the sheet conductors hidden, so that the routing can be followed. The blind via descends from the layer-three stripline, through its ground-plane clearance, to the terminal pads carrying the lumped varactor; the bias line continues away from the junction and the radial stub branches laterally from it. This lateral branching, rather than a stub continuing along the bias line, is the reading taken from Figure 1 and supported by Figure D.1.
 
 The layer on which the bias-T sits is a reconstruction interpretation rather than a published assignment. The 2022 source describes the bias-T as a quarter-wavelength stripline transformer with a microstrip radial-stub shunt, and draws the bias line and the radial stub in the same superimposed plan view as the stripline, but neither its text nor its layer-structure figure gives the bias-T a conductor-layer number [3]. The precursor paper is explicit in one direction and contrary in another: its layer-stack figure labels layer three as stripline and bias-T, while its text places the varactor diode and the bias-T behind the ground layer [2]. That stack belongs to the 8 mm precursor element, so it constrains the present reconstruction only by analogy.
 
@@ -248,13 +252,13 @@ This is deliberately an idealisation. Package parasitics, series resistance, lea
 
 Adaptive tetrahedral refinement runs between three and eight passes, refining the mesh where the field solution changes most between passes. The convergence measure is the Maximum Delta All S-Parameters, the largest change in any S-parameter between consecutive passes, and a run is accepted for comparison only when that quantity falls to approximately 0.01 or below. The threshold was tightened to this value after early runs terminated at a looser default and produced results that were not stable enough to compare between capacitance states.
 
-> **FIGURE 5. Figure required, not yet available.**
+> **FIGURE 7. Figure required, not yet available.**
 >
 > Export of the CST adaptive-mesh convergence plot, Maximum Delta All S-Parameters against pass number, for one accepted endpoint run on the current geometry. The horizontal axis must read Pass. State in the caption which capacitance state the run belongs to and the final delta value from the solver log rather than from the plot.
 
-**Figure 5.** Representative adaptive tetrahedral mesh convergence for one accepted endpoint run on the current geometry. The horizontal axis is the refinement pass number, not frequency. The acceptance criterion used throughout this project is a final Maximum Delta All S-Parameters of approximately 0.01 or below.
+**Figure 7.** Representative adaptive tetrahedral mesh convergence for one accepted endpoint run on the current geometry. The horizontal axis is the refinement pass number, not frequency. The acceptance criterion used throughout this project is a final Maximum Delta All S-Parameters of approximately 0.01 or below.
 
-Figure 5 shows a representative convergence record. Frequency-domain results are presented separately in Section 7.
+Figure 7 shows a representative convergence record. Frequency-domain results are presented separately in Section 7.
 
 
 ### 5.4  Quantities evaluated
@@ -302,19 +306,15 @@ This section reports what the model currently produces. It is deliberately short
 
 The endpoint pair was first run over the 25.6 to 26.6 GHz interval inherited from the source measurement, where the two capacitance states produced almost coincident reflection-phase curves. That interval was chosen by the source, not to find the element's capacitance-sensitive region, so the pair was re-run over approximately 25.5 to 28 GHz on unchanged geometry. Runs 17 and 18 are that diagnostic. In both figures below, red is varC = 0.19 pF and green is varC = 0.025 pF.
 
-> **FIGURE 6. Figure required, not yet available.**
->
-> Overlay of the reflection magnitude of SZmax(1),Zmax(1) against frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry over approximately 25.5 to 28 GHz (runs 17 and 18). Save to figures/results/g04_reflection_magnitude.png.
+![Figure 8](../figures/results/g04_reflection_magnitude.png)
 
-**Figure 6.** Reflection magnitude of SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry, over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. The magnitude dip near 26.8 GHz moves with capacitance, which is the clearest evidence in this project that the varactor reaches the resonance of the complete unit cell. The sweep extends beyond the declared Astra MT77 material fit range of 25.6 to 26.6 GHz, so this region is a diagnostic indication rather than a quantitative prediction.
+**Figure 8.** Reflection magnitude of SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry, over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF (run 17) and green is varC = 0.025 pF (run 18). A single resonant dip appears near 26.8 GHz and moves with capacitance: approximately 26.86 GHz and -3.3 dB at 0.19 pF against approximately 26.78 GHz and -3.6 dB at 0.025 pF, a shift of roughly 0.08 GHz. This is the clearest evidence in this project that the varactor reaches the resonance of the complete unit cell. Both figures are read from the plot rather than exported from the solver, and the sweep extends beyond the declared Astra MT77 material fit range of 25.6 to 26.6 GHz, so the region is a diagnostic indication rather than a quantitative prediction.
 
 The reflection magnitude stays close to 0 dB over most of the sweep, as expected of perfect conductors on a low-loss substrate. Near 26.8 GHz, however, a dip appears, and it moves with the varactor capacitance. That is the first result in this project showing the tuning element acting on the resonance of the complete unit cell rather than only on the impedance at its own terminals, and it is stronger evidence than the terminal check of Section 6.2, which validates the component and not the circuit around it.
 
-> **FIGURE 7. Figure required, not yet available.**
->
-> Overlay of the reflection phase of SZmax(1),Zmax(1) against frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry over approximately 25.5 to 28 GHz (runs 17 and 18), with 26.104 GHz marked. Save to figures/results/g04_reflection_phase.png. Export the underlying complex S-parameter data at the same time: the displayed phase is wrapped, so no tuning range in degrees can be taken from the plot.
+![Figure 9](../figures/results/g04_reflection_phase.png)
 
-**Figure 7.** Reflection phase of the co-polarised term SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry (patchW = 2.30 mm, slotL = 2.32 mm, slotW = 0.35 mm, lineV = 1.13 mm), over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. Near the intended 26.104 GHz operating frequency the two responses remain close; a capacitance-dependent shift of the resonant feature appears near 26.8 GHz. The displayed phase wraps at plus or minus 180 degrees, so the tuning range has not been quantified from this plot.
+**Figure 9.** Reflection phase of the co-polarised term SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry (patchW = 2.30 mm, slotL = 2.32 mm, slotW = 0.35 mm, lineV = 1.13 mm), over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. Near the intended 26.104 GHz operating frequency the two traces are drawn on top of one another at approximately -24 degrees and no separation is measurable. They become distinguishable at about 26.3 GHz and reach roughly 7 degrees apart at 26.5 GHz and 13 degrees at 26.6 GHz, before each wraps through the rapid transition that accompanies its own resonance: near 26.85 GHz at 0.19 pF and near 26.77 GHz at 0.025 pF. The displayed phase wraps at plus or minus 180 degrees, so the apparent excursion between the two wrap points is an artefact of the display and no tuning range in degrees is quantified from this plot.
 
 The phase response carries the same feature: a rapid transition accompanying the magnitude dip, whose frequency moves with capacitance. Near the intended 26.104 GHz operating frequency the two curves remain close, as they did over the narrower interval. The capacitance-sensitive resonance therefore exists in this reconstruction but is displaced above the operating point the source design works at. The published tuning at 26.104 GHz is not reproduced.
 
@@ -338,13 +338,13 @@ Only isolated nearby values were tested, and each change was carried forward int
 
 ### 7.3  Surface-current distribution
 
-A field monitor at the reference frequency was used to see where current concentrates in the structure. Figure 7 shows the surface-current magnitude for the low-capacitance state.
+A field monitor at the reference frequency was used to see where current concentrates in the structure. Figure 10 shows the surface-current magnitude for the low-capacitance state.
 
-> **FIGURE 8. Figure required, not yet available.**
+> **FIGURE 10. Figure required, not yet available.**
 >
 > Surface-current magnitude plot at 26.104 GHz from the field-audit run at varC = 0.025 pF, rescaled to a fixed 0 to 5 A/m range so that the layer-three resonant path is visible. Use a camera position that can be repeated for the planned 0.19 pF counterpart.
 
-**Figure 8.** Surface-current magnitude at 26.104 GHz for varC = 0.025 pF, plotted on a fixed 0 to 5 A/m colour scale so that the resonant path is visible. The global maximum reported by the solver for this run is 392.368 A/m, located at approximately (1.138, -0.130, -0.254) mm, which is the layer-two level. The fixed scale saturates the aperture region by construction and the plot is therefore a qualitative distribution, not a calibrated field export.
+**Figure 10.** Surface-current magnitude at 26.104 GHz for varC = 0.025 pF, plotted on a fixed 0 to 5 A/m colour scale so that the resonant path is visible. The global maximum reported by the solver for this run is 392.368 A/m, located at approximately (1.138, -0.130, -0.254) mm, which is the layer-two level. The fixed scale saturates the aperture region by construction and the plot is therefore a qualitative distribution, not a calibrated field export.
 
 The solver-reported maximum given in the caption, 392.368 A/m at the layer-two level near the aperture, is the only calibrated value available for this run. On the fixed 0 to 5 A/m display the layer-three resonant path appears at substantially lower current density than the layer-two field concentration. That display is qualitative and supports no numerical ratio between the two.
 
@@ -581,21 +581,31 @@ The stub orientation entries above were read against the dimensioned bias-T figu
 **Figure D.1.** Bias-T dimensions and port definitions for the 2020 precursor element. The radial stub branches laterally from the bias line rather than continuing along it. The figure was used as supporting evidence for the qualitative bias-T topology and for the lateral orientation of the radial stub. Its numerical dimensions belong to the 2020 precursor element and were not transferred as dimensions of the 2022 cell reconstructed here. Reproduced from Harz et al. [2], Fig. 5, under the Creative Commons Attribution 4.0 licence.
 
 
-## Appendix E  Additional electromagnetic plots
+## Appendix E  Additional model views and electromagnetic plots
 
-The plots listed here support the main text but are not needed to follow it. Figure E.1 is the endpoint reflection-magnitude overlay discussed in Section 7.2, and Figure E.2 is the electric-field distribution at the reference frequency. Neither has yet been exported from the solver.
+The views collected here show the same model as Figures 3 to 6 from other directions. They are not needed to follow the main text and are included so that the reconstruction can be checked rather than taken on trust. Figures E.1 to E.4 are captures of the CST model; Figure E.5 is a field plot that has not yet been exported in a usable form.
 
-> **FIGURE E.1. Figure required, not yet available.**
+![Figure E.1](../figures/model/model_side_view.png)
+
+**Figure E.1.** The assembled cell viewed from the side within its simulation domain. The five substrates and the conductor layers are seen in section, with the lumped varactor on the far side of the ground plane.
+
+![Figure E.2](../figures/model/model_front.png)
+
+**Figure E.2.** Front view, looking into the stack along the propagation axis. The layer-three stripline, the blind via, the lumped varactor and the laterally branching radial stub are visible through the semi-transparent conductors. The view label is part of the original screen capture.
+
+![Figure E.3](../figures/model/model_back.png)
+
+**Figure E.3.** Back view along the same axis, showing the lower conductor layers and the pad pair that carries the varactor. The view label is part of the original screen capture.
+
+![Figure E.4](../figures/model/model_bias_network_detail_1.png)
+
+**Figure E.4.** The bias network of Figure 6 from a second angle, with the ground-plane clearance ring around the blind via more clearly separated from the radial stub.
+
+> **FIGURE E.5. Figure required, not yet available.**
 >
-> Overlay of the reflection magnitude of SZmax(1),Zmax(1) against frequency at varC = 0.025 pF and 0.19 pF on the current geometry, same runs as Figure 6.
+> Electric-field magnitude at 26.104 GHz on a fixed non-saturating scale, starting near 0 to 10000 V/m, with the same camera position as Figure 10. The existing capture saturates and carries no information, so it must be regenerated before use.
 
-**Figure E.1.** Reflection magnitude at the two capacitance endpoints on the current geometry, same runs as Figure 6. Discussed in Section 7.2.
-
-> **FIGURE E.2. Figure required, not yet available.**
->
-> Electric-field magnitude at 26.104 GHz on a fixed non-saturating scale, starting near 0 to 10000 V/m, with the same camera position as Figure 7. The existing capture saturates and carries no information, so it must be regenerated before use.
-
-**Figure E.2.** Electric-field magnitude at 26.104 GHz for varC = 0.025 pF on a fixed non-saturating colour scale.
+**Figure E.5.** Electric-field magnitude at 26.104 GHz for varC = 0.025 pF on a fixed non-saturating colour scale.
 
 
 ## Appendix F  Unresolved source and reconstruction ambiguities

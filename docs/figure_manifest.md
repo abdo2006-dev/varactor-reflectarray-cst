@@ -49,35 +49,45 @@ the source result.
 
 ### Figure 3
 
-**Status.** **required, not yet available**
+**Status.** present, `figures/model/model_isometric.png`
 
-**What must be captured or exported.** Isometric view of the reconstructed unit cell in CST Studio Suite 2023, with the substrate stack shown semi-transparent so that all six conductor layers, the blind via and the varactor terminal pads are visible. Capture from the current geometry checkpoint (lineV = 1.13 mm, slotW = 0.35 mm, slotL = 2.32 mm).
-
-**Save to.** `figures/cst/cst_iso.png`, then set `path` for `cst_iso` in
-`tools/report_build/report_content.py` and rebuild.
-
-**Reserved height.** 3.30 in
+**Reserved height.** 3.00 in
 
 **List-of-figures entry.** CST reconstruction of the unit cell
 
-**Caption.** Reconstructed unit cell in CST Studio Suite 2023. The model is a 7 mm by 7 mm periodic cell containing six perfect-electric-conductor layers separated by five Astra MT77 substrates, with an ideal lumped capacitor across the layer-six terminal pads representing the varactor.
+**Caption.** Reconstructed unit cell in CST Studio Suite 2023, shown inside the bounding box of the periodic simulation domain. The model is a 7 mm by 7 mm cell containing six perfect-electric-conductor layers separated by five Astra MT77 substrates, with an ideal lumped capacitor across the layer-six terminal pads representing the varactor. The substrates are drawn semi-transparent and the square layer-one patch is visible on the front face; the open space above and below the stack is the region through which the Floquet excitation enters and leaves.
 
 ### Figure 4
 
-**Status.** **required, not yet available**
+**Status.** present, `figures/model/model_layer_stack.png`
 
-**What must be captured or exported.** Layer-by-layer or exploded composite view of the reconstruction, one panel per conductor layer L1 to L6, all at the same scale and camera orientation, so that the reconstruction can be compared panel by panel against Figure 1. Capture from the same checkpoint as Figure 3.
+**Reserved height.** 3.00 in
 
-**Save to.** `figures/cst/cst_layers.png`, then set `path` for `cst_layers` in
-`tools/report_build/report_content.py` and rebuild.
+**List-of-figures entry.** Conductor layers of the reconstruction, seen in depth
 
-**Reserved height.** 3.45 in
-
-**List-of-figures entry.** Layer-by-layer CST reconstruction
-
-**Caption.** Layer-by-layer view of the reconstruction. L1 carries the square patch, L2 is a conductor sheet interrupted by the rectangular coupling aperture, L3 carries the resonant stripline together with the bias-T branch and radial stub, L4 is the ground plane with a circular clearance around the blind via, L5 carries the DC supply trace, and L6 carries the varactor terminal pads.
+**Caption.** The same model viewed close to edge-on, so that the conductor layers are separated in depth rather than superimposed. Reading downward: the square patch on L1, the L2 conductor interrupted by the rectangular coupling aperture, the L3 stripline with its bias-T branch and radial stub, the L4 ground plane with the circular clearance around the blind via, and the L5 and L6 routing carrying the lumped varactor, visible below the stack. This is a single oblique capture rather than a per-layer exploded set, so the layers are identified by their depth order, not shown in isolation.
 
 ### Figure 5
+
+**Status.** present, `figures/model/model_via_detail.png`
+
+**Reserved height.** 2.90 in
+
+**List-of-figures entry.** Blind via through the ground-plane clearance
+
+**Caption.** The blind via crossing the layer-four ground plane. The circular clearance around the via, drawn here as the light ring, is what keeps the resonant path isolated from the ground plane as it passes through it. The lumped element representing the varactor is the darker collar on the lower part of the via, at the layer-six terminal pads. The clearance diameter is not published and is a reconstruction assumption; see Appendix F.
+
+### Figure 6
+
+**Status.** present, `figures/model/model_bias_network_detail_2.png`
+
+**Reserved height.** 2.20 in
+
+**List-of-figures entry.** Bias network with the surrounding layers hidden
+
+**Caption.** The bias network with the substrates and the sheet conductors hidden, so that the routing can be followed. The blind via descends from the layer-three stripline, through its ground-plane clearance, to the terminal pads carrying the lumped varactor; the bias line continues away from the junction and the radial stub branches laterally from it. This lateral branching, rather than a stub continuing along the bias line, is the reading taken from Figure 1 and supported by Figure D.1.
+
+### Figure 7
 
 **Status.** **required, not yet available**
 
@@ -92,37 +102,27 @@ the source result.
 
 **Caption.** Representative adaptive tetrahedral mesh convergence for one accepted endpoint run on the current geometry. The horizontal axis is the refinement pass number, not frequency. The acceptance criterion used throughout this project is a final Maximum Delta All S-Parameters of approximately 0.01 or below.
 
-### Figure 6
+### Figure 8
 
-**Status.** **required, not yet available**
+**Status.** present, `figures/results/g04_reflection_magnitude.png`
 
-**What must be captured or exported.** Overlay of the reflection magnitude of SZmax(1),Zmax(1) against frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry over approximately 25.5 to 28 GHz (runs 17 and 18). Save to figures/results/g04_reflection_magnitude.png.
-
-**Save to.** `figures/cst/endpoint_magnitude.png`, then set `path` for `endpoint_magnitude` in
-`tools/report_build/report_content.py` and rebuild.
-
-**Reserved height.** 3.20 in
+**Reserved height.** 2.35 in
 
 **List-of-figures entry.** Endpoint reflection magnitude, wide sweep
 
-**Caption.** Reflection magnitude of SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry, over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. The magnitude dip near 26.8 GHz moves with capacitance, which is the clearest evidence in this project that the varactor reaches the resonance of the complete unit cell. The sweep extends beyond the declared Astra MT77 material fit range of 25.6 to 26.6 GHz, so this region is a diagnostic indication rather than a quantitative prediction.
+**Caption.** Reflection magnitude of SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry, over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF (run 17) and green is varC = 0.025 pF (run 18). A single resonant dip appears near 26.8 GHz and moves with capacitance: approximately 26.86 GHz and -3.3 dB at 0.19 pF against approximately 26.78 GHz and -3.6 dB at 0.025 pF, a shift of roughly 0.08 GHz. This is the clearest evidence in this project that the varactor reaches the resonance of the complete unit cell. Both figures are read from the plot rather than exported from the solver, and the sweep extends beyond the declared Astra MT77 material fit range of 25.6 to 26.6 GHz, so the region is a diagnostic indication rather than a quantitative prediction.
 
-### Figure 7
+### Figure 9
 
-**Status.** **required, not yet available**
+**Status.** present, `figures/results/g04_reflection_phase.png`
 
-**What must be captured or exported.** Overlay of the reflection phase of SZmax(1),Zmax(1) against frequency for varC = 0.025 pF and varC = 0.19 pF on the current geometry over approximately 25.5 to 28 GHz (runs 17 and 18), with 26.104 GHz marked. Save to figures/results/g04_reflection_phase.png. Export the underlying complex S-parameter data at the same time: the displayed phase is wrapped, so no tuning range in degrees can be taken from the plot.
-
-**Save to.** `figures/cst/endpoint_phase.png`, then set `path` for `endpoint_phase` in
-`tools/report_build/report_content.py` and rebuild.
-
-**Reserved height.** 3.20 in
+**Reserved height.** 2.35 in
 
 **List-of-figures entry.** Endpoint reflection phase, wide sweep
 
-**Caption.** Reflection phase of the co-polarised term SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry (patchW = 2.30 mm, slotL = 2.32 mm, slotW = 0.35 mm, lineV = 1.13 mm), over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. Near the intended 26.104 GHz operating frequency the two responses remain close; a capacitance-dependent shift of the resonant feature appears near 26.8 GHz. The displayed phase wraps at plus or minus 180 degrees, so the tuning range has not been quantified from this plot.
+**Caption.** Reflection phase of the co-polarised term SZmax(1),Zmax(1) at the two capacitance endpoints on the current diagnostic geometry (patchW = 2.30 mm, slotL = 2.32 mm, slotW = 0.35 mm, lineV = 1.13 mm), over approximately 25.5 to 28 GHz. Red is varC = 0.19 pF and green is varC = 0.025 pF. Near the intended 26.104 GHz operating frequency the two traces are drawn on top of one another at approximately -24 degrees and no separation is measurable. They become distinguishable at about 26.3 GHz and reach roughly 7 degrees apart at 26.5 GHz and 13 degrees at 26.6 GHz, before each wraps through the rapid transition that accompanies its own resonance: near 26.85 GHz at 0.19 pF and near 26.77 GHz at 0.025 pF. The displayed phase wraps at plus or minus 180 degrees, so the apparent excursion between the two wrap points is an artefact of the display and no tuning range in degrees is quantified from this plot.
 
-### Figure 8
+### Figure 10
 
 **Status.** **required, not yet available**
 
@@ -166,24 +166,49 @@ the source result.
 
 ### Figure E.1
 
-**Status.** **required, not yet available**
+**Status.** present, `figures/model/model_side_view.png`
 
-**What must be captured or exported.** Overlay of the reflection magnitude of SZmax(1),Zmax(1) against frequency at varC = 0.025 pF and 0.19 pF on the current geometry, same runs as Figure 6.
+**Reserved height.** 2.70 in
 
-**Save to.** `figures/cst/magnitude_appendix.png`, then set `path` for `magnitude_appendix` in
-`tools/report_build/report_content.py` and rebuild.
+**List-of-figures entry.** Assembled cell seen from the side
 
-**Reserved height.** 2.30 in
-
-**List-of-figures entry.** Endpoint reflection magnitude
-
-**Caption.** Reflection magnitude at the two capacitance endpoints on the current geometry, same runs as Figure 6. Discussed in Section 7.2.
+**Caption.** The assembled cell viewed from the side within its simulation domain. The five substrates and the conductor layers are seen in section, with the lumped varactor on the far side of the ground plane.
 
 ### Figure E.2
 
+**Status.** present, `figures/model/model_front.png`
+
+**Reserved height.** 2.60 in
+
+**List-of-figures entry.** Front view of the model
+
+**Caption.** Front view, looking into the stack along the propagation axis. The layer-three stripline, the blind via, the lumped varactor and the laterally branching radial stub are visible through the semi-transparent conductors. The view label is part of the original screen capture.
+
+### Figure E.3
+
+**Status.** present, `figures/model/model_back.png`
+
+**Reserved height.** 2.60 in
+
+**List-of-figures entry.** Back view of the model
+
+**Caption.** Back view along the same axis, showing the lower conductor layers and the pad pair that carries the varactor. The view label is part of the original screen capture.
+
+### Figure E.4
+
+**Status.** present, `figures/model/model_bias_network_detail_1.png`
+
+**Reserved height.** 2.10 in
+
+**List-of-figures entry.** Bias network from a second angle
+
+**Caption.** The bias network of Figure 6 from a second angle, with the ground-plane clearance ring around the blind via more clearly separated from the radial stub.
+
+### Figure E.5
+
 **Status.** **required, not yet available**
 
-**What must be captured or exported.** Electric-field magnitude at 26.104 GHz on a fixed non-saturating scale, starting near 0 to 10000 V/m, with the same camera position as Figure 7. The existing capture saturates and carries no information, so it must be regenerated before use.
+**What must be captured or exported.** Electric-field magnitude at 26.104 GHz on a fixed non-saturating scale, starting near 0 to 10000 V/m, with the same camera position as Figure 10. The existing capture saturates and carries no information, so it must be regenerated before use.
 
 **Save to.** `figures/cst/efield_appendix.png`, then set `path` for `efield_appendix` in
 `tools/report_build/report_content.py` and rebuild.

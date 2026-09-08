@@ -138,7 +138,12 @@ one-variable change.
 - Near 26.104 GHz the two endpoint phase responses remain close, as in G-03.
 - Over the widened interval a **capacitance-sensitive resonant region appears
   near 26.8 GHz**. Changing `varC` shifts the reflection-magnitude dip and the
-  rapid phase transition associated with it.
+  rapid phase transition associated with it: approximately 26.86 GHz at -3.3 dB
+  for 0.19 pF against approximately 26.78 GHz at -3.6 dB for 0.025 pF, a shift
+  of roughly 0.08 GHz. At 26.104 GHz the two phase traces overlie one another
+  near -24 degrees; they separate by roughly 7 degrees at 26.5 GHz and
+  13 degrees at 26.6 GHz. All of these are plot measurements, not solver
+  exports.
 - The varactor therefore influences the electromagnetic resonance of the
   complete unit cell, not only the impedance at its own terminals.
 - The tunable resonance is **displaced above** the intended 26.104 GHz operating

@@ -63,6 +63,38 @@ reconstruction assumptions in [`docs/claims_ledger.md`](docs/claims_ledger.md),
 CL-A1 to CL-A8.
 
 <!-- FIGURES-MODEL-START -->
+<table>
+<tr>
+<td width="50%" valign="top">
+<img src="figures/model/model_isometric.png" alt="Reconstructed unit cell in its periodic simulation domain">
+<br><sub><b>The cell.</b> 7 mm by 7 mm, six conductor layers on five Astra MT77
+substrates, bounded above and below by the open space the Floquet excitation
+passes through. The layer-one patch is the square on the front face.</sub>
+</td>
+<td width="50%" valign="top">
+<img src="figures/model/model_layer_stack.png" alt="Conductor layers seen separated in depth">
+<br><sub><b>The layers.</b> The same model close to edge-on, so the conductors
+separate in depth: patch, apertured L2 sheet, L3 stripline with its bias-T
+branch, L4 ground, and the L5/L6 routing carrying the varactor below.</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<img src="figures/model/model_via_detail.png" alt="Blind via crossing the ground-plane clearance">
+<br><sub><b>The blind via.</b> Crossing the L4 ground plane through its circular
+clearance — the light ring — so the resonant path reaches the diode without
+shorting to ground. The clearance diameter is not published; it is a
+reconstruction assumption.</sub>
+</td>
+<td width="50%" valign="top">
+<img src="figures/model/model_bias_network_detail_2.png" alt="Bias network with surrounding layers hidden">
+<br><sub><b>The bias network.</b> Substrates and sheet conductors hidden. The via
+descends from the stripline to the pads carrying the varactor; the bias line
+continues away from the junction and the radial stub branches laterally from
+it.</sub>
+</td>
+</tr>
+</table>
 <!-- FIGURES-MODEL-END -->
 
 | Layer | Function |
@@ -147,23 +179,68 @@ to find this element's capacitance-sensitive region, so the pair was re-run on
 unchanged geometry over approximately **25.5 to 28 GHz** (runs 17 and 18).
 
 <!-- FIGURES-RESULTS-START -->
+![Reflection magnitude at both capacitance endpoints, 25.5 to 28 GHz](figures/results/g04_reflection_magnitude.png)
+
+*Reflection magnitude of `SZmax(1),Zmax(1)`. Red is `varC` = 0.19 pF (run 17),
+green is 0.025 pF (run 18). One resonant dip, and it moves: about 26.86 GHz at
+-3.3 dB against about 26.78 GHz at -3.6 dB, a shift of roughly 0.08 GHz.*
+
+![Reflection phase at both capacitance endpoints, 25.5 to 28 GHz](figures/results/g04_reflection_phase.png)
+
+*Reflection phase, same two runs and the same colour convention. At 26.104 GHz
+the two traces lie on top of one another near -24 degrees. They separate by
+roughly 7 degrees at 26.5 GHz and 13 degrees at 26.6 GHz, then each wraps
+through the transition belonging to its own resonance. Every number here is read
+off the plot, not exported from the solver.*
 <!-- FIGURES-RESULTS-END -->
 
 **What the wider sweep shows.** Near the intended 26.104 GHz operating frequency
-the two endpoint responses remain close. But a **capacitance-sensitive resonant
-region appears near 26.8 GHz**: changing `varC` shifts the magnitude dip and the
-rapid phase transition that goes with it. The varactor is therefore influencing
+the two endpoint responses remain close — close enough that the traces are drawn
+on top of one another. But a **capacitance-sensitive resonant region appears near
+26.8 GHz**: changing `varC` shifts the magnitude dip by roughly 0.08 GHz and
+carries the rapid phase transition with it. The varactor is therefore influencing
 the electromagnetic resonance of the complete unit cell, which the terminal
 impedance check alone could not establish.
 
 **What it does not show.** The tunable resonance is displaced above the intended
 operating point, so **the published tuning at 26.104 GHz has not been
 reproduced**. And no tuning range in degrees is claimed here: the phase CST
-displays wraps at plus or minus 180 degrees, so no 300-degree-class figure can
-be read from these plots. The sweep also extends past the Astra MT77 material
-fit range declared in the model, 25.6 to 26.6 GHz, so the 26.8 GHz region is a
-diagnostic indication of where the feature sits rather than a quantitative
-prediction.
+displays wraps at plus or minus 180 degrees, so the wide apparent gap between
+the two wrap points is a display artefact, not a tuning range, and no
+300-degree-class figure can be read from these plots. The sweep also extends
+past the Astra MT77 material fit range declared in the model, 25.6 to 26.6 GHz,
+so the 26.8 GHz region is a diagnostic indication of where the feature sits
+rather than a quantitative prediction.
+
+<details>
+<summary><b>Additional model views</b></summary>
+
+<br>
+
+<img src="figures/model/model_side_view.png" alt="Assembled cell from the side">
+
+*The assembled cell from the side, within its simulation domain. The substrates
+and conductors are seen in section, with the varactor on the far side of the
+ground plane.*
+
+<img src="figures/model/model_front.png" alt="Front view of the model">
+
+*Front view, looking into the stack along the propagation axis. The stripline,
+the blind via, the varactor and the laterally branching radial stub show through
+the semi-transparent conductors. The view label is part of the original screen
+capture.*
+
+<img src="figures/model/model_back.png" alt="Back view of the model">
+
+*Back view along the same axis: the lower conductor layers and the pad pair that
+carries the varactor. The view label is part of the original screen capture.*
+
+<img src="figures/model/model_bias_network_detail_1.png" alt="Bias network from a second angle">
+
+*The bias network from a second angle, with the ground-plane clearance ring
+around the via more clearly separated from the radial stub.*
+
+</details>
 
 ## 7. What is unresolved
 

@@ -22,6 +22,10 @@ workspace.
   next step.
 - `figures/model/` and `figures/results/`, with a README in each stating what
   belongs there and what may not be read from it.
+- `archive/README.md`, marking the first report revision as superseded and
+  naming the statements in it that the wide-frequency result has overtaken. The
+  archived text itself is left unedited: rewriting a superseded record would
+  hide how the earlier conclusion was reached.
 - `tools/check_public_repo.py`, a hygiene gate over the tracked tree: broken
   links, local absolute paths, credential patterns, OS and editor debris,
   publisher PDFs outside `deliverables/`, and internal workflow directories.
@@ -45,9 +49,12 @@ workspace.
   26.6 GHz lies outside the range the material model was fitted for. That step
   is carried forward into CL-P4.
 - The current geometry record now lists `patchW = 2.30 mm` and states that it
-  **departs from the published `Pw` of 2.225 mm**. Four of the eleven published
+  **departs from the published `Pw` of 2.225 mm**. The value is confirmed as the
+  one used for runs 17 and 18 and is carried as a deliberate diagnostic
+  deviation, not as a correction to the source. Four of the eleven published
   dimensions are now displaced by choice; the reconstruction baseline still
-  reproduces all eleven exactly.
+  reproduces all eleven exactly. The report's two parameter tables were corrected
+  to match — they still carried `patchW` at its published value.
 - Report Sections 7 to 10 rewritten around the new result. Section 7 now covers
   the widened sweep with both the magnitude and the phase overlay; Section 9's
   immediate task is the numerical export rather than the wider sweep; Section 10

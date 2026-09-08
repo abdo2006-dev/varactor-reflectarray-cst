@@ -148,11 +148,12 @@ one-variable change.
 
 ### Record status
 
-`patchW = 2.30 mm` departs from the published `Pw` = 2.225 mm. It is carried
-here as recorded for runs 17 and 18. The branch in which `patchW` was first
-moved off its published value was not logged separately, which is a further
-instance of the per-variant record gap already listed in
-[claims_ledger.md](claims_ledger.md).
+`patchW = 2.30 mm` departs from the published `Pw` = 2.225 mm. The value is
+confirmed as the one used for runs 17 and 18, and is carried as a deliberate
+diagnostic deviation from the published patch width, not as a correction to the
+source. The branch in which `patchW` was first moved off its published value was
+not logged separately, which is a further instance of the per-variant record gap
+already listed in [claims_ledger.md](claims_ledger.md).
 
 Per-run convergence deltas for runs 17 and 18 are not in the supplied record.
 The numerical S-parameter export for these runs has not been made, so the

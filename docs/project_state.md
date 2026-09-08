@@ -63,6 +63,10 @@ range must be re-declared before any number is taken from that region.
 The wide-frequency endpoint diagnostic (G-04, runs 17 and 18) has been run on the
 current geometry at both capacitance endpoints over approximately 25.5 to 28 GHz.
 
+**The current reconstruction shows capacitance-dependent resonant behaviour, but
+the tunable resonant region is displaced above the intended 26.104 GHz operating
+point.** The rest of this section states what that does and does not establish.
+
 **The varactor does influence the electromagnetic resonance of the complete unit
 cell.** Over the wider interval the two endpoint responses are no longer close
 everywhere: a capacitance-sensitive resonant region appears near **26.8 GHz**,

@@ -1,9 +1,12 @@
 # Varactor-tuned 26 GHz reflectarray unit cell — CST reconstruction
 
 A full-wave CST reconstruction of a varactor-tuned, six-layer reflectarray unit
-cell for K-band operation near 26 GHz, and an open investigation into why the
-reconstructed element does not yet reproduce the capacitance-dependent phase
-response its reference design reports.
+cell for K-band operation near 26 GHz, and an open investigation into why its
+tunable resonance does not sit where the reference design puts it.
+
+The current reconstruction shows capacitance-dependent resonant behaviour, but
+the tunable resonant region is displaced above the intended 26.104 GHz operating
+point.
 
 **Status: in progress.** Simulation only. No hardware was fabricated and no
 measurement was made. The published tuning at 26.104 GHz has **not** been
@@ -29,16 +32,20 @@ stub.
 
 ![Published unit-cell layout](figures/source/fig01_harz2022_element_layout.png)
 
-*Reference unit-cell geometry from Harz and Kleine-Ostmann [2], Fig. 1,
-reproduced under CC BY 4.0. The unit-cell extent X and Y, the patch width Pw,
+*Published reference unit-cell layout from Harz et al., reproduced under
+CC BY 4.0.* Harz and Kleine-Ostmann [2], Fig. 1, doi:
+[10.5194/ars-19-215-2022](https://doi.org/10.5194/ars-19-215-2022).
+*The unit-cell extent X and Y, the patch width Pw,
 the coupling slot Sw and Sl, the stripline width Lw with its two resonant
 lengths Lv and Ls, the blind via, the varactor position, and the bias line with
 its radial stub dimensioned by Bl, Bd, Bw and Bh.*
 
 ![Published six-layer architecture](figures/source/fig02_harz2022_layer_structure.png)
 
-*Published six-layer architecture from Harz and Kleine-Ostmann [2], Fig. 2,
-reproduced under CC BY 4.0. The patch sits on layer one, the coupling aperture
+*Published six-layer architecture from Harz et al., reproduced under
+CC BY 4.0.* Harz and Kleine-Ostmann [2], Fig. 2, doi:
+[10.5194/ars-19-215-2022](https://doi.org/10.5194/ars-19-215-2022).
+*The patch sits on layer one, the coupling aperture
 is the gap in the layer-two conductor, the resonant stripline is on layer three,
 layer four is the ground plane, and the blind via carries the resonant path down
 to the varactor on layer six.*
@@ -88,22 +95,26 @@ the targets it is working toward.
 
 ## 4. Current model parameters
 
-| Parameter | Meaning | Current diagnostic value |
-|---|---|---:|
-| `patchW` | square patch width | 2.30 mm |
-| `slotW` | coupling-slot width | 0.35 mm |
-| `slotL` | coupling-slot length | 2.32 mm |
-| `lineV` | resonant stripline length below the via | 1.13 mm |
-| `varC` | varactor capacitance | 0.025 / 0.19 pF |
+The geometry of the current endpoint pair, runs 17 and 18. The two runs share
+one geometry and differ only in `varC`.
 
-These are the values used in the current endpoint comparison. **They are
-diagnostic settings, not optimised dimensions, and not a claim of exact
-reproduction of the published geometry** — four of them depart from the
-published values by choice, as part of the sensitivity sequence in
-[`docs/experiment_log.md`](docs/experiment_log.md). The reconstruction baseline
-reproduces all eleven published dimensions exactly (CL-S3). The full inventory
-of every named parameter, with its published value, its current value and its
-origin, is Appendix A of the report.
+| Parameter | Meaning | Published | Runs 17 / 18 |
+|---|---|---:|---:|
+| `patchW` | square patch width | 2.225 mm (Pw) | 2.30 mm |
+| `slotW` | coupling-slot width | 0.26 mm (Sw) | 0.35 mm |
+| `slotL` | coupling-slot length | 2.275 mm (Sl) | 2.32 mm |
+| `lineV` | resonant stripline length below the via | 1.11 mm (Lv) | 1.13 mm |
+| `varC` | varactor capacitance | — | 0.19 pF (run 17) / 0.025 pF (run 18) |
+
+**These are diagnostic settings, not optimised dimensions, and not a claim of
+exact reproduction of the published geometry.** Four published dimensions,
+including the patch width, are deliberately displaced from their published
+values as part of the sensitivity sequence in
+[`docs/experiment_log.md`](docs/experiment_log.md); the displacement is a
+diagnostic deviation, not a correction to the source. The reconstruction
+baseline reproduces all eleven published dimensions exactly (CL-S3). The full
+inventory of every named parameter, with its published value, its current value
+and its origin, is Appendix A of the report.
 
 ## 5. What is verified
 
@@ -253,10 +264,7 @@ The source PDFs are not committed to this repository. Figures reproduced from
 The code and documentation here are MIT licensed; see [`LICENSE`](LICENSE).
 Reproduced source figures remain under CC BY 4.0 and are attributed as such.
 
-The report and this documentation were drafted with AI assistance under a fixed
-set of evidence-control rules: a claim may not be stated without a recorded
-source, an assumption may not be written as a fact, and a planned experiment may
-not be written as a result. Every technical statement derives from the CST model
-or from the cited papers, and the claims ledger records which. No part of the
-electromagnetic modelling, the experiment design or the results is machine
-generated.
+The report and this documentation were drafted with AI assistance. Every
+technical statement derives from the CST model or from the cited papers, and
+[`docs/claims_ledger.md`](docs/claims_ledger.md) records the evidence and
+status of each.

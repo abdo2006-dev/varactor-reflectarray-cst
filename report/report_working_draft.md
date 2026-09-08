@@ -148,7 +148,7 @@ Table 1 lists the principal geometry and excitation parameters together with the
 |---|---|---|---|---|---|
 | cellX | Unit-cell extent, x | 7.0 | 7.0 | mm | Published (X) |
 | cellY | Unit-cell extent, y | 7.0 | 7.0 | mm | Published (Y) |
-| patchW | Square patch side, L1 | 2.225 | 2.225 | mm | Published (Pw) |
+| patchW | Square patch side, L1 | 2.225 | 2.30 | mm | Published (Pw); current diagnostic value |
 | slotW | Coupling aperture width, L2 | 0.26 | 0.35 | mm | Published (Sw); current diagnostic value |
 | slotL | Coupling aperture length, L2 | 2.275 | 2.32 | mm | Published (Sl); current diagnostic value |
 | lineW | Stripline width, L3 | 0.33 | 0.33 | mm | Published (Lw) |
@@ -373,9 +373,9 @@ None of the work in this section has been carried out. The 26.8 GHz feature is a
 
 ## 10  Interim project status
 
-A parameterised six-layer reconstruction of the published element now exists in CST. Its baseline implements all dimensions explicitly published for the 2022 element, and the current diagnostic checkpoint departs from three of them by design. The solver configuration, the convergence behaviour and the internal connectivity have been checked, and the lumped varactor has been verified to be electrically active at both capacitance endpoints.
+A parameterised six-layer reconstruction of the published element now exists in CST. Its baseline implements all dimensions explicitly published for the 2022 element, and the current diagnostic checkpoint departs from four of them by design. The solver configuration, the convergence behaviour and the internal connectivity have been checked, and the lumped varactor has been verified to be electrically active at both capacitance endpoints.
 
-The behaviour that motivated the work has not been recovered. Changing the varactor capacitance across its full range leaves the reflection phase at 26.104 GHz essentially unchanged, whereas the source reports a simulated phase shift of 337 degrees for its element and a measured phase-change range of 322 degrees at that frequency. **This report does not claim to have reproduced the published response.**
+The current reconstruction shows capacitance-dependent resonant behaviour, but the tunable resonant region is displaced above the intended 26.104 GHz operating point. The behaviour that motivated the work has therefore not been recovered at the frequency it is wanted. Changing the varactor capacitance across its full range leaves the reflection phase at 26.104 GHz essentially unchanged, whereas the source reports a simulated phase shift of 337 degrees for its element and a measured phase-change range of 322 degrees at that frequency. **This report does not claim to have reproduced the published response.**
 
 What has changed is the shape of the open problem. The widened sweep shows that the varactor does move a resonance of the complete unit cell, near 26.8 GHz, so the mechanism the design depends on is present in the reconstruction and is simply at the wrong frequency. That is a more tractable question than the one this project started with. It is also not yet quantified: the phase plots are wrapped and no numerical export exists, so no tuning range in degrees is stated anywhere in this document. No hardware has been fabricated or measured; every result reported here is from simulation.
 
@@ -417,7 +417,7 @@ Three parameters are displaced from their published values at the current checkp
 | fRef | 26.104 | 26.104 | 26.104 | GHz | Reference and material fit frequency | Published [3] |
 | cellX | 7 | 7 | 7 | mm | Unit-cell extent in x | Published (X) [3] |
 | cellY | 7 | 7 | 7 | mm | Unit-cell extent in y | Published (Y) [3] |
-| patchW | 2.225 | 2.225 | 2.225 | mm | Square patch side on L1 | Published (Pw) [3] |
+| patchW | independent | 2.225 | 2.30 | mm | Square patch side on L1 | Published (Pw) [3]; currently displaced |
 | slotW | independent | 0.26 | 0.35 | mm | Coupling aperture width on L2 | Published (Sw) [3]; currently displaced |
 | slotL | independent | 2.275 | 2.32 | mm | Coupling aperture length on L2 | Published (Sl) [3]; currently displaced |
 | lineW | 0.33 | 0.33 | 0.33 | mm | Stripline width on L3 | Published (Lw) [3] |
@@ -607,6 +607,6 @@ The following points are unsettled. They are recorded here so that they are not 
 3. The conductor layer of the bias-T. The 2022 source gives the bias-T no layer number, in its text or in its layer-structure figure. The Layer-3 placement used here follows the superimposed plan view of that paper and the Layer-3 label in the precursor stack-up, but the precursor describes a different element and its own text places the bias-T behind the ground layer. The placement is an interpretation, and the alternative arrangement recorded in Appendix D is therefore not closed by source evidence.
 4. The interlayer bias route between layers three, five and six. The source establishes that the route exists but does not dimension it. What is modelled satisfies the published constraints without being a published layout.
 5. The conductor thicknesses. These are inferred from the source stack description rather than published, and the value used for layers five and six is carried over from the upper layers.
-6. The substrate properties above 20 GHz. The published permittivity and loss factor are specified only to 20 GHz and are applied here at 26 GHz, following the source. Widening the simulated interval will extend this extrapolation further and requires the material fit range to be re-checked.
+6. The substrate properties above 20 GHz. The published permittivity and loss factor are specified only to 20 GHz and are applied here at 26 GHz, following the source. The widened sweep of runs 17 and 18 extends that extrapolation further still, and the material fit range has not yet been re-checked against it.
 7. Per-run numerical records for the slotW and lineV diagnostic branches. Their parameter values are known and carried forward into the current geometry, but their individual convergence and phase readings were not archived. No numerical value from those two branches is quoted anywhere in this report.
 8. The endpoint phase separation near the upper band edge. It has been observed from overlaid plots but not quantified, because the S-parameter data have not been exported numerically.
